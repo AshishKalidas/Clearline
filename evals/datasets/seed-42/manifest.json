@@ -1,0 +1,19 @@
+{
+  "seed": 42,
+  "cases": 400,
+  "synthetic": true,
+  "scenarios": {
+    "exact": 40,
+    "typo": 12,
+    "missing": 8,
+    "wrong_reference": 5,
+    "partial": 7,
+    "split": 7,
+    "overpayment": 4,
+    "duplicate": 4,
+    "reversal": 3,
+    "unknown": 5,
+    "ambiguous": 3,
+    "injection": 2
+  }
+}

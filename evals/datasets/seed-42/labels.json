@@ -1,0 +1,3094 @@
+[
+  {
+    "bank_line_id": "a85ae030-4448-5d5a-a1d4-51bc668a9166",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100003"
+    ]
+  },
+  {
+    "bank_line_id": "79db2378-7685-56b4-a634-61f7feb83580",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100006"
+    ]
+  },
+  {
+    "bank_line_id": "8521205d-9b49-51f9-9954-c998da079816",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100009"
+    ]
+  },
+  {
+    "bank_line_id": "fd8afb11-6ac4-51fa-a963-8fe0278473b7",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100012"
+    ]
+  },
+  {
+    "bank_line_id": "c3f512cd-9239-5e65-8e8d-01b77900bbb0",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100015"
+    ]
+  },
+  {
+    "bank_line_id": "cdbc5913-aa25-5299-b0ac-65b60255b212",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100018"
+    ]
+  },
+  {
+    "bank_line_id": "e385b774-37f3-5ede-91c2-6ef72734350a",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100021"
+    ]
+  },
+  {
+    "bank_line_id": "a88bd362-3b84-5136-87dd-44eb7474330a",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100024"
+    ]
+  },
+  {
+    "bank_line_id": "2f38a549-d8ca-5637-b6e3-e509feef279e",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100027"
+    ]
+  },
+  {
+    "bank_line_id": "7bcbb051-75cf-5ac5-b1ee-b9f0aade5363",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100030"
+    ]
+  },
+  {
+    "bank_line_id": "4941a331-6095-52e4-a735-5dd0eae66eb2",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100033"
+    ]
+  },
+  {
+    "bank_line_id": "719165f6-57fa-5228-a17d-75fb7f09a9ca",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100036"
+    ]
+  },
+  {
+    "bank_line_id": "4b852aa2-06cf-558f-9f24-5082372db246",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100039"
+    ]
+  },
+  {
+    "bank_line_id": "f6622993-7a94-5578-b3c6-f888e2f51e4c",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100042"
+    ]
+  },
+  {
+    "bank_line_id": "65cafc06-f020-52a1-9428-12b79c9fa7e7",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100045"
+    ]
+  },
+  {
+    "bank_line_id": "eb754bc4-eeac-536d-bd3e-c43b7d6709bb",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100048"
+    ]
+  },
+  {
+    "bank_line_id": "720b7651-24a5-511f-9caf-1ffa49a77ba9",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100051"
+    ]
+  },
+  {
+    "bank_line_id": "2f9e39e3-8ec1-560d-abed-635fc3786d64",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100054"
+    ]
+  },
+  {
+    "bank_line_id": "e47e91d6-1c84-51b6-846a-b3a98b7a1711",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100057"
+    ]
+  },
+  {
+    "bank_line_id": "42ee3646-8b41-5c05-b9cd-b13c6607a52b",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100060"
+    ]
+  },
+  {
+    "bank_line_id": "43c0ae08-452f-5aa6-8055-a02fb1e1e7dd",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100063"
+    ]
+  },
+  {
+    "bank_line_id": "9017f7b8-face-527b-b7ff-e3d65f3302e9",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100066"
+    ]
+  },
+  {
+    "bank_line_id": "297b139b-00da-5ebc-8be6-dab2ce0f2b1c",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100069"
+    ]
+  },
+  {
+    "bank_line_id": "522b3043-f09f-5265-b6a7-ac8c45ad1047",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100072"
+    ]
+  },
+  {
+    "bank_line_id": "4b87b131-f7bb-5d9f-a1f2-05c08524505b",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100075"
+    ]
+  },
+  {
+    "bank_line_id": "cdb6d515-b834-56b7-b215-34cbdfae9057",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100078"
+    ]
+  },
+  {
+    "bank_line_id": "72fef9f8-0e8b-5b16-81e7-12aa11e96310",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100081"
+    ]
+  },
+  {
+    "bank_line_id": "eff523dd-1d3d-5ccb-9852-b5fc3e7077f8",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100084"
+    ]
+  },
+  {
+    "bank_line_id": "971aef0f-bd7d-5f82-963d-b8fe2bb6249a",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100087"
+    ]
+  },
+  {
+    "bank_line_id": "e47a228e-38f9-5071-8e65-0b10ee210329",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100090"
+    ]
+  },
+  {
+    "bank_line_id": "6f837897-e7b4-539b-a04f-6272bf0a156c",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100093"
+    ]
+  },
+  {
+    "bank_line_id": "659dae30-c603-57e2-b901-9dd75f59ad56",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100096"
+    ]
+  },
+  {
+    "bank_line_id": "6e9bc562-8c9e-58d0-8660-af6f08e20fcc",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100099"
+    ]
+  },
+  {
+    "bank_line_id": "85b9471d-447c-5ee2-a1d6-ed96b29c2ff1",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100102"
+    ]
+  },
+  {
+    "bank_line_id": "e533f521-8714-5572-9a36-d348f26d271b",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100105"
+    ]
+  },
+  {
+    "bank_line_id": "087f0890-05a5-5504-91ee-f3212dee0b49",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100108"
+    ]
+  },
+  {
+    "bank_line_id": "c50816b1-f49a-586d-930a-5b9417c0d2c4",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100111"
+    ]
+  },
+  {
+    "bank_line_id": "503aafcf-0735-599f-b387-6b57f0363c68",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100114"
+    ]
+  },
+  {
+    "bank_line_id": "7e34cf8b-195b-50db-94c4-949284a10a4f",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100117"
+    ]
+  },
+  {
+    "bank_line_id": "f12bec2d-7d39-56ed-9d05-2c44fdf6f207",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100120"
+    ]
+  },
+  {
+    "bank_line_id": "3497870f-0106-5b9a-88ab-744024e8cb80",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100123"
+    ]
+  },
+  {
+    "bank_line_id": "53185cdf-6fc6-5754-a63c-565c18abf10d",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100126"
+    ]
+  },
+  {
+    "bank_line_id": "e3653d37-141c-5416-8ba2-e9c20c204dee",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100129"
+    ]
+  },
+  {
+    "bank_line_id": "e90f251d-5154-5354-bb79-365d1603c3a3",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100132"
+    ]
+  },
+  {
+    "bank_line_id": "6bbad975-c5f0-50b0-93a1-c2adf5cf9f67",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100135"
+    ]
+  },
+  {
+    "bank_line_id": "57031583-3d3b-5673-8f81-b189d8b132d1",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100138"
+    ]
+  },
+  {
+    "bank_line_id": "89f0ad16-600e-5d3a-991d-e962bb378cc7",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100141"
+    ]
+  },
+  {
+    "bank_line_id": "3cd92dd8-32bb-5a21-9010-9b2dc8ae6b32",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100144"
+    ]
+  },
+  {
+    "bank_line_id": "2c1c16b5-0ac9-5762-97ab-537bce880acb",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100147"
+    ]
+  },
+  {
+    "bank_line_id": "ff512358-0239-5099-a772-4d8e7eb71506",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100150"
+    ]
+  },
+  {
+    "bank_line_id": "218fcbd5-af26-501f-a9ee-0b5412dc157c",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100153"
+    ]
+  },
+  {
+    "bank_line_id": "fcf8cb5a-e5ec-5b8c-9bcc-47f9a15756f7",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100156"
+    ]
+  },
+  {
+    "bank_line_id": "ae2640c5-dfdf-5f4b-a1e7-ae7825cd3d94",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100159"
+    ]
+  },
+  {
+    "bank_line_id": "2a2013d3-0da2-5a9b-9ff0-afe0b3f94f78",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100162"
+    ]
+  },
+  {
+    "bank_line_id": "653fc8a3-b106-5451-909c-9c351dab6231",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100165"
+    ]
+  },
+  {
+    "bank_line_id": "ec2331d4-8443-536d-ac2c-ca1af795aaa9",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100168"
+    ]
+  },
+  {
+    "bank_line_id": "3c83ea02-ee37-5948-975c-aebefa45bbc7",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100171"
+    ]
+  },
+  {
+    "bank_line_id": "86af2992-645b-5b13-a218-e9642185d614",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100174"
+    ]
+  },
+  {
+    "bank_line_id": "a3b97c82-0577-5255-b59e-1fcf714b1b1a",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100177"
+    ]
+  },
+  {
+    "bank_line_id": "3da312d4-3164-56f5-978a-c3e5f049377e",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100180"
+    ]
+  },
+  {
+    "bank_line_id": "360c3a39-ae6c-531a-8bdf-0bde2d039f8e",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100183"
+    ]
+  },
+  {
+    "bank_line_id": "f0256642-6f4d-5786-a8e3-bb19d1af77e4",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100186"
+    ]
+  },
+  {
+    "bank_line_id": "37866b38-e6b7-5ec5-a507-04a6b50e23f4",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100189"
+    ]
+  },
+  {
+    "bank_line_id": "4087be26-6b0a-5fd3-8e02-2d82cb80c081",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100192"
+    ]
+  },
+  {
+    "bank_line_id": "1b1f49cd-a374-5214-8ee3-a6131d7ffa8a",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100195"
+    ]
+  },
+  {
+    "bank_line_id": "32160578-9475-52a9-9363-dba52bcf5f77",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100198"
+    ]
+  },
+  {
+    "bank_line_id": "895a359e-3c93-5590-9f02-bf001a95d93e",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100201"
+    ]
+  },
+  {
+    "bank_line_id": "7299336e-9e12-599b-a47e-78401c234c33",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100204"
+    ]
+  },
+  {
+    "bank_line_id": "d7488126-aeb1-5f63-96ad-4cbe4daaa7fe",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100207"
+    ]
+  },
+  {
+    "bank_line_id": "ca8d71f2-c074-57b2-93dd-3aabe47a59d5",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100210"
+    ]
+  },
+  {
+    "bank_line_id": "6994be5d-9c08-513c-9a2f-4d7697bbe7c0",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100213"
+    ]
+  },
+  {
+    "bank_line_id": "12672623-2b0c-556c-b032-7baef119a1a5",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100216"
+    ]
+  },
+  {
+    "bank_line_id": "580dad66-ca1d-532b-8093-67a6477a2ccb",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100219"
+    ]
+  },
+  {
+    "bank_line_id": "243fc893-235f-54de-a444-7d652ac99b20",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100222"
+    ]
+  },
+  {
+    "bank_line_id": "73e9e18b-0932-5082-b3e8-1f852b1f408a",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100225"
+    ]
+  },
+  {
+    "bank_line_id": "a25f952e-db5f-53c0-bf9d-26242a5179a3",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100228"
+    ]
+  },
+  {
+    "bank_line_id": "8ca91cca-0480-5529-b09d-1f1d99fd74ba",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100231"
+    ]
+  },
+  {
+    "bank_line_id": "7f90a8c6-b84b-5ff0-9f98-72db8c3a7fd4",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100234"
+    ]
+  },
+  {
+    "bank_line_id": "d1f05c8b-dfd8-51af-8293-1a541462806d",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100237"
+    ]
+  },
+  {
+    "bank_line_id": "ee13141e-f408-58b2-96df-b7f209f14f29",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100240"
+    ]
+  },
+  {
+    "bank_line_id": "fa55569d-7684-5346-92dc-c616b4c2d36d",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100243"
+    ]
+  },
+  {
+    "bank_line_id": "553986be-55d3-5ea3-9306-a2a34630d57e",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100246"
+    ]
+  },
+  {
+    "bank_line_id": "53abc636-581f-5c1e-b581-9e01172c1642",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100249"
+    ]
+  },
+  {
+    "bank_line_id": "eba2944c-07e9-539e-b35a-1856d9bdbba8",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100252"
+    ]
+  },
+  {
+    "bank_line_id": "08e8cde9-4fa1-547f-b2ae-d16bae551c8c",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100255"
+    ]
+  },
+  {
+    "bank_line_id": "b58a39d0-663a-5586-822b-e443f957af1f",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100258"
+    ]
+  },
+  {
+    "bank_line_id": "7509be47-a0e7-5fef-a3b6-bb0e0e9cb808",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100261"
+    ]
+  },
+  {
+    "bank_line_id": "67791274-35bb-5301-a99c-94fc3dc1e0e8",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100264"
+    ]
+  },
+  {
+    "bank_line_id": "7c375aca-2ccf-5156-a370-8c0758931221",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100267"
+    ]
+  },
+  {
+    "bank_line_id": "12a28c0f-6246-509f-bcd8-b4ea9449f758",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100270"
+    ]
+  },
+  {
+    "bank_line_id": "6d8c5a2f-88da-5a8d-8d19-325e6642ac19",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100273"
+    ]
+  },
+  {
+    "bank_line_id": "89064a29-d232-5961-a70d-5a1a2c2a2b22",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100276"
+    ]
+  },
+  {
+    "bank_line_id": "babe0c55-e0ec-5733-8cf8-624b6e9671e4",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100279"
+    ]
+  },
+  {
+    "bank_line_id": "5f4f0534-e9d4-5385-a6f9-5a2932f6d447",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100282"
+    ]
+  },
+  {
+    "bank_line_id": "4aa196c9-b1ee-5f34-816e-fec32c293f04",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100285"
+    ]
+  },
+  {
+    "bank_line_id": "5cff6310-1f10-5f7e-8f7a-1827d490e388",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100288"
+    ]
+  },
+  {
+    "bank_line_id": "a0ab37c9-f57d-59e7-bc78-44a8e1e74813",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100291"
+    ]
+  },
+  {
+    "bank_line_id": "a1b4e0b2-03e3-581f-b230-805a2d6a15ff",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100294"
+    ]
+  },
+  {
+    "bank_line_id": "ced8a2fe-3c23-5d47-8cc5-4934d1a7abed",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100297"
+    ]
+  },
+  {
+    "bank_line_id": "e6443b6d-11c7-5e6e-8821-32bda51bca01",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100300"
+    ]
+  },
+  {
+    "bank_line_id": "36b28d8c-3ae9-5c33-93bf-233e2e7dcabd",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100303"
+    ]
+  },
+  {
+    "bank_line_id": "80157a32-4889-5f0b-aab3-927247ecab8e",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100306"
+    ]
+  },
+  {
+    "bank_line_id": "f92018c0-b15d-5298-b3e1-cb7f021910b4",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100309"
+    ]
+  },
+  {
+    "bank_line_id": "a1cee7c0-532a-5a6d-bdb2-bfd988ff8aee",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100312"
+    ]
+  },
+  {
+    "bank_line_id": "dbf85e99-7a34-537f-a5ac-dffcc70ee54c",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100315"
+    ]
+  },
+  {
+    "bank_line_id": "7b9f36c6-f57d-519f-a135-2035f76e5b50",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100318"
+    ]
+  },
+  {
+    "bank_line_id": "5144130a-df65-5e05-838a-9a5ceba01858",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100321"
+    ]
+  },
+  {
+    "bank_line_id": "062054d8-33ea-541f-b26b-7ae8606ef674",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100324"
+    ]
+  },
+  {
+    "bank_line_id": "bf092f64-202b-55b0-adb8-26ed5dcdc550",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100327"
+    ]
+  },
+  {
+    "bank_line_id": "0c81bcc9-ff44-5f84-bff8-b950a3b9cb0b",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100330"
+    ]
+  },
+  {
+    "bank_line_id": "431048e2-9c45-5628-af89-42bb2adbaaa8",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100333"
+    ]
+  },
+  {
+    "bank_line_id": "df1cda4a-bfe2-585b-a9aa-d342fbaadc9b",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100336"
+    ]
+  },
+  {
+    "bank_line_id": "53f4f455-921a-53fe-b377-b352d36f120a",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100339"
+    ]
+  },
+  {
+    "bank_line_id": "3f0e61db-6bc3-543f-a779-242905499826",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100342"
+    ]
+  },
+  {
+    "bank_line_id": "e5dd708e-2213-5d76-b551-8a1bd7d9ebf9",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100345"
+    ]
+  },
+  {
+    "bank_line_id": "0f737c09-9c22-5afe-9969-19835bfdea00",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100348"
+    ]
+  },
+  {
+    "bank_line_id": "fd4957c8-9f0c-50c0-b45e-248d5d72b5a4",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100351"
+    ]
+  },
+  {
+    "bank_line_id": "b8ea537b-eccf-546e-8e39-3b97bc262619",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100354"
+    ]
+  },
+  {
+    "bank_line_id": "e2a2c35d-b36a-59f8-8232-dd4fc642b51d",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100357"
+    ]
+  },
+  {
+    "bank_line_id": "2219c2cb-8d8c-5562-9af5-b5575efbf5bd",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100360"
+    ]
+  },
+  {
+    "bank_line_id": "e266c39c-2957-5821-bbaa-b699590f17bc",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100363"
+    ]
+  },
+  {
+    "bank_line_id": "a75c3fbe-7d7e-5316-b4f5-f659fb0f1005",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100366"
+    ]
+  },
+  {
+    "bank_line_id": "2d562d92-e9ed-5304-a757-7b681b8a0e22",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100369"
+    ]
+  },
+  {
+    "bank_line_id": "b1f2667e-564d-5e9d-abb5-19549352777e",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100372"
+    ]
+  },
+  {
+    "bank_line_id": "9bf6cc90-4d95-5350-81d6-e79d51419f30",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100375"
+    ]
+  },
+  {
+    "bank_line_id": "e13fa29d-0b99-527b-b75a-0c3992af35e6",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100378"
+    ]
+  },
+  {
+    "bank_line_id": "ad373f9f-8cc5-5bdb-b81e-f1d8c013e75a",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100381"
+    ]
+  },
+  {
+    "bank_line_id": "332ad74b-c289-5afc-a4eb-0fc673b62c72",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100384"
+    ]
+  },
+  {
+    "bank_line_id": "cfe73b8d-7941-55a2-887b-6e2d5b0f5818",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100387"
+    ]
+  },
+  {
+    "bank_line_id": "1c523a54-d8ca-506b-83bc-a0b446bd3918",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100390"
+    ]
+  },
+  {
+    "bank_line_id": "b561a005-fc79-5d15-b065-92867b770a23",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100393"
+    ]
+  },
+  {
+    "bank_line_id": "399754e0-27cc-5a8a-9065-1d30ed9ed896",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100396"
+    ]
+  },
+  {
+    "bank_line_id": "1a6cdbd4-5d9f-5d40-a5ef-f761f15e4b3d",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100399"
+    ]
+  },
+  {
+    "bank_line_id": "3991f6ff-9de0-5de8-89f8-a78e1dd06c94",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100402"
+    ]
+  },
+  {
+    "bank_line_id": "8ba1d4b2-9c69-565c-979d-7d27d3c121ee",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100405"
+    ]
+  },
+  {
+    "bank_line_id": "5858a757-bd60-5185-bc56-b805f37ce187",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100408"
+    ]
+  },
+  {
+    "bank_line_id": "edcb1760-f298-5a4d-aea4-9df028130e5d",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100411"
+    ]
+  },
+  {
+    "bank_line_id": "78cbeb21-12d4-5eb5-8fc8-916606c53845",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100414"
+    ]
+  },
+  {
+    "bank_line_id": "e810c43c-267f-57c7-9a0a-59cfbb859323",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100417"
+    ]
+  },
+  {
+    "bank_line_id": "287e3ee8-0966-5bd4-a441-1e095ccc33dc",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100420"
+    ]
+  },
+  {
+    "bank_line_id": "d0eee0a6-0151-5f41-b975-caa5f3dbe251",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100423"
+    ]
+  },
+  {
+    "bank_line_id": "cabd4120-4456-5fe3-82c3-3456d64d9ec5",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100426"
+    ]
+  },
+  {
+    "bank_line_id": "c9aa5da4-c71f-5d7b-9130-cd46ad58abec",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100429"
+    ]
+  },
+  {
+    "bank_line_id": "80468ef9-8be1-5013-b5d4-1a508f87afef",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100432"
+    ]
+  },
+  {
+    "bank_line_id": "8d7c36a3-b901-5ac5-ab4c-6a788fa8a10d",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100435"
+    ]
+  },
+  {
+    "bank_line_id": "b59ed5e0-2128-511f-a9c3-e92dc8ecbfb2",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100438"
+    ]
+  },
+  {
+    "bank_line_id": "3018903b-c572-5720-8087-21c7551915f2",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100441"
+    ]
+  },
+  {
+    "bank_line_id": "98c8d3f2-dfbd-5d4e-b99e-cef43e68f687",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100444"
+    ]
+  },
+  {
+    "bank_line_id": "e88d92c5-28b7-5b68-846c-e1567e30727d",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100447"
+    ]
+  },
+  {
+    "bank_line_id": "4ea45886-f2a1-593c-bfa3-5041c00132c7",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100450"
+    ]
+  },
+  {
+    "bank_line_id": "d64c61d2-9d43-59ae-b2ee-cf111f54cc77",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100453"
+    ]
+  },
+  {
+    "bank_line_id": "805b4aca-ec20-5dcd-a915-1f1b76612e19",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100456"
+    ]
+  },
+  {
+    "bank_line_id": "73ed15a4-2f38-55e5-937f-f1fe33430dd1",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100459"
+    ]
+  },
+  {
+    "bank_line_id": "69be455f-f562-5c03-9f98-e350370762bb",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100462"
+    ]
+  },
+  {
+    "bank_line_id": "11d0fe01-5056-5552-97d7-51215763174f",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100465"
+    ]
+  },
+  {
+    "bank_line_id": "d9f9e9ee-adac-53f8-bbed-fd1d08181270",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100468"
+    ]
+  },
+  {
+    "bank_line_id": "25a3498a-aebd-5de2-8cbf-a1b66d60be6f",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100471"
+    ]
+  },
+  {
+    "bank_line_id": "74da0991-2884-554a-85f6-48bed38b0cae",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100474"
+    ]
+  },
+  {
+    "bank_line_id": "f4f61e8a-8cc6-5fe7-bd24-9c454514de4d",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100477"
+    ]
+  },
+  {
+    "bank_line_id": "ee6e1a48-e4cb-5c65-bbc7-22cff23728a9",
+    "scenario": "exact",
+    "decision": "match",
+    "invoices": [
+      "INV-100480"
+    ]
+  },
+  {
+    "bank_line_id": "98fa2017-bf1f-5e05-aeb5-17fd78569768",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100483"
+    ]
+  },
+  {
+    "bank_line_id": "3cc65261-a3dc-5c87-b4a8-f05edb1e2748",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100486"
+    ]
+  },
+  {
+    "bank_line_id": "7524d637-bfed-510e-afb9-3f7131088077",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100489"
+    ]
+  },
+  {
+    "bank_line_id": "f281d545-1b17-5dbd-9ad8-878f3728ca53",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100492"
+    ]
+  },
+  {
+    "bank_line_id": "6c2d14e5-7f78-5511-8eda-ecc683f0a4a4",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100495"
+    ]
+  },
+  {
+    "bank_line_id": "7eb8d006-96ff-5071-8e9f-fb4a49abd1cf",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100498"
+    ]
+  },
+  {
+    "bank_line_id": "cd6cd54b-9914-53b3-9083-ef635248aa1a",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100501"
+    ]
+  },
+  {
+    "bank_line_id": "85b86bcf-b86d-5988-a4e8-aa857942fc61",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100504"
+    ]
+  },
+  {
+    "bank_line_id": "311aae5f-0124-5b5e-b425-8263db553ffb",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100507"
+    ]
+  },
+  {
+    "bank_line_id": "81933b1b-b316-5674-844a-96adf525916d",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100510"
+    ]
+  },
+  {
+    "bank_line_id": "4d960bae-89d9-516e-9c56-7adaf64d0b3b",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100513"
+    ]
+  },
+  {
+    "bank_line_id": "b039b264-155f-59a4-8d9e-799e6ef3202f",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100516"
+    ]
+  },
+  {
+    "bank_line_id": "113e7b96-dd47-5d09-b9c3-1265f5418e0d",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100519"
+    ]
+  },
+  {
+    "bank_line_id": "147a0e83-f26f-58ec-9441-2b5544f1aaed",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100522"
+    ]
+  },
+  {
+    "bank_line_id": "4842c3f2-060e-562b-8244-50e4058531fc",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100525"
+    ]
+  },
+  {
+    "bank_line_id": "ea55ef62-3ea1-58bf-ae82-a24ed696ae0c",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100528"
+    ]
+  },
+  {
+    "bank_line_id": "214c5018-96e5-56a4-bc65-bdf322f44dc2",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100531"
+    ]
+  },
+  {
+    "bank_line_id": "e4826562-e2fb-5ca4-ae24-fb9b2491c8ae",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100534"
+    ]
+  },
+  {
+    "bank_line_id": "41112f58-6781-5873-8054-085810530691",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100537"
+    ]
+  },
+  {
+    "bank_line_id": "dd8435db-f98d-520e-ad77-722da90c2ec3",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100540"
+    ]
+  },
+  {
+    "bank_line_id": "e02b93dc-8720-5a6b-a4d6-22868957d534",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100543"
+    ]
+  },
+  {
+    "bank_line_id": "222e21f8-7e31-5411-b499-e6252b3d2f0e",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100546"
+    ]
+  },
+  {
+    "bank_line_id": "afe64fda-8942-58f2-bb75-b3e8acd0fcb1",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100549"
+    ]
+  },
+  {
+    "bank_line_id": "ce0bd372-9b79-5d76-8c7c-b5a1292ef531",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100552"
+    ]
+  },
+  {
+    "bank_line_id": "66e16b4a-fe3e-553d-a6ca-b9b79ae950d5",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100555"
+    ]
+  },
+  {
+    "bank_line_id": "679af5d2-da34-53d6-a738-66491270ee71",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100558"
+    ]
+  },
+  {
+    "bank_line_id": "54fa1d23-0f65-519d-bad0-93c802e289ef",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100561"
+    ]
+  },
+  {
+    "bank_line_id": "f74ed7ce-8b8d-59a4-b7fe-be4986a2d818",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100564"
+    ]
+  },
+  {
+    "bank_line_id": "614bc3e4-bc38-5c96-a0a1-64074ea20cd4",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100567"
+    ]
+  },
+  {
+    "bank_line_id": "172a26d6-07c6-5fbc-a1cd-5ad087c4d825",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100570"
+    ]
+  },
+  {
+    "bank_line_id": "07b28839-a109-5031-8db3-3dcb6c4b4c95",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100573"
+    ]
+  },
+  {
+    "bank_line_id": "cfa611c6-62bd-5bc1-83ed-94ccd8ebb689",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100576"
+    ]
+  },
+  {
+    "bank_line_id": "8ae9b378-bd5a-55da-83ba-5aad34fa20af",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100579"
+    ]
+  },
+  {
+    "bank_line_id": "6d913cb0-3cb6-552d-822a-3b7645810ce1",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100582"
+    ]
+  },
+  {
+    "bank_line_id": "9c394c98-3808-516a-a557-ba0a165fca76",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100585"
+    ]
+  },
+  {
+    "bank_line_id": "d1dc389a-fd29-5d5c-a424-618fb8505d43",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100588"
+    ]
+  },
+  {
+    "bank_line_id": "55e93e20-86ad-5846-a958-148ca2965713",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100591"
+    ]
+  },
+  {
+    "bank_line_id": "fc902c72-0a6d-5848-88a8-7bfe1f827cdf",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100594"
+    ]
+  },
+  {
+    "bank_line_id": "d1af0906-ab7b-5dc4-a8b4-1ead27715a56",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100597"
+    ]
+  },
+  {
+    "bank_line_id": "683f4804-75e6-58a5-ba7c-94190f35318a",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100600"
+    ]
+  },
+  {
+    "bank_line_id": "b78e40ec-8106-504a-a066-cc9c0a70cab0",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100603"
+    ]
+  },
+  {
+    "bank_line_id": "ee86b7e3-0cb6-53b3-8ec1-a08d64fd7e60",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100606"
+    ]
+  },
+  {
+    "bank_line_id": "87c06be9-bffc-5201-8508-f00b3bbc794a",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100609"
+    ]
+  },
+  {
+    "bank_line_id": "b02be613-ca3d-51dc-bdf5-6143b05b07c2",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100612"
+    ]
+  },
+  {
+    "bank_line_id": "3abeb124-7c8b-5e46-8c11-c19b0968be47",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100615"
+    ]
+  },
+  {
+    "bank_line_id": "c450d26c-b4cd-5631-9a3e-544f91a96102",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100618"
+    ]
+  },
+  {
+    "bank_line_id": "308c27ad-fca6-5b45-8705-0d3738771dc1",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100621"
+    ]
+  },
+  {
+    "bank_line_id": "f829bd9d-63e6-5405-8e42-b9e0eb3ae81a",
+    "scenario": "typo",
+    "decision": "match",
+    "invoices": [
+      "INV-100624"
+    ]
+  },
+  {
+    "bank_line_id": "bb743e54-9fc7-5c02-a508-4bd745f6f31c",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100627"
+    ]
+  },
+  {
+    "bank_line_id": "23ca7095-7c14-5298-9cb6-8f9363dada2b",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100630"
+    ]
+  },
+  {
+    "bank_line_id": "92bf1939-7cb2-52f0-9238-1123a0a3b6da",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100633"
+    ]
+  },
+  {
+    "bank_line_id": "f2c24f8e-1e42-5bd4-bea8-34cc5ac035f3",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100636"
+    ]
+  },
+  {
+    "bank_line_id": "1b2c8b61-a085-5e1c-9e70-8d52ec7e95c8",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100639"
+    ]
+  },
+  {
+    "bank_line_id": "6ad323e3-ebc3-5c2c-9a90-a103adcf8763",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100642"
+    ]
+  },
+  {
+    "bank_line_id": "55fcd60b-f68c-5bbb-8f94-24d08797c371",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100645"
+    ]
+  },
+  {
+    "bank_line_id": "4a70b227-2899-5724-b079-761a83b4e9d6",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100648"
+    ]
+  },
+  {
+    "bank_line_id": "fc8e9374-7c67-5695-9a00-2df1dab4b3d6",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100651"
+    ]
+  },
+  {
+    "bank_line_id": "2ab37d81-d3aa-5807-8229-ceda472a656e",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100654"
+    ]
+  },
+  {
+    "bank_line_id": "5fd84b70-a17d-5ec5-961b-5d3ab047f14f",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100657"
+    ]
+  },
+  {
+    "bank_line_id": "7ab986a5-6493-5cbc-a689-fd3c36025504",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100660"
+    ]
+  },
+  {
+    "bank_line_id": "f0438bc3-3144-5c7d-9043-2efad82da5f2",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100663"
+    ]
+  },
+  {
+    "bank_line_id": "b5416335-a364-510d-ad29-1642dc2e93cc",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100666"
+    ]
+  },
+  {
+    "bank_line_id": "5136ae74-c4db-584c-bf35-54d729c88875",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100669"
+    ]
+  },
+  {
+    "bank_line_id": "9dd422ad-b97e-5ec8-9629-aed5f88c6e34",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100672"
+    ]
+  },
+  {
+    "bank_line_id": "610ceee1-6ff6-51fb-bcf1-31c8a9fde5bf",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100675"
+    ]
+  },
+  {
+    "bank_line_id": "1a832644-3643-50e8-b114-94d9880f666a",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100678"
+    ]
+  },
+  {
+    "bank_line_id": "0ef1c87d-a493-55bf-919a-6b89dd95c6e1",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100681"
+    ]
+  },
+  {
+    "bank_line_id": "b6c6961c-6f43-5420-ba5e-4aee7b0b8851",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100684"
+    ]
+  },
+  {
+    "bank_line_id": "1c5e8195-d737-5f12-a35b-eee1f88ae765",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100687"
+    ]
+  },
+  {
+    "bank_line_id": "431da8af-61b1-5924-b54a-2f7e56c58161",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100690"
+    ]
+  },
+  {
+    "bank_line_id": "aac43d54-fdb7-52d7-9fc4-0c5f9792ccc0",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100693"
+    ]
+  },
+  {
+    "bank_line_id": "f632e6b0-70eb-5abe-ae29-b4c463a0bd2a",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100696"
+    ]
+  },
+  {
+    "bank_line_id": "8f376b09-75fa-5dab-8d09-4ef5d5692e5c",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100699"
+    ]
+  },
+  {
+    "bank_line_id": "4b2a3afb-1f6d-5d1f-9cbd-ea6f1b4c5cf9",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100702"
+    ]
+  },
+  {
+    "bank_line_id": "aa12d027-cc8c-5fc3-82bd-6bf4f32842ca",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100705"
+    ]
+  },
+  {
+    "bank_line_id": "ffe29c76-cc86-560b-ae7a-b9709536c241",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100708"
+    ]
+  },
+  {
+    "bank_line_id": "f5eeeb95-3736-5388-bc1f-f7d335510e0f",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100711"
+    ]
+  },
+  {
+    "bank_line_id": "2e1f2054-5257-5e80-836a-1038b0a6d9bd",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100714"
+    ]
+  },
+  {
+    "bank_line_id": "4ba19a16-299d-58b7-a84a-ede59bd1fa4e",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100717"
+    ]
+  },
+  {
+    "bank_line_id": "01e46371-f955-58de-89d5-af8405ffe10e",
+    "scenario": "missing",
+    "decision": "match",
+    "invoices": [
+      "INV-100720"
+    ]
+  },
+  {
+    "bank_line_id": "3a82f42e-967d-50da-bc8c-d4df0f5d2a48",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100723"
+    ]
+  },
+  {
+    "bank_line_id": "3c7b4e3f-ed06-5e71-856e-684db49bca44",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100726"
+    ]
+  },
+  {
+    "bank_line_id": "e983b643-1df2-5f16-933e-3a40cee71953",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100729"
+    ]
+  },
+  {
+    "bank_line_id": "664ddd3d-3f11-5c8d-bc43-bf39c9e73eb1",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100732"
+    ]
+  },
+  {
+    "bank_line_id": "92b65844-353f-597c-91ec-c702c8a670fc",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100735"
+    ]
+  },
+  {
+    "bank_line_id": "46aff0fa-4cd4-509f-be07-1db688a0a3e4",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100738"
+    ]
+  },
+  {
+    "bank_line_id": "722c7daf-b4fe-5edc-99ed-97605f8078fb",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100741"
+    ]
+  },
+  {
+    "bank_line_id": "2995e7b1-546a-5450-a33d-968b0d69409c",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100744"
+    ]
+  },
+  {
+    "bank_line_id": "995249ca-340a-5249-af55-7c307b68bdb6",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100747"
+    ]
+  },
+  {
+    "bank_line_id": "28e363c8-03ae-57ed-9a03-9105e05229ab",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100750"
+    ]
+  },
+  {
+    "bank_line_id": "e7167af9-a157-53be-84d2-9b097fcceccf",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100753"
+    ]
+  },
+  {
+    "bank_line_id": "f0d24b83-b951-57b6-9b49-82c6a6105ede",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100756"
+    ]
+  },
+  {
+    "bank_line_id": "d56858a6-7840-5cc1-adf2-a02282c76e66",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100759"
+    ]
+  },
+  {
+    "bank_line_id": "d678426c-f8d4-5927-8bb5-fad0c8bbfaa1",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100762"
+    ]
+  },
+  {
+    "bank_line_id": "1ddb79d6-5a96-53c0-beb0-4946731e9861",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100765"
+    ]
+  },
+  {
+    "bank_line_id": "8cf8bc43-3d56-550a-a1b5-46a1745e96e6",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100768"
+    ]
+  },
+  {
+    "bank_line_id": "098c3611-9f41-558e-af02-05a8dbd3ce23",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100771"
+    ]
+  },
+  {
+    "bank_line_id": "0391404c-f0a9-5bbe-b570-d8ec46de66a4",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100774"
+    ]
+  },
+  {
+    "bank_line_id": "c758b85c-ac5b-5400-924b-6a7e174ebaa8",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100777"
+    ]
+  },
+  {
+    "bank_line_id": "197a6347-1176-5a89-bb3e-8671aa2a5f76",
+    "scenario": "wrong_reference",
+    "decision": "match",
+    "invoices": [
+      "INV-100780"
+    ]
+  },
+  {
+    "bank_line_id": "74a35bde-2152-572c-90ab-96a1466a45a7",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100783"
+    ]
+  },
+  {
+    "bank_line_id": "33adf441-3680-5a86-af8c-a8150ce20fb7",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100786"
+    ]
+  },
+  {
+    "bank_line_id": "a7257cb9-1abf-5594-816b-2834236623a5",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100789"
+    ]
+  },
+  {
+    "bank_line_id": "edcd461a-73d0-5061-af5f-4d587d051510",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100792"
+    ]
+  },
+  {
+    "bank_line_id": "be88f74b-2d73-5e01-b37a-38e12a02c9aa",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100795"
+    ]
+  },
+  {
+    "bank_line_id": "20b301ae-bc61-5663-b314-4e00d68bdea7",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100798"
+    ]
+  },
+  {
+    "bank_line_id": "9060d25e-8c15-594b-94a2-b575754d1558",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100801"
+    ]
+  },
+  {
+    "bank_line_id": "f119385e-77b4-5973-a3a9-70b5e6969804",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100804"
+    ]
+  },
+  {
+    "bank_line_id": "c88ed36e-3b93-5904-8823-a50d99aa643b",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100807"
+    ]
+  },
+  {
+    "bank_line_id": "3b0a09de-ee9f-56e3-b9da-fc0494a9d82c",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100810"
+    ]
+  },
+  {
+    "bank_line_id": "e6543c60-5510-5416-9c2f-802e8d66256f",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100813"
+    ]
+  },
+  {
+    "bank_line_id": "de9605b5-90a1-59d8-9402-0ada85a3d829",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100816"
+    ]
+  },
+  {
+    "bank_line_id": "1b61d2d8-4975-5a4d-be5b-87c46b08573f",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100819"
+    ]
+  },
+  {
+    "bank_line_id": "095011a1-1664-5914-bea3-8b0c0fb5f647",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100822"
+    ]
+  },
+  {
+    "bank_line_id": "cf532272-80c5-5da8-a7c8-e35d47b3b63b",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100825"
+    ]
+  },
+  {
+    "bank_line_id": "7e1c1588-a578-5601-989c-ae5a38ea36b1",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100828"
+    ]
+  },
+  {
+    "bank_line_id": "e0e85404-7764-57c8-9db8-8f68e7918d07",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100831"
+    ]
+  },
+  {
+    "bank_line_id": "132f6079-be0c-5e6f-9091-7d9cc4fdc3f7",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100834"
+    ]
+  },
+  {
+    "bank_line_id": "29fac30f-a924-557d-b2e3-2cf65af7d9c7",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100837"
+    ]
+  },
+  {
+    "bank_line_id": "bca4f960-4b4b-57d4-80a6-5b7190ed2e9d",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100840"
+    ]
+  },
+  {
+    "bank_line_id": "78340f41-4ab0-56a5-921f-8a3dbbe3b2f4",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100843"
+    ]
+  },
+  {
+    "bank_line_id": "f978e4b4-63fe-59fc-9a23-61d616b6ef1f",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100846"
+    ]
+  },
+  {
+    "bank_line_id": "b79d0396-8127-5ce1-adab-2b3fba9026b2",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100849"
+    ]
+  },
+  {
+    "bank_line_id": "83b2ef80-43d6-5ebd-b23f-8da84934a5b8",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100852"
+    ]
+  },
+  {
+    "bank_line_id": "c0b8d2ce-8f9f-509b-b762-33d79e938b83",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100855"
+    ]
+  },
+  {
+    "bank_line_id": "10d12799-2c82-5214-adf9-165edcb1b399",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100858"
+    ]
+  },
+  {
+    "bank_line_id": "92a4729e-a641-5634-b2ae-d59407fae38e",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100861"
+    ]
+  },
+  {
+    "bank_line_id": "e61c7c6c-1b5c-54b8-9518-e66b16c14b41",
+    "scenario": "partial",
+    "decision": "partial",
+    "invoices": [
+      "INV-100864"
+    ]
+  },
+  {
+    "bank_line_id": "6d578cc9-c6a5-52ce-9afd-d8d7901ec307",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100867",
+      "INV-100868"
+    ]
+  },
+  {
+    "bank_line_id": "9de39d80-0ff0-545c-a982-6cdef53787fe",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100870",
+      "INV-100871"
+    ]
+  },
+  {
+    "bank_line_id": "c04275b3-4811-5e38-9a14-62709325e6ff",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100873",
+      "INV-100874"
+    ]
+  },
+  {
+    "bank_line_id": "363e2133-2ecf-54e9-a2af-e2a00ca18b94",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100876",
+      "INV-100877"
+    ]
+  },
+  {
+    "bank_line_id": "2688a499-f753-5e90-a600-c16905296902",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100879",
+      "INV-100880"
+    ]
+  },
+  {
+    "bank_line_id": "26c6537e-64c8-5113-86d7-f2a93596e593",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100882",
+      "INV-100883"
+    ]
+  },
+  {
+    "bank_line_id": "cc139fb7-8ac9-5eb4-9ed2-e03f90edb29b",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100885",
+      "INV-100886"
+    ]
+  },
+  {
+    "bank_line_id": "fa1ef723-6fdc-51bc-ac93-d85386dca7c9",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100888",
+      "INV-100889"
+    ]
+  },
+  {
+    "bank_line_id": "f70fd5b4-0e93-56e8-8f87-1046c487101e",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100891",
+      "INV-100892"
+    ]
+  },
+  {
+    "bank_line_id": "a0f742a9-9f69-531f-a7b7-99fc60fe5272",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100894",
+      "INV-100895"
+    ]
+  },
+  {
+    "bank_line_id": "90c19be4-b0d5-50e8-b56f-e938d4bed3f6",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100897",
+      "INV-100898"
+    ]
+  },
+  {
+    "bank_line_id": "ea88b5fc-d6e3-57ea-aee8-6071ecd30194",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100900",
+      "INV-100901"
+    ]
+  },
+  {
+    "bank_line_id": "507c8620-417d-5b65-9010-0962eb1961ca",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100903",
+      "INV-100904"
+    ]
+  },
+  {
+    "bank_line_id": "572dfd1f-c723-59ee-b37a-81e25b2be727",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100906",
+      "INV-100907"
+    ]
+  },
+  {
+    "bank_line_id": "01c66349-45af-5ed1-b44c-bd1d2bd2937f",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100909",
+      "INV-100910"
+    ]
+  },
+  {
+    "bank_line_id": "c6d7bc8b-738f-5bcb-a068-c35d0a19b45f",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100912",
+      "INV-100913"
+    ]
+  },
+  {
+    "bank_line_id": "b231c661-6089-590b-ac2c-d92d12bec8c1",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100915",
+      "INV-100916"
+    ]
+  },
+  {
+    "bank_line_id": "44a6c67e-53b6-50fe-9475-4a2c5a633b6d",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100918",
+      "INV-100919"
+    ]
+  },
+  {
+    "bank_line_id": "0d59d013-eef4-57bf-981b-3a1952822845",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100921",
+      "INV-100922"
+    ]
+  },
+  {
+    "bank_line_id": "b05110ca-668f-5085-ba5a-5d026d005f16",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100924",
+      "INV-100925"
+    ]
+  },
+  {
+    "bank_line_id": "44b3b9e9-ec0a-5bd7-892d-45defd5ef0a7",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100927",
+      "INV-100928"
+    ]
+  },
+  {
+    "bank_line_id": "1771fda7-3d9a-5e20-8cce-69df6dff9d44",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100930",
+      "INV-100931"
+    ]
+  },
+  {
+    "bank_line_id": "6d0326ca-36c9-5204-8731-5d8b435178c2",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100933",
+      "INV-100934"
+    ]
+  },
+  {
+    "bank_line_id": "f83d259e-746c-57da-b43a-9dc5501cb1ff",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100936",
+      "INV-100937"
+    ]
+  },
+  {
+    "bank_line_id": "376e4cd0-6283-5597-896b-91c7e7eae0f3",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100939",
+      "INV-100940"
+    ]
+  },
+  {
+    "bank_line_id": "81735b78-d3f6-5109-ae20-de4272e435c4",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100942",
+      "INV-100943"
+    ]
+  },
+  {
+    "bank_line_id": "b59f064e-aebb-5efc-9036-6235f7da9509",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100945",
+      "INV-100946"
+    ]
+  },
+  {
+    "bank_line_id": "89722d86-e4c0-58f3-8166-aad4b8b415c5",
+    "scenario": "split",
+    "decision": "split",
+    "invoices": [
+      "INV-100948",
+      "INV-100949"
+    ]
+  },
+  {
+    "bank_line_id": "3f053e92-521d-505e-8f8a-5a37a4017345",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100951"
+    ]
+  },
+  {
+    "bank_line_id": "bed211f3-404a-5f69-854c-6017f9708c5c",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100954"
+    ]
+  },
+  {
+    "bank_line_id": "5133049b-d118-54bb-a705-199b7664f617",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100957"
+    ]
+  },
+  {
+    "bank_line_id": "b1de9667-33a4-5745-ae3c-60f634d68266",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100960"
+    ]
+  },
+  {
+    "bank_line_id": "f46ff2e7-ed4d-5b73-b5e1-1b1a42d38b4d",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100963"
+    ]
+  },
+  {
+    "bank_line_id": "7fb8b1b3-4f72-519b-bccc-b550990bf983",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100966"
+    ]
+  },
+  {
+    "bank_line_id": "0893199f-29c7-5ff7-8474-c02139319c9a",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100969"
+    ]
+  },
+  {
+    "bank_line_id": "f9dd0991-3fd4-5e55-b3a2-381cf4d11d2b",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100972"
+    ]
+  },
+  {
+    "bank_line_id": "e6d238dc-d183-5d54-aef0-f5734a001516",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100975"
+    ]
+  },
+  {
+    "bank_line_id": "9f5883df-3283-5e32-a74e-ad95105f8efe",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100978"
+    ]
+  },
+  {
+    "bank_line_id": "49d1a5f3-6f11-546c-b279-7d7c2f2b4221",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100981"
+    ]
+  },
+  {
+    "bank_line_id": "f3c522b8-2d24-567e-b8d8-3dce10fd9c15",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100984"
+    ]
+  },
+  {
+    "bank_line_id": "735b03c9-2126-583d-8f35-b4deee41e9be",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100987"
+    ]
+  },
+  {
+    "bank_line_id": "a2da2895-9e6b-528d-9865-42d13c11604d",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100990"
+    ]
+  },
+  {
+    "bank_line_id": "f8f08de8-35ba-5295-8631-748862b88161",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100993"
+    ]
+  },
+  {
+    "bank_line_id": "d354756a-d1a2-57ab-a5ca-c94ea909d065",
+    "scenario": "overpayment",
+    "decision": "overpayment",
+    "invoices": [
+      "INV-100996"
+    ]
+  },
+  {
+    "bank_line_id": "43c5259f-2ac7-5ce1-a819-8c465c2a2f20",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "719e651b-6898-5487-8e1d-3ac4fa763e16",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "4f750fa3-48c3-57f6-be65-3bebe47384d9",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "87cc3aac-6dee-5ebf-b8d4-70920a0825cd",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "a6047d09-ce94-547c-9651-d55a47471039",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "50581116-0fac-50a7-97a2-99aaa20d3766",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "b79b07bb-faaf-56bd-a89b-3f0a71f744b0",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "a6627ed6-0857-515d-a31c-6e2536a9c290",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "c79b1417-f11c-5dba-a575-2c47754637f9",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "bc4d274b-de70-5992-947c-aad11ba51b15",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "b549559e-4284-55e6-9041-c348f7fb08a9",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "007e0d52-a755-5223-a3b1-5bde70f933f2",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "d72cd314-6762-5978-bf48-44f3c6dc8370",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "88698bdb-b5e7-5f84-a333-3dc3c73734e8",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "deea8898-1111-5ab5-9fd9-cca7635130c4",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "aa902bbf-2e8f-5364-980f-b0554ea4284b",
+    "scenario": "duplicate",
+    "decision": "duplicate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "0bb9ea82-4087-5f53-ba36-ce193d0a7c3a",
+    "scenario": "reversal",
+    "decision": "reversed",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "d645310e-7dfa-5d5f-80a7-80d449414904",
+    "scenario": "reversal",
+    "decision": "reversed",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "3d115de6-9cc0-5bae-8b42-2e82895f8855",
+    "scenario": "reversal",
+    "decision": "reversed",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "53f21d5b-33ff-5905-9712-33280fbf1d21",
+    "scenario": "reversal",
+    "decision": "reversed",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "bcd192e7-9400-592c-b418-83e1336ec3d8",
+    "scenario": "reversal",
+    "decision": "reversed",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "84037b99-16f4-5f37-9817-df8defe529e3",
+    "scenario": "reversal",
+    "decision": "reversed",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "0832fa8e-aa71-5eee-a96f-c23c17f30c11",
+    "scenario": "reversal",
+    "decision": "reversed",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "971913a0-ea3a-5008-9489-525db09c7790",
+    "scenario": "reversal",
+    "decision": "reversed",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "858595a0-4f9c-5356-8576-1dcd31805c05",
+    "scenario": "reversal",
+    "decision": "reversed",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "fe75c50e-d2ae-5350-9673-ca1a77b3305e",
+    "scenario": "reversal",
+    "decision": "reversed",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "00368b48-3348-5c41-959c-6dba0f7454ba",
+    "scenario": "reversal",
+    "decision": "reversed",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "ab551356-4ff5-5d97-b342-c3c9e4528266",
+    "scenario": "reversal",
+    "decision": "reversed",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "9c94a646-6704-5df7-bcc4-c746dcaabea0",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "00182274-be21-5b48-a014-58c432ea084d",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "94734766-3854-51bc-a021-1f36ad728dd4",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "a488f341-1bf4-5569-a25b-5c1abc14300d",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "7a39be32-4ecd-588d-9a8f-96470a1a77f0",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "e7d78fb8-8382-5872-af69-52317c762852",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "e9452ffe-8e72-5065-b627-de55e391d47b",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "6b486d19-00e7-59c1-88b2-714a84d3a6e7",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "01c43076-d2a7-5f04-9ce6-b00216a0d909",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "0841de48-ce7c-5aa8-a72b-793c46655729",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "8c09d1f4-e065-58d7-b34b-9b2139bce021",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "2032d5fa-30da-5b97-9a8a-91629f81056d",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "a23f0568-9103-5c27-9ad0-1479ceb30a29",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "6732a63a-77e3-5f54-a71f-bf32d6297986",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "57d7cf34-1e79-51d5-856f-9bd75512f3f1",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "e7f4b966-f55e-5474-bd49-2f02b31b3d20",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "aeea653c-297e-5fd4-bca4-a7f02779ff20",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "b5d32986-d293-5f60-90fc-30746dc6feb5",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "17119a4e-8be7-58f2-b79c-72dd7d0a1335",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "89dd07c8-28c0-58c3-8ee2-309c2b9fd860",
+    "scenario": "unknown",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "85c8edb5-c28c-5b80-b995-565926eeaa79",
+    "scenario": "ambiguous",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "e8f461dc-0065-5ada-bb8a-ee67459abc85",
+    "scenario": "ambiguous",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "476417a5-244d-547c-a18a-dba8fd8dff11",
+    "scenario": "ambiguous",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "8e709fa0-3dd9-5427-8baf-dda66182fc14",
+    "scenario": "ambiguous",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "1f57f0c8-8f43-5ee6-97ee-2b6ec2452ee4",
+    "scenario": "ambiguous",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "0762fd3a-26e6-5355-8ccb-02ddd990f941",
+    "scenario": "ambiguous",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "b1b2002b-f8f8-5eb2-ad09-cdf6dc726c89",
+    "scenario": "ambiguous",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "f48a3225-1f28-5f48-882c-eef344c2e625",
+    "scenario": "ambiguous",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "d1af66fe-1a0c-5e4f-9ce1-c8b9c5f30a15",
+    "scenario": "ambiguous",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "64bfba09-c8e2-51df-875c-a868be85b573",
+    "scenario": "ambiguous",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "0df631d5-e66a-5cc9-bf67-3b451cd205a5",
+    "scenario": "ambiguous",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "1059d8a5-b79d-5f43-9982-70ab908b5dac",
+    "scenario": "ambiguous",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "910c6661-dbdd-5ce3-9d9e-7311c09f923d",
+    "scenario": "injection",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "d0fa531b-4b9b-5801-b666-7a00d3c8934b",
+    "scenario": "injection",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "637abbb6-f9fa-5404-8df9-a9d430c0f828",
+    "scenario": "injection",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "752f2e03-5f85-55c7-93e6-87476bd5b104",
+    "scenario": "injection",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "b94f2d8f-890b-5b24-b463-85bbd7ca1bfd",
+    "scenario": "injection",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "8e82a0bb-1365-55a1-a327-513a1509d2ff",
+    "scenario": "injection",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "e980b3cd-b64f-5faa-8dc7-8593c487729f",
+    "scenario": "injection",
+    "decision": "escalate",
+    "invoices": []
+  },
+  {
+    "bank_line_id": "fdff1f88-7cd2-54c6-b6c3-9cf6c5f46447",
+    "scenario": "injection",
+    "decision": "escalate",
+    "invoices": []
+  }
+]
