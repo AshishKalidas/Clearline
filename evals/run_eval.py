@@ -89,9 +89,12 @@ async def evaluate(provider: str, retrieval: bool, out: Path) -> dict[str, Any]:
     """Run an evaluation without leaking provider/ablation settings into its caller."""
     keys = ("RETRIEVAL_ENABLED", "LLM_PROVIDER", "EMBEDDER")
     previous = {key: os.environ.get(key) for key in keys}
+    clients: list[PrivacyCapture] = []
     try:
-        return await _evaluate(provider, retrieval, out)
+        return await _evaluate(provider, retrieval, out, clients)
     finally:
+        for client in clients:
+            await client.aclose()
         for key, value in previous.items():
             if value is None:
                 os.environ.pop(key, None)
@@ -101,7 +104,9 @@ async def evaluate(provider: str, retrieval: bool, out: Path) -> dict[str, Any]:
         get_embedder.cache_clear()
 
 
-async def _evaluate(provider: str, retrieval: bool, out: Path) -> dict[str, Any]:
+async def _evaluate(
+    provider: str, retrieval: bool, out: Path, clients: list[PrivacyCapture]
+) -> dict[str, Any]:
     """Run a fresh 400-case bank set and 60 proofs through real application paths."""
     os.environ["RETRIEVAL_ENABLED"] = str(retrieval).lower()
     os.environ["LLM_PROVIDER"] = provider
@@ -110,6 +115,7 @@ async def _evaluate(provider: str, retrieval: bool, out: Path) -> dict[str, Any]
     get_embedder.cache_clear()
     settings = get_settings()
     client = PrivacyCapture(create_client(settings))
+    clients.append(client)
     failures: list[dict[str, Any]] = []
     with tempfile.TemporaryDirectory(prefix="clearline-eval-") as temporary:
         directory = Path(temporary)

@@ -12,6 +12,7 @@ from backend.app.api.ingest import read_upload
 from backend.app.audit.service import record_event
 from backend.app.config import get_settings
 from backend.app.db.models import BankLine, Invoice, PopDocument
+from backend.app.db.session import lock_workflow
 from backend.app.matching.service import snapshot
 from backend.app.pop.extract import extract_pdf
 from backend.app.pop.verify import verify_claim
@@ -47,6 +48,7 @@ async def upload_pop(
 ) -> dict[str, Any]:
     """Extract a bounded PDF and verify exclusively against received bank observations."""
     content = await read_upload(file)
+    lock_workflow(session)
     invoice = None
     if claimed_invoice_number:
         invoice = session.scalar(

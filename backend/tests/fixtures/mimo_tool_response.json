@@ -1,0 +1,8 @@
+{
+  "id": "chatcmpl_synthetic_fixture",
+  "object": "chat.completion",
+  "created": 0,
+  "model": "recorded-fixture-model",
+  "choices": [{"index": 0, "message": {"role": "assistant", "content": null, "tool_calls": [{"id": "call_fixture", "type": "function", "function": {"name": "submit_proposal", "arguments": "{\"decision\":\"escalate\",\"allocations\":[],\"confidence\":0.8,\"reasoning\":\"Insufficient bank evidence.\",\"evidence\":[],\"risk_flags\":[\"insufficient_evidence\"]}"}}]}, "finish_reason": "tool_calls"}],
+  "usage": {"prompt_tokens": 120, "completion_tokens": 34, "total_tokens": 154}
+}

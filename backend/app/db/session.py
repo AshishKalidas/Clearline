@@ -3,7 +3,7 @@
 from collections.abc import Iterator
 from pathlib import Path
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session, sessionmaker
 
 from backend.app.config import get_settings
@@ -18,3 +18,9 @@ def get_session() -> Iterator[Session]:
     with SessionLocal() as session:
         with session.begin():
             yield session
+
+
+def lock_workflow(session: Session) -> None:
+    """Serialize bank, proof and ledger mutations across API processes."""
+    if session.get_bind().dialect.name == "postgresql":
+        session.execute(text("SELECT pg_advisory_xact_lock(724193)"))

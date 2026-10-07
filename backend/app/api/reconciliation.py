@@ -4,17 +4,19 @@ from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
-from sqlalchemy import func, select, text
+from sqlalchemy import func, select
 
-from backend.app.agent.llm.stub import StubLLM
+from backend.app.agent.llm.factory import client_scope
 from backend.app.agent.loop import investigate
 from backend.app.agent.schemas import ProposalInput
 from backend.app.agent.service import apply_resolution, proposal_input
 from backend.app.api.dependencies import DB, require_key, reviewer
+from backend.app.api.pops import pop_data
 from backend.app.audit.service import record_event
 from backend.app.config import get_settings
-from backend.app.db.models import AuditEvent, BankLine, Proposal, ResolvedCase
-from backend.app.matching.service import run_rules
+from backend.app.db.models import AuditEvent, BankLine, Invoice, PopDocument, Proposal, ResolvedCase
+from backend.app.db.session import lock_workflow
+from backend.app.matching.service import has_mismatch, run_rules
 from backend.app.retrieval.index import index_case
 
 router = APIRouter()
@@ -56,12 +58,6 @@ def serialize_proposal(proposal: Proposal, line: BankLine) -> dict[str, Any]:
     }
 
 
-def lock_workflow(session: DB) -> None:
-    """Serialize bank/invoice mutations across processes in PostgreSQL."""
-    if session.get_bind().dialect.name == "postgresql":
-        session.execute(text("SELECT pg_advisory_xact_lock(724193)"))
-
-
 @router.post("/runs/reconcile", dependencies=[Depends(require_key)])
 async def reconcile(session: DB) -> dict[str, Any]:
     """Apply rules, then investigate every remaining exception with bounded calls."""
@@ -73,8 +69,9 @@ async def reconcile(session: DB) -> dict[str, Any]:
         .order_by(BankLine.value_date, BankLine.id)
         .with_for_update()
     ).all()
-    for line in lines:
-        await investigate(session, line, StubLLM(), get_settings())
+    async with client_scope(get_settings()) as client:
+        for line in lines:
+            await investigate(session, line, client, get_settings())
     return {"rules": counts, "agent_cases": len(lines)}
 
 
@@ -137,6 +134,19 @@ def proposal_detail(proposal_id: str, session: DB) -> dict[str, Any]:
     assert line is not None
     data = serialize_proposal(proposal, line)
     data["trace"] = audit(line.id, session)
+    numbers = [a["invoice_number"] for a in proposal.allocations_json]
+    invoice_ids = list(
+        session.scalars(select(Invoice.id).where(Invoice.invoice_number.in_(numbers)))
+    )
+    data["linked_pops"] = [
+        pop_data(p)
+        for p in session.scalars(
+            select(PopDocument).where(
+                (PopDocument.matched_bank_line_id == line.id)
+                | PopDocument.claimed_invoice_id.in_(invoice_ids)
+            )
+        )
+    ]
     return data
 
 
@@ -167,6 +177,15 @@ def approve(
     """Revalidate and apply the reviewer's decision once, atomically."""
     proposal, line = pending(proposal_id, session)
     value = body.corrected_resolution or proposal_input(proposal)
+    invoice_ids = list(
+        session.scalars(
+            select(Invoice.id).where(
+                Invoice.invoice_number.in_([a.invoice_number for a in value.allocations])
+            )
+        )
+    )
+    if has_mismatch(session, line, invoice_ids) and not body.note.strip():
+        raise HTTPException(422, "Explain the proof-of-payment mismatch override in a review note")
     proposal.status, proposal.reviewer, proposal.review_note = "approved", identity, body.note
     apply_resolution(session, line, proposal, value, "human", identity)
     record_event(

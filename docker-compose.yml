@@ -34,12 +34,30 @@ services:
       POP_RETENTION_DAYS: ${POP_RETENTION_DAYS:-30}
     command: ["sh", "-c", "alembic upgrade head && uvicorn backend.app.main:app --host 0.0.0.0 --port 8000"]
     ports:
-      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:${CLEARLINE_API_PORT:-18000}:8000"
     volumes:
       - proof_data:/app/data
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthz', timeout=3)"]
+      interval: 5s
+      timeout: 4s
+      retries: 30
+      start_period: 10s
+  web:
+    build: ./web
+    ports:
+      - "127.0.0.1:5173:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
 volumes:
   postgres_data:
   proof_data:

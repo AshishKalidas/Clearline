@@ -12,6 +12,9 @@ class StubLLM:
 
     model = "stub-baseline-v1"
 
+    async def aclose(self) -> None:
+        """The offline baseline owns no network resources."""
+
     async def complete(
         self,
         messages: list[dict[str, Any]],

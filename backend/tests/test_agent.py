@@ -226,6 +226,54 @@ def test_review_approve_reject_correct(client: TestClient, session: Session) -> 
     assert client.get("/audit/nonexistent").status_code == 404
 
 
+def test_mismatch_override_and_invoice_choices(client: TestClient, session: Session) -> None:
+    """A proof mismatch requires an explained human override, never a silent click."""
+    dataset = load(session)
+    label = dataset["labels"][160]
+    invoice = session.scalar(select(Invoice).where(Invoice.invoice_number == label["invoices"][0]))
+    assert invoice is not None
+    session.add(
+        PopDocument(
+            filename="synthetic.pdf",
+            claimed_invoice_id=invoice.id,
+            extracted_json={},
+            verdict="mismatch",
+            checks_json=[],
+        )
+    )
+    session.commit()
+    key = {"X-API-Key": "clearline-local-demo", "X-Reviewer": "Synthetic Reviewer"}
+    assert client.post("/runs/reconcile", headers=key).status_code == 200
+    proposal = session.scalar(
+        select(Proposal).where(Proposal.bank_line_id == label["bank_line_id"])
+    )
+    assert proposal is not None
+    detail = client.get(f"/proposals/{proposal.id}").json()
+    assert detail["linked_pops"][0]["verdict"] == "mismatch"
+    choices = client.get("/invoices", params={"query": invoice.invoice_number}).json()
+    assert choices[0]["id"] == invoice.id and choices[0]["customer_name"]
+    url = f"/proposals/{proposal.id}/approve"
+    assert client.post(url, headers=key, json={}).status_code == 422
+    assert (
+        session.scalar(
+            select(Allocation.id).where(Allocation.bank_line_id == label["bank_line_id"])
+        )
+        is None
+    )
+    assert (
+        client.post(
+            url,
+            headers=key,
+            json={"note": "Confirmed independent bank evidence; investigated conflicting document"},
+        ).status_code
+        == 200
+    )
+    allocation = session.scalar(
+        select(Allocation).where(Allocation.bank_line_id == label["bank_line_id"])
+    )
+    assert allocation is not None and allocation.source == "human"
+
+
 def test_invalid_allocations_and_mismatch_rule_veto(session: Session) -> None:
     dataset = load(session)
     line = session.get(BankLine, dataset["labels"][0]["bank_line_id"])

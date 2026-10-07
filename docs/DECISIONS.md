@@ -9,3 +9,9 @@
 - Keep historical bank observations separate from the 400 evaluation cases and authorize their synthetic ledger entries with rules-match audit events.
 - Run evaluations in disposable PostgreSQL schemas; use SQLite only for hermetic unit evaluation tests.
 - Do not estimate live model pricing; report SDK token usage and leave unknown API cost unpriced.
+- Serve the UI through nginx with a same-origin API proxy; avoid browser CORS configuration and ship no remote fonts or assets.
+- Use host API port 18000 to avoid an existing service on 8000; the container API remains on 8000.
+- Add a bounded read-only /invoices endpoint for human correction choices; derive labels and outstanding balances from the database.
+- Serialize reconciliation, reviews, imports and proof verification with one PostgreSQL transaction advisory lock; favor auditable consistency over throughput for this single-workspace demo.
+- Require a human note to approve a proposal with conflicting proof evidence; corrections already require an explanation.
+- Test live clients against recorded HTTP responses through their actual SDKs; keep paid provider evaluations opt-in and unreported until measured.

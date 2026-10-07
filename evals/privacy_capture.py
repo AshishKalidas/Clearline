@@ -26,3 +26,7 @@ class PrivacyCapture:
                 f"Outbound request {self.request_count} contained a sensitive pattern"
             )
         return await self.client.complete(cleaned, schemas, timeout)
+
+    async def aclose(self) -> None:
+        """Release the wrapped provider's transport."""
+        await self.client.aclose()

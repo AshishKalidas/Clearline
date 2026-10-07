@@ -35,3 +35,7 @@ class LLMClient(Protocol):
     ) -> ModelReply:
         """Return normalized tool calls within the remaining run budget."""
         ...
+
+    async def aclose(self) -> None:
+        """Release provider resources after the enclosing run."""
+        ...
