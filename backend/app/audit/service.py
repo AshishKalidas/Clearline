@@ -5,6 +5,7 @@ from typing import Any
 from sqlalchemy.orm import Session
 
 from backend.app.db.models import AuditEvent
+from backend.app.privacy.masking import Masker
 
 
 def record_event(
@@ -15,14 +16,15 @@ def record_event(
     bank_line_id: str | None = None,
     proposal_id: str | None = None,
     actor: str = "system",
+    masker: Masker | None = None,
 ) -> AuditEvent:
     """Append an event inside the caller's transaction."""
     event = AuditEvent(
         bank_line_id=bank_line_id,
         proposal_id=proposal_id,
-        actor=actor,
+        actor=(masker or Masker()).text(actor),
         event_type=event_type,
-        payload_json=payload,
+        payload_json=(masker or Masker()).clean(payload),
     )
     session.add(event)
     session.flush()

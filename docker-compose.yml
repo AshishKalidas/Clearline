@@ -17,7 +17,7 @@ services:
   api:
     build: .
     environment:
-      DATABASE_URL: postgresql+psycopg://clearline_owner:local-owner-only@db:5432/clearline
+      DATABASE_URL: postgresql+psycopg://clearline_app:local-app-only@db:5432/clearline
       AGENT_DATABASE_URL: postgresql+psycopg://clearline_agent:local-agent-only@db:5432/clearline
       MIGRATION_DATABASE_URL: postgresql+psycopg://clearline_owner:local-owner-only@db:5432/clearline
       API_KEY: ${API_KEY:-clearline-local-demo}

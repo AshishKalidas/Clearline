@@ -8,17 +8,20 @@ from sqlalchemy.orm import Session
 
 from backend.app.config import get_settings
 from backend.app.db.models import BankLine, Customer, ResolvedCase, RunbookChunk
+from backend.app.privacy.masking import Masker
 from backend.app.retrieval.embedder import get_embedder
 
 
 def index_case(case: ResolvedCase) -> None:
     """Attach the embedding before the resolving transaction is committed."""
+    case.summary_text = Masker().text(case.summary_text)
+    case.resolution_json = Masker().clean(case.resolution_json)
     case.embedding = get_embedder().encode(case.summary_text)
 
 
 def index_customer(customer: Customer) -> None:
     """Embed local payment-behavior notes."""
-    customer.notes_embedding = get_embedder().encode(customer.notes)
+    customer.notes_embedding = get_embedder().encode(Masker().text(customer.notes))
 
 
 def cosine(left: list[float], right: list[float]) -> float:
@@ -30,7 +33,7 @@ def cosine(left: list[float], right: list[float]) -> float:
 
 def line_description(line: BankLine) -> str:
     """Construct the common local retrieval query."""
-    return (
+    return Masker().text(
         f"Payer {line.payer_name}; reference {line.raw_reference}; amount_cents {line.amount_cents}"
     )
 
@@ -83,7 +86,7 @@ def search_runbook(session: Session, query: str, k: int = 5) -> list[dict[str, A
     """Retrieve policy sections using local cosine similarity."""
     if not get_settings().retrieval_enabled:
         return []
-    vector = get_embedder().encode(query)
+    vector = get_embedder().encode(Masker().text(query))
     statement = select(RunbookChunk).where(RunbookChunk.embedding.is_not(None))
     if session.get_bind().dialect.name == "postgresql":
         session.execute(text("SET LOCAL ivfflat.probes = 10"))
@@ -109,7 +112,7 @@ def index_runbook(session: Session, document: str) -> int:
         else:
             sections.setdefault(heading, []).append(line)
     for section, lines in sections.items():
-        body = "\n".join(lines).strip()
+        body = Masker().text("\n".join(lines).strip())
         if not body:
             continue
         chunk = session.scalar(select(RunbookChunk).where(RunbookChunk.section == section))

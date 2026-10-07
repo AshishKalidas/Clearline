@@ -6,6 +6,7 @@ import time
 from typing import Any
 
 from pydantic import ValidationError
+from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm import Session
 
 from backend.app.agent.llm.base import LLMClient
@@ -17,7 +18,9 @@ from backend.app.agent.validation import validate_proposal
 from backend.app.audit.service import record_event
 from backend.app.config import Settings
 from backend.app.db.models import BankLine, Proposal
+from backend.app.db.permissions import agent_scope
 from backend.app.matching.rules import has_injection
+from backend.app.privacy.masking import Masker
 
 
 async def investigate(
@@ -31,6 +34,7 @@ async def investigate(
 ) -> Proposal:
     """Execute validated read tools, then persist one terminal proposal or safe fallback."""
     start = time.monotonic()
+    masker = Masker()
     messages: list[dict[str, Any]] = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {
@@ -60,7 +64,7 @@ async def investigate(
             break
         try:
             response = await asyncio.wait_for(
-                client.complete(messages, tool_schemas(), remaining), remaining
+                client.complete(masker.clean(messages), tool_schemas(), remaining), remaining
             )
         except TimeoutError:
             break
@@ -103,7 +107,7 @@ async def investigate(
                 model = TOOL_MODELS.get(call.name)
                 if model is None:
                     raise ValueError("unknown tool")
-                args = model.model_validate(call.arguments)
+                args = model.model_validate(masker.clean(call.arguments))
                 if isinstance(args, ProposalInput):
                     validate_proposal(session, line, args)
                     if args.allocations and (
@@ -113,10 +117,15 @@ async def investigate(
                     value = args
                     result = {"accepted": True}
                 else:
-                    result = executor.execute(call.name, args)
+                    local_args = model.model_validate(masker.restore(args.model_dump()))
+                    with (
+                        session.begin_nested(),
+                        agent_scope(session, max_seconds - (time.monotonic() - start)),
+                    ):
+                        result = masker.clean(executor.execute(call.name, local_args))
                     if not (isinstance(result, dict) and "error" in result):
                         successful.add(citation)
-            except (ValidationError, ValueError) as exc:
+            except (ValidationError, ValueError, DBAPIError) as exc:
                 result = {
                     "error": "invalid_tool_arguments",
                     "detail": str(exc)
@@ -137,6 +146,7 @@ async def investigate(
                 },
                 bank_line_id=line.id,
                 actor="agent",
+                masker=masker,
             )
             event_ids.append(event.id)
             messages.append(
@@ -152,6 +162,8 @@ async def investigate(
         if failures >= 2:
             fallback_flag = "proposal_validation_failed"
             break
+    if time.monotonic() - start >= max_seconds:
+        value = None
     if value is None:
         value = ProposalInput(
             decision="escalate",
