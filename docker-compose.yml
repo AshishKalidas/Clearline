@@ -1,0 +1,45 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: clearline
+      POSTGRES_USER: clearline_owner
+      POSTGRES_PASSWORD: local-owner-only
+    ports:
+      - "127.0.0.1:54329:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clearline_owner -d clearline"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  api:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://clearline_owner:local-owner-only@db:5432/clearline
+      AGENT_DATABASE_URL: postgresql+psycopg://clearline_agent:local-agent-only@db:5432/clearline
+      MIGRATION_DATABASE_URL: postgresql+psycopg://clearline_owner:local-owner-only@db:5432/clearline
+      API_KEY: ${API_KEY:-clearline-local-demo}
+      EMBEDDER: hash
+      LLM_PROVIDER: ${LLM_PROVIDER:-stub}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      CLAUDE_MODEL: ${CLAUDE_MODEL:-claude-sonnet-5-5}
+      MIMO_BASE_URL: ${MIMO_BASE_URL:-}
+      MIMO_API_KEY: ${MIMO_API_KEY:-}
+      MIMO_MODEL: ${MIMO_MODEL:-}
+      RETRIEVAL_ENABLED: ${RETRIEVAL_ENABLED:-true}
+      AUTO_CONFIDENCE: ${AUTO_CONFIDENCE:-0.90}
+      AUTO_LIMIT_CENTS: ${AUTO_LIMIT_CENTS:-500000}
+      POP_RETENTION_DAYS: ${POP_RETENTION_DAYS:-30}
+    command: ["sh", "-c", "alembic upgrade head && uvicorn backend.app.main:app --host 0.0.0.0 --port 8000"]
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - proof_data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  postgres_data:
+  proof_data:

@@ -1,0 +1,11 @@
+name: Clearline release gates
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: make up
+      - run: make lint typecheck test
+      - if: always()
+        run: docker compose logs && make down
