@@ -39,9 +39,16 @@ def invoice_data(invoice: Invoice) -> dict[str, Any]:
 class ToolExecutor:
     """A bank-line-scoped read interface; submit is handled by the loop."""
 
-    def __init__(self, session: Session, line: BankLine) -> None:
+    def __init__(self, session: Session, line: BankLine | None = None) -> None:
         self.session = session
-        self.line = line
+        self._line = line
+
+    @property
+    def line(self) -> BankLine:
+        """Require explicit bank context for line-specific evidence tools."""
+        if self._line is None:
+            raise ValueError("This tool requires a bank line")
+        return self._line
 
     def execute(self, name: str, args: Arguments) -> Any:
         """Dispatch previously validated tool arguments."""

@@ -19,7 +19,7 @@ Database: postgresql16-pgvector. Embedder: hash.
 | mean_steps | 6 |
 | mean_prompt_tokens | 0 |
 | mean_completion_tokens | 0 |
-| mean_latency_ms | 22.342105263157894 |
+| mean_latency_ms | 20.916666666666668 |
 | model_api_cost_usd | 0 |
 | retrieval_lift | 0.0 |
 

@@ -15,3 +15,9 @@
 - Serialize reconciliation, reviews, imports and proof verification with one PostgreSQL transaction advisory lock; favor auditable consistency over throughput for this single-workspace demo.
 - Require a human note to approve a proposal with conflicting proof evidence; corrections already require an explanation.
 - Test live clients against recorded HTTP responses through their actual SDKs; keep paid provider evaluations opt-in and unreported until measured.
+- Use the MCP SDK v1 API with an explicit <2 dependency cap; avoid adopting a different major-version interface during this build.
+- Require the PostgreSQL agent identity and read-only transactions for MCP; tool hints alone do not enforce permissions.
+- Reuse validated agent queries for MCP; bank-specific evidence requires an explicit bank-line identifier.
+- Keep clean-checkout smoke validation in an isolated Compose project and fresh volumes; preserve the active review workspace.
+- Browser opening is best-effort on supported desktop systems; headless users always receive the demo URL.
+- Redact MCP SDK validation errors at the public tool-dispatch boundary; third-party error messages can echo sensitive arguments even when successful results are masked.

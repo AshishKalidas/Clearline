@@ -2,7 +2,7 @@
 COMPOSE := $(shell command -v docker-compose >/dev/null 2>&1 && echo docker-compose || echo docker compose)
 RUN := $(COMPOSE) exec -T api
 
-.PHONY: up down migrate seed test lint typecheck eval eval-claude eval-mimo results demo purge
+.PHONY: up down migrate seed test lint typecheck eval eval-claude eval-mimo results demo purge mcp-check
 up:
 	$(COMPOSE) up -d --build --wait
 down:
@@ -15,7 +15,7 @@ lint:
 	$(RUN) ruff check .
 	$(RUN) ruff format --check .
 typecheck:
-	$(RUN) mypy --strict backend/app
+	$(RUN) mypy --strict backend/app mcp_server
 seed:
 	$(RUN) python -m evals.generate_dataset --pdfs
 	$(RUN) sh -c 'DATABASE_URL="$$MIGRATION_DATABASE_URL" python -m backend.app.ingest.seed'
@@ -36,3 +36,12 @@ eval-mimo:
 results:
 	cat README.md | $(RUN) python -m evals.update_results --stdin > README.generated.md
 	mv README.generated.md README.md
+demo: up seed
+	$(RUN) python -m backend.app.demo
+	@demo_url="http://$$($(COMPOSE) port web 80)"; echo "Clearline: $$demo_url"; \
+	if [ "$${CLEARLINE_NO_BROWSER:-0}" != 1 ]; then \
+		if command -v open >/dev/null 2>&1; then open "$$demo_url" || true; \
+		elif command -v xdg-open >/dev/null 2>&1; then xdg-open "$$demo_url" || true; fi; \
+	fi
+mcp-check:
+	$(RUN) python -m mcp_server.smoke
