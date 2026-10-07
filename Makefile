@@ -1,3 +1,4 @@
+-include .docker-context.local
 COMPOSE := $(shell command -v docker-compose >/dev/null 2>&1 && echo docker-compose || echo docker compose)
 RUN := $(COMPOSE) exec -T api
 
@@ -20,3 +21,18 @@ seed:
 	$(RUN) sh -c 'DATABASE_URL="$$MIGRATION_DATABASE_URL" python -m backend.app.ingest.seed'
 purge:
 	$(RUN) python -m backend.app.privacy.retention
+eval:
+	$(RUN) python -m evals.run_eval --llm stub --retrieval on
+	$(RUN) python -m evals.run_eval --llm stub --retrieval off
+	$(COMPOSE) cp api:/app/evals/reports/. evals/reports/
+eval-claude:
+	$(RUN) python -m evals.run_eval --llm claude --retrieval on
+	$(RUN) python -m evals.run_eval --llm claude --retrieval off
+	$(COMPOSE) cp api:/app/evals/reports/. evals/reports/
+eval-mimo:
+	$(RUN) python -m evals.run_eval --llm mimo --retrieval on
+	$(RUN) python -m evals.run_eval --llm mimo --retrieval off
+	$(COMPOSE) cp api:/app/evals/reports/. evals/reports/
+results:
+	cat README.md | $(RUN) python -m evals.update_results --stdin > README.generated.md
+	mv README.generated.md README.md

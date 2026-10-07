@@ -7,5 +7,6 @@ jobs:
       - uses: actions/checkout@v4
       - run: make up
       - run: make lint typecheck test
+      - run: make eval
       - if: always()
         run: docker compose logs && make down

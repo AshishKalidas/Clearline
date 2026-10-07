@@ -8,6 +8,7 @@ from typing import Any
 from sqlalchemy import select, text
 from sqlalchemy.orm import Session
 
+from backend.app.audit.service import record_event
 from backend.app.db.models import Allocation, BankLine, Customer, Invoice, ResolvedCase
 from backend.app.db.session import SessionLocal
 from backend.app.ingest.service import ingest_bank_lines, ingest_invoices, stable_id
@@ -69,6 +70,12 @@ def load_dataset(session: Session, directory: Path) -> dict[str, Any]:
         )
         index_case(case)
         session.add(case)
+        record_event(
+            session,
+            "rules_match",
+            {"invoice_number": number, "amount_cents": amount, "historical": True},
+            bank_line_id=line.id,
+        )
     for customer in session.scalars(select(Customer)):
         index_customer(customer)
     chunks = index_runbook(session, Path("docs/runbook.md").read_text())

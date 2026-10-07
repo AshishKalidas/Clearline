@@ -1,6 +1,7 @@
 ._*
 .DS_Store
 .env
+.docker-context.local
 .venv/
 __pycache__/
 *.py[cod]
@@ -17,3 +18,4 @@ tmp/
 build/
 playwright-report/
 test-results/
+README.generated.md

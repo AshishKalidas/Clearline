@@ -1,4 +1,12 @@
 .git
+.kilo
+.docker-context.local
+.env
+.env.*
+!.env.example
+.coverage
+build
+*.egg-info
 .venv
 web/node_modules
 web/dist

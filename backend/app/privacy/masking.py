@@ -1,5 +1,6 @@
 """Stable, run-scoped redaction for model requests, retrieval and audit payloads."""
 
+import json
 import re
 from typing import Any, TypeVar, cast
 
@@ -57,13 +58,25 @@ class Masker:
 
     def _walk(self, value: Any, *, restore: bool) -> Any:
         if isinstance(value, str):
+            if value.startswith(("{", "[")):
+                try:
+                    structured = json.loads(value)
+                except (ValueError, TypeError):
+                    structured = None
+                if isinstance(structured, (dict, list)):
+                    return json.dumps(self._walk(structured, restore=restore))
             if not restore:
                 return self.text(value)
             for original, token in self._tokens.items():
                 value = value.replace(token, original)
             return value
         if isinstance(value, dict):
-            return {key: self._walk(item, restore=restore) for key, item in value.items()}
+            return {
+                self.text(key) if isinstance(key, str) and not restore else key: self._walk(
+                    item, restore=restore
+                )
+                for key, item in value.items()
+            }
         if isinstance(value, list):
             return [self._walk(item, restore=restore) for item in value]
         return value

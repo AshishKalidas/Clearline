@@ -38,6 +38,11 @@ def test_stable_mask_and_local_restore() -> None:
     assert clean["id"] == original["id"]
     assert clean == masker.clean(original)
     assert masker.restore(clean) == original
+    context = json.dumps({"amount_cents": 123456789, "account": RAW[1]})
+    result = json.loads(masker.clean(context))
+    assert result["amount_cents"] == 123456789
+    assert RAW[1] not in result["account"]
+    assert RAW[3] not in json.dumps(masker.clean({RAW[3]: "unexpected tool field"}))
 
 
 class CapturingStub(StubLLM):

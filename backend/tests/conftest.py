@@ -17,6 +17,7 @@ from backend.app.retrieval.embedder import get_embedder
 def offline_settings(monkeypatch: pytest.MonkeyPatch) -> Iterator[None]:
     monkeypatch.setenv("EMBEDDER", "hash")
     monkeypatch.setenv("LLM_PROVIDER", "stub")
+    monkeypatch.setenv("RETRIEVAL_ENABLED", "true")
     get_settings.cache_clear()
     get_embedder.cache_clear()
     yield
