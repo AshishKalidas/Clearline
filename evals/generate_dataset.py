@@ -182,8 +182,15 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--cases", type=int, default=400)
     parser.add_argument("--out", type=Path, default=Path("evals/datasets/seed-42"))
+    parser.add_argument(
+        "--pdfs", action="store_true", help="Generate the 60 synthetic PDF fixtures"
+    )
     args = parser.parse_args()
-    write_dataset(args.out, args.seed, args.cases)
+    dataset = write_dataset(args.out, args.seed, args.cases)
+    if args.pdfs:
+        from backend.app.pop.generate import generate_pop_set
+
+        generate_pop_set(args.out / "pops", dataset)
     print(f"Generated {args.cases} synthetic cases in {args.out}")
 
 

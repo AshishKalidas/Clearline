@@ -16,7 +16,7 @@ lint:
 typecheck:
 	$(RUN) mypy --strict backend/app
 seed:
-	$(RUN) python -m evals.generate_dataset
+	$(RUN) python -m evals.generate_dataset --pdfs
 	$(RUN) sh -c 'DATABASE_URL="$$MIGRATION_DATABASE_URL" python -m backend.app.ingest.seed'
 purge:
 	$(RUN) python -m backend.app.privacy.retention
