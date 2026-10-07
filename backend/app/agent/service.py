@@ -10,6 +10,7 @@ from backend.app.audit.service import record_event
 from backend.app.config import Settings, get_settings
 from backend.app.db.models import Allocation, BankLine, Proposal, ResolvedCase
 from backend.app.matching.service import has_mismatch
+from backend.app.retrieval.index import index_case
 
 
 def proposal_input(proposal: Proposal) -> ProposalInput:
@@ -108,6 +109,7 @@ def apply_resolution(
         resolution_json=resolution,
         resolved_by=source,
     )
+    index_case(case)
     session.add(case)
     record_event(
         session,

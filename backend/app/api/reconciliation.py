@@ -15,6 +15,7 @@ from backend.app.audit.service import record_event
 from backend.app.config import get_settings
 from backend.app.db.models import AuditEvent, BankLine, Proposal, ResolvedCase
 from backend.app.matching.service import run_rules
+from backend.app.retrieval.index import index_case
 
 router = APIRouter()
 
@@ -192,14 +193,14 @@ def reject(
         apply_resolution(session, line, proposal, body.corrected_resolution, "human", identity)
     else:
         line.status = "escalated"
-        session.add(
-            ResolvedCase(
-                bank_line_id=line.id,
-                summary_text=f"Rejected: {body.note}",
-                resolution_json={"decision": "escalate", "note": body.note},
-                resolved_by="human",
-            )
+        case = ResolvedCase(
+            bank_line_id=line.id,
+            summary_text=f"Rejected: {body.note}",
+            resolution_json={"decision": "escalate", "note": body.note},
+            resolved_by="human",
         )
+        index_case(case)
+        session.add(case)
     record_event(
         session,
         "human_rejected",

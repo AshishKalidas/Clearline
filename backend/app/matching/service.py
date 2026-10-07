@@ -11,6 +11,7 @@ from backend.app.matching.rules import (
     exact_match,
     reversal_match,
 )
+from backend.app.retrieval.index import index_case
 
 
 def snapshot(line: BankLine) -> LineSnapshot:
@@ -77,25 +78,23 @@ def run_rules(session: Session) -> dict[str, int]:
         invoice.outstanding_cents = 0
         invoice.status = "paid"
         line.status = "matched"
-        session.add(
-            ResolvedCase(
-                bank_line_id=line.id,
-                customer_id=invoice.customer_id,
-                summary_text=(
-                    f"Exact full payment by {line.payer_name} for {invoice.invoice_number}."
-                ),
-                resolution_json={
-                    "decision": "match",
-                    "allocations": [
-                        {
-                            "invoice_number": invoice.invoice_number,
-                            "amount_cents": line.amount_cents,
-                        }
-                    ],
-                },
-                resolved_by="rules",
-            )
+        case = ResolvedCase(
+            bank_line_id=line.id,
+            customer_id=invoice.customer_id,
+            summary_text=(f"Exact full payment by {line.payer_name} for {invoice.invoice_number}."),
+            resolution_json={
+                "decision": "match",
+                "allocations": [
+                    {
+                        "invoice_number": invoice.invoice_number,
+                        "amount_cents": line.amount_cents,
+                    }
+                ],
+            },
+            resolved_by="rules",
         )
+        index_case(case)
+        session.add(case)
         record_event(
             session,
             "rules_match",

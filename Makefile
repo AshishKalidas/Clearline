@@ -15,3 +15,6 @@ lint:
 	$(RUN) ruff format --check .
 typecheck:
 	$(RUN) mypy --strict backend/app
+seed:
+	$(RUN) python -m evals.generate_dataset
+	$(RUN) python -m backend.app.ingest.seed

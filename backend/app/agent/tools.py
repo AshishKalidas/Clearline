@@ -19,6 +19,7 @@ from backend.app.agent.schemas import (
 )
 from backend.app.db.models import Allocation, BankLine, Customer, Invoice, PopDocument
 from backend.app.matching.rules import normalize_reference
+from backend.app.retrieval.index import search_runbook, similar_cases
 
 
 def invoice_data(invoice: Invoice) -> dict[str, Any]:
@@ -113,9 +114,9 @@ class ToolExecutor:
             ).all()
             return [{"id": p.id, "verdict": p.verdict, "checks": p.checks_json} for p in pops]
         if name == "find_similar_cases" and isinstance(args, SimilarArgs):
-            return []
+            return similar_cases(self.session, self.line, args.k, args.customer_id)
         if name == "search_runbook" and isinstance(args, RunbookArgs):
-            return []
+            return search_runbook(self.session, args.query, args.k)
         raise ValueError("Unknown tool or argument type")
 
     def search_invoices(self, args: SearchInvoices) -> list[dict[str, Any]]:

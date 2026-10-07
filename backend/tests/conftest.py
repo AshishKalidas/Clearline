@@ -6,9 +6,22 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
 
+from backend.app.config import get_settings
 from backend.app.db.models import Base
 from backend.app.db.session import get_session
 from backend.app.main import app
+from backend.app.retrieval.embedder import get_embedder
+
+
+@pytest.fixture(autouse=True)
+def offline_settings(monkeypatch: pytest.MonkeyPatch) -> Iterator[None]:
+    monkeypatch.setenv("EMBEDDER", "hash")
+    monkeypatch.setenv("LLM_PROVIDER", "stub")
+    get_settings.cache_clear()
+    get_embedder.cache_clear()
+    yield
+    get_settings.cache_clear()
+    get_embedder.cache_clear()
 
 
 @pytest.fixture

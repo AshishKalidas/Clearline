@@ -13,6 +13,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from backend.app.db.models import BankLine, Customer, Invoice
+from backend.app.retrieval.index import index_customer
 
 
 def stable_id(kind: str, key: str) -> str:
@@ -80,6 +81,7 @@ def ingest_invoices(session: Session, content: bytes) -> dict[str, int]:
                 name=row.customer_name,
                 notes=row.notes,
             )
+            index_customer(customer)
             session.add(customer)
             session.flush()
         elif customer.name != row.customer_name:
