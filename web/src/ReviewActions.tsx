@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from './Icon';
-import { money, request } from './api';
+import { money } from './api';
+import { useWorkspaceRequest } from './workspace/Workspace';
 import type { Allocation, Decision, Invoice, ProposalDetail, Resolution } from './types';
 
 export interface ReviewActionsProps {
@@ -15,6 +16,7 @@ export interface ReviewActionsProps {
 
 /** Every human action carries an identity; rejection and correction require context. */
 export function ReviewActions({ detail, busy, onDecision }: ReviewActionsProps) {
+  const request = useWorkspaceRequest();
   const [mode, setMode] = useState<'approve' | 'reject' | 'correct'>('approve');
   const [note, setNote] = useState('');
   const [invoices, setInvoices] = useState<Invoice[]>([]);

@@ -1,4 +1,13 @@
 const paths = {
+  home: 'M3 10 12 3l9 7v11h-7v-7h-4v7H3z',
+  activity: 'M3 12h4l3-8 4 16 3-8h4',
+  settings: 'M4 7h16 M4 17h16 M8 4v6 M16 14v6',
+  layers: 'm12 3 10 5-10 5L2 8z M2 12l10 5 10-5 M2 16l10 5 10-5',
+  pause: 'M8 5v14 M16 5v14',
+  play: 'm8 4 12 8-12 8z',
+  sun: 'M12 3v2 M12 19v2 M3 12h2 M19 12h2 M5 5l2 2 M17 17l2 2 M5 19l2-2 M17 7l2-2 M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
+  moon: 'M20 14A9 9 0 0 1 10 4a9 9 0 1 0 10 10z',
+  monitor: 'M3 4h18v13H3z M8 21h8 M12 17v4',
   queue: 'M4 4h16v16H4z M8 8h8 M8 12h8 M8 16h5',
   proof: 'M6 3h8l4 4v14H6z M14 3v5h5 M9 12h6 M9 16h6',
   check: 'm5 12 4 4 10-10',

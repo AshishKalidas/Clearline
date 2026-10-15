@@ -1,15 +1,15 @@
 # Executed validation
 
-Build verification on 7 October 2026. All financial fixtures are synthetic. The checks below were executed locally; the GitHub Actions workflow is configured to repeat them, but no remote GitHub workflow or deployment is claimed.
+Build verification updated on 15 October 2026; the base platform was completed on 7 October 2026. All financial fixtures are synthetic. The checks below were executed locally; the GitHub Actions workflow is configured to repeat them, but no remote GitHub workflow or deployment is claimed.
 
 | Check | Observed result |
 |---|---|
-| Docker backend suite | 58 passed; 95.16% statement coverage on `backend/app`; required threshold 85% |
+| Docker backend suite | 59 passed; 95.21% statement coverage on `backend/app`; required threshold 85% |
 | Ruff lint and formatting | Clean |
-| Strict mypy | Clean on `backend/app` and `mcp_server` (55 source files) |
-| Frontend unit suite | 8 tests passed in 3 files |
-| Frontend build | TypeScript check and Vite production build passed; React bundle 173.47 kB before gzip |
-| Browser against nginx + actual API | Approve, reject, correct, invoice choices, genuine/absent PDF upload and laptop-width overflow checks passed (2 Playwright tests) |
+| Strict mypy | Clean on `backend/app` and `mcp_server` (56 source files) |
+| Frontend unit suite | 14 tests passed in 5 files |
+| Frontend build | TypeScript check and Vite production build passed; React bundle 245.46 kB before gzip |
+| Browser against nginx + actual API | 7 Playwright tests passed: actual reviews/uploads, API-blocked sample use, deep links/history, mobile layouts, saved appearance, reduced transparency/motion, increased contrast, live polling pause/recovery and navigation during a pending approval |
 | Live SDK adapters | Recorded HTTP response tests exercised both real SDKs, retries, request masking, tool translation, malformed replies, usage and transport closure; no paid network calls |
 | MCP stdio client | Initialized; exactly 8 read-only tools listed; `search_invoices` succeeded against PostgreSQL |
 | MCP safety | Every tool called through the protocol; returned PII-shaped fixture strings and echoed invalid arguments masked; unknown write tool and fractional cents rejected; database transaction rejected an audit INSERT otherwise permitted to the agent role |
@@ -19,8 +19,12 @@ Build verification on 7 October 2026. All financial fixtures are synthetic. The 
 | Idempotent demo | Repeated seed/run preserves existing history and resolutions; no additional agent investigations on already processed lines |
 | Synthetic PDFs | All three generated layouts rendered and visually inspected; reproducibility and 60-file verdict tests passed |
 
-The clean demo used alternate loopback ports (web 5175, API 18001, PostgreSQL 54330) to preserve the active workspace. Browser workflows were repeated against those freshly seeded services. The main demo remains available on its default web port 5173 and API port 18000.
+The clean demo used alternate loopback ports (web 5175, API 18001, PostgreSQL 54330) to preserve the active workspace. Browser workflows were repeated against those freshly seeded services. The main demo remains available on its default web port 5173 and API port 18000. The new workspace routing and all seven browser workflows were verified against the production nginx build on those default ports.
 
 The current report files are the source of truth for exact evaluation metrics and timing. Stub throughput is machine/load dependent; synthetic decision accuracy is not an estimate of live-model quality. The local embedding interface is tested with a stand-in cached encoder; a downloaded MiniLM checkpoint and real provider inference were not benchmarked. Missing live results remain “not yet run.”
 
 A credential/private-key pattern scan of committed source trees found no matches. This is a targeted repository check, not a general security audit. Public local Docker passwords and the local demo mutation key are intentionally documented demonstration values.
+
+## Workspace redesign checks
+
+Screenshots for the sample overview, connected overview, dark appearance and phone layout were captured from the completed interface and visually inspected. A production browser run exposed a queue-load navigation race; implicit selection now updates local state instead of issuing a redirect. A delayed-approval regression also proves that completing an action does not pull a reviewer away from another page. Native radio controls handle appearance/proof choices. The saved theme is applied before React mounts, preventing a light first frame in dark mode. Browser traces and reports are excluded from Docker build contexts and Git.

@@ -5,7 +5,7 @@
   "retrieval_enabled": false,
   "embedder": "hash",
   "database": "postgresql16-pgvector",
-  "created_at": "2026-10-07T21:18:13.655088+00:00",
+  "created_at": "2026-10-15T10:26:04.552407+00:00",
   "seed": 42,
   "dataset_sha256": "087257cadde5534f7ca15a31f93f2b18cfa0e7171c92508581db7edad0074db1",
   "counts": {
@@ -32,7 +32,7 @@
     "mean_steps": 6,
     "mean_prompt_tokens": 0,
     "mean_completion_tokens": 0,
-    "mean_latency_ms": 17.587719298245613,
+    "mean_latency_ms": 21.140350877192983,
     "model_api_cost_usd": 0,
     "retrieval_lift": 0.0
   },

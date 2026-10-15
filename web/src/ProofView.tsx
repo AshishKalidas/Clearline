@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Icon } from './Icon';
-import { dateLabel, money, request } from './api';
+import { dateLabel, money } from './api';
+import { useWorkspaceRequest } from './workspace/Workspace';
 import type { BankLine, Credentials, PopResult } from './types';
 
 const checkNames: Record<string, string> = {
@@ -15,6 +16,7 @@ const checkNames: Record<string, string> = {
 };
 
 export function ProofView({ credentials }: { credentials: Credentials }) {
+  const request = useWorkspaceRequest();
   const [file, setFile] = useState<File | null>(null);
   const [invoice, setInvoice] = useState('');
   const [result, setResult] = useState<PopResult | null>(null);

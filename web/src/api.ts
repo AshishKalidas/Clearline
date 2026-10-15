@@ -23,7 +23,7 @@ export async function request<T>(
   if (options.body && !(options.body instanceof FormData))
     headers.set('Content-Type', 'application/json');
   const response = await fetch(`/api${path}`, { ...options, headers });
-  const payload: unknown = await response.json();
+  const payload: unknown = await response.json().catch(() => null);
   if (!response.ok) {
     const detail =
       typeof payload === 'object' && payload !== null && 'detail' in payload
@@ -34,6 +34,11 @@ export async function request<T>(
       response.status,
     );
   }
+  if (payload === null)
+    throw new ApiError(
+      'The workspace returned an unreadable response. Please retry.',
+      response.status,
+    );
   return payload as T;
 }
 

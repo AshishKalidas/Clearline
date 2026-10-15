@@ -21,3 +21,12 @@
 - Keep clean-checkout smoke validation in an isolated Compose project and fresh volumes; preserve the active review workspace.
 - Browser opening is best-effort on supported desktop systems; headless users always receive the demo URL.
 - Redact MCP SDK validation errors at the public tool-dispatch boundary; third-party error messages can echo sensitive arguments even when successful results are masked.
+
+- Apply the user-supplied Apple design system to the app shell; reserve CSS Liquid Glass for navigation and keep financial content opaque.
+- Make the sample a separate, disposable in-memory adapter; never use it as an implicit fallback for a disconnected API.
+- Use explicit `/sample` and `/workspace` URL namespaces with React Router 7; selected proposals, tabs and filters are addressable and support browser history.
+- Poll committed API state instead of introducing a message broker or pretending to stream an agent transaction; expose pause, refresh and stale/offline states.
+- Add a bounded masked audit-summary endpoint for the live panel; exclude full tool payloads and retain the existing full per-proposal audit path.
+- Restore saved appearance before React mounts; avoid transitions from a light first frame when the saved theme is dark.
+- Keep initial review selection in local state rather than a data-load redirect; a delayed queue response must not override a navigation click.
+- Allow submitted mutations to finish after leaving review, while guarding page-local navigation and feedback against unmount.

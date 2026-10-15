@@ -35,3 +35,7 @@ StubLLM is a scripted baseline. AnthropicLLM and OpenAICompatLLM translate commo
 pdfplumber extracts required claim fields from three synthetic layouts. Pure verification compares positive, non-reversed bank lines with amount, ±2-day date tolerance, payer, reference, beneficiary suffix and optional claimed invoice. Verdicts and individual checks are stored; a mismatch blocks automatic allocations. Proof files receive server-generated UUID names, are size/page bounded and expire through the retention command. Uploading evidence never authorizes an allocation.
 
 The review workspace displays the actual ordered tool results, case history, confidence, policy vetoes, proof checks and audit events. Human approval/correction rechecks live balances and records reviewer identity and notes. This identity is a local demonstration header, not production authentication.
+
+## Routed workspaces
+
+The interface has separate browser-only sample and API-backed workspace providers. The sample contains illustrative fixtures and temporary review simulation; it never calls the API or contributes to evaluation metrics. The connected provider polls health, actual metrics, bank observations, pending proposals and bounded masked `/activity` audit summaries. URL routes preserve proposal and tab selection; mode changes dispose outstanding reads. See [Design and interaction](DESIGN.md).

@@ -16,7 +16,7 @@ test('review evidence, approve, reject and correct real synthetic proposals', as
 }) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
-  await page.goto('/');
+  await page.goto('/workspace/review');
   await expect(page.getByRole('tab', { name: 'Overview' })).toBeVisible();
   await expect(page.locator('.bank-amount')).toContainText('R ');
   await page.screenshot({ path: '../docs/images/review-workspace.png', fullPage: true });
@@ -91,8 +91,8 @@ test('review evidence, approve, reject and correct real synthetic proposals', as
 });
 
 test('verify genuine and absent payment claims from the browser', async ({ page }) => {
-  await page.goto('/');
-  await page.getByRole('button', { name: 'Payment proofs' }).click();
+  await page.goto('/workspace/review');
+  await page.getByRole('link', { name: 'Payment proofs', exact: true }).click();
   await page
     .getByLabel('Proof of payment PDF')
     .setInputFiles('../evals/datasets/seed-42/pops/proof-001.pdf');

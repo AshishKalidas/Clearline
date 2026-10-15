@@ -98,3 +98,16 @@ export interface PopResult {
   matched_bank_line_id: string | null;
   summary: string;
 }
+
+export interface ActivityEvent {
+  id: string;
+  event_type: string;
+  actor: string;
+  created_at: string;
+  bank_line_id: string | null;
+  proposal_id: string | null;
+  payer_name: string | null;
+  amount_cents: number | null;
+}
+
+export type WorkspaceMode = 'sample' | 'connected';

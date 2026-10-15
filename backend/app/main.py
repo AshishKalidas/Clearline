@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from backend.app.api.activity import router as activity_router
 from backend.app.api.ingest import router as ingest_router
 from backend.app.api.invoices import router as invoices_router
 from backend.app.api.pops import router as pops_router
@@ -16,6 +17,7 @@ app.include_router(ingest_router)
 app.include_router(reconciliation_router)
 app.include_router(pops_router)
 app.include_router(invoices_router)
+app.include_router(activity_router)
 
 
 @app.exception_handler(ValueError)
