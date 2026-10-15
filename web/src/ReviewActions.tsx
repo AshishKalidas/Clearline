@@ -41,12 +41,14 @@ export function ReviewActions({ detail, busy, onDecision }: ReviewActionsProps) 
     if (mode !== 'correct') return;
     const controller = new AbortController();
     request<Invoice[]>('/invoices', { signal: controller.signal })
-      .then(setInvoices)
+      .then((value) => {
+        if (!controller.signal.aborted) setInvoices(value);
+      })
       .catch((e) => {
         if (!controller.signal.aborted) setError(e.message);
       });
     return () => controller.abort();
-  }, [mode]);
+  }, [mode, request]);
 
   async function submit(action: 'approve' | 'reject') {
     if (busy) return;

@@ -403,8 +403,9 @@ kbd {
   isolation: isolate;
   background: var(--chrome);
   border: 1px solid var(--rim);
-  backdrop-filter: saturate(180%) blur(20px);
+  /* Keep the standard declaration last; production minification preserves both forms. */
   -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
   box-shadow:
     inset 1px 1px 1px var(--rim),
     inset -1px -1px 1px rgba(255, 255, 255, 0.12),
@@ -548,6 +549,7 @@ kbd {
   margin-top: 14px;
 }
 .main-shell {
+  --navigation-inset: 16px;
   margin-left: 252px;
   padding: 16px 24px 0 0;
   min-width: 0;
@@ -565,6 +567,23 @@ kbd {
   padding: 8px 16px 8px 24px;
   max-width: 1284px;
   margin-inline: auto;
+}
+/* Soften text in the viewport gap without filtering the navigation's own labels. */
+.main-shell::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 252px;
+  right: 24px;
+  max-width: 1284px;
+  margin-inline: auto;
+  height: var(--navigation-inset);
+  z-index: 39;
+  background: var(--bg);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  mask-image: linear-gradient(to bottom, #000, transparent);
+  pointer-events: none;
 }
 .breadcrumb {
   display: flex;
@@ -1739,9 +1758,6 @@ pre {
   background: var(--surface-secondary);
   color: var(--text-secondary);
 }
-.evidence-illustration > span {
-  display: none;
-}
 .verdict-examples {
   display: flex;
   gap: 12px;
@@ -2223,7 +2239,12 @@ pre {
   .nav-short {
     display: inline;
   }
+  .main-shell::before {
+    left: 12px;
+    right: 12px;
+  }
   .main-shell {
+    --navigation-inset: 12px;
     margin-left: 0;
     padding: 12px 12px 100px;
   }
@@ -2236,14 +2257,8 @@ pre {
     justify-content: space-between;
     gap: 8px;
   }
-  .topbar::after {
-    content: none;
-  }
   .topbar .breadcrumb {
     display: none;
-  }
-  .topbar::before {
-    content: none;
   }
   .mode-switch {
     margin-right: auto;
@@ -2499,17 +2514,25 @@ pre {
   .glass {
     background: var(--chrome-solid);
   }
+  .main-shell::before {
+    mask-image: none;
+  }
 }
 @media (prefers-reduced-transparency: reduce) {
   .glass {
     background: var(--chrome-solid);
-    backdrop-filter: none;
     -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     box-shadow: none;
     border-color: var(--border);
   }
   .glass::before {
     display: none;
+  }
+  .main-shell::before {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    mask-image: none;
   }
 }
 @media (prefers-contrast: more) {
@@ -2519,9 +2542,14 @@ pre {
   }
   .glass {
     background: var(--chrome-solid);
-    backdrop-filter: none;
     -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     border-color: var(--text-primary);
+  }
+  .main-shell::before {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    mask-image: none;
   }
   .panel {
     border-color: var(--border);

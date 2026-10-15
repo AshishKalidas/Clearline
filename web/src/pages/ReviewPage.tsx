@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ApiError, money } from '../api';
 import { Icon } from '../Icon';
-import type { Decision, ProposalDetail, Resolution } from '../types';
+import type { ProposalDetail, Resolution } from '../types';
 import { useWorkspace } from '../workspace/Workspace';
 import { usePreferences } from '../workspace/Preferences';
 import { decisionLabels } from '../workspace/presentation';
@@ -184,7 +184,7 @@ export function ReviewPage() {
             </label>
             <select
               aria-label="Filter by decision"
-              value={filter in decisionLabels ? filter : 'all'}
+              value={filter}
               onChange={(event) => updateParam('decision', event.target.value)}
             >
               <option value="all">All exceptions</option>

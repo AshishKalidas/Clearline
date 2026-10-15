@@ -30,3 +30,7 @@
 - Restore saved appearance before React mounts; avoid transitions from a light first frame when the saved theme is dark.
 - Keep initial review selection in local state rather than a data-load redirect; a delayed queue response must not override a navigation click.
 - Allow submitted mutations to finish after leaving review, while guarding page-local navigation and feedback against unmount.
+- Keep the standard backdrop-filter declaration after the prefixed fallback; verify the optimized production stylesheet in a real browser to catch CSS optimizer regressions.
+- Place the scroll-edge scrim outside the filtered toolbar; soften the top gap without sampling through a filtered ancestor or intercepting navigation.
+- Define the HTTP/sample request contract in the API module; workspace infrastructure must not depend on a type owned by sample fixtures.
+- Treat notification lifetime as message-owned; unrelated parent renders cannot restart dismissal, and cancelled invoice lookups cannot replace current choices.

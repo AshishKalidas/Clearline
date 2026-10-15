@@ -1,4 +1,4 @@
-import { ApiError, type request as HttpRequest } from '../api';
+import { ApiError, type WorkspaceRequest } from '../api';
 import type {
   ActivityEvent,
   AuditEvent,
@@ -12,7 +12,6 @@ import type {
   Resolution,
 } from '../types';
 
-export type WorkspaceRequest = typeof HttpRequest;
 export type ProofScenario = 'verified' | 'not_received' | 'mismatch';
 const clone = <T>(value: T): T => structuredClone(value);
 

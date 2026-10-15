@@ -164,9 +164,6 @@ export function ProofView({ credentials }: { credentials: Credentials }) {
         ) : (
           <div className="proof-placeholder">
             <div className="evidence-illustration">
-              <span />
-              <span />
-              <span />
               <Icon name="shield" size={43} />
             </div>
             <h3>Trust the bank feed.</h3>

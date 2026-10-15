@@ -7,9 +7,9 @@ Build verification updated on 15 October 2026; the base platform was completed o
 | Docker backend suite | 59 passed; 95.21% statement coverage on `backend/app`; required threshold 85% |
 | Ruff lint and formatting | Clean |
 | Strict mypy | Clean on `backend/app` and `mcp_server` (56 source files) |
-| Frontend unit suite | 14 tests passed in 5 files |
-| Frontend build | TypeScript check and Vite production build passed; React bundle 245.46 kB before gzip |
-| Browser against nginx + actual API | 7 Playwright tests passed: actual reviews/uploads, API-blocked sample use, deep links/history, mobile layouts, saved appearance, reduced transparency/motion, increased contrast, live polling pause/recovery and navigation during a pending approval |
+| Frontend unit suite | 17 tests passed in 6 files |
+| Frontend build | TypeScript check and Vite production build passed; React bundle 245.48 kB before gzip |
+| Browser against nginx + actual API | 8 Playwright tests passed: actual reviews/uploads, API-blocked sample use, deep links/history, mobile layouts, saved appearance, reduced transparency/motion, increased contrast, live polling pause/recovery, navigation during a pending approval, and scrolling navigation blur in light/dark desktop/phone layouts |
 | Live SDK adapters | Recorded HTTP response tests exercised both real SDKs, retries, request masking, tool translation, malformed replies, usage and transport closure; no paid network calls |
 | MCP stdio client | Initialized; exactly 8 read-only tools listed; `search_invoices` succeeded against PostgreSQL |
 | MCP safety | Every tool called through the protocol; returned PII-shaped fixture strings and echoed invalid arguments masked; unknown write tool and fractional cents rejected; database transaction rejected an audit INSERT otherwise permitted to the agent role |
@@ -19,7 +19,7 @@ Build verification updated on 15 October 2026; the base platform was completed o
 | Idempotent demo | Repeated seed/run preserves existing history and resolutions; no additional agent investigations on already processed lines |
 | Synthetic PDFs | All three generated layouts rendered and visually inspected; reproducibility and 60-file verdict tests passed |
 
-The clean demo used alternate loopback ports (web 5175, API 18001, PostgreSQL 54330) to preserve the active workspace. Browser workflows were repeated against those freshly seeded services. The main demo remains available on its default web port 5173 and API port 18000. The new workspace routing and all seven browser workflows were verified against the production nginx build on those default ports.
+The clean demo used alternate loopback ports (web 5175, API 18001, PostgreSQL 54330) to preserve the active workspace. Browser workflows were repeated against those freshly seeded services. The main demo remains available on its default web port 5173 and API port 18000. The new workspace routing and all eight browser workflows were verified against the production nginx build on those default ports.
 
 The current report files are the source of truth for exact evaluation metrics and timing. Stub throughput is machine/load dependent; synthetic decision accuracy is not an estimate of live-model quality. The local embedding interface is tested with a stand-in cached encoder; a downloaded MiniLM checkpoint and real provider inference were not benchmarked. Missing live results remain “not yet run.”
 
@@ -28,3 +28,9 @@ A credential/private-key pattern scan of committed source trees found no matches
 ## Workspace redesign checks
 
 Screenshots for the sample overview, connected overview, dark appearance and phone layout were captured from the completed interface and visually inspected. A production browser run exposed a queue-load navigation race; implicit selection now updates local state instead of issuing a redirect. A delayed-approval regression also proves that completing an action does not pull a reviewer away from another page. Native radio controls handle appearance/proof choices. The saved theme is applied before React mounts, preventing a light first frame in dark mode. Browser traces and reports are excluded from Docker build contexts and Git.
+
+## Navigation and maintainability follow-up
+
+The production stylesheet originally retained only the WebKit-prefixed backdrop filter, which Chromium ignored. Ordering the standard declaration last preserves both forms in the built asset. A separate gradient scrim softens the top viewport gap. Scrolled desktop/phone screenshots in both appearances were visually inspected; the production browser regression verifies active blur, clickable navigation and opaque increased-contrast fallback. Existing reduced-transparency, focus, routing and financial workflows pass with the fix.
+
+The focused frontend review removed dead markup/imports and redundant filter handling, moved the shared request contract out of the sample implementation, enabled unused-local/parameter and switch-fallthrough compiler errors, and corrected notification lifetimes and stale invoice responses. Unit regressions exercise a parent update during a notification and an invoice response arriving after correction is cancelled/reopened. All frontend checks and the full Docker backend suite were rerun.

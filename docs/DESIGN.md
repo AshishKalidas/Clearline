@@ -6,7 +6,7 @@ The October 2026 workspace update follows the supplied `APPLE_DESIGN_SYSTEM.md` 
 
 Liquid Glass is a CSS approximation on the floating sidebar, top toolbar and mobile navigation. It combines translucent tint, `saturate(180%) blur(20px)`, an inset specular rim and restrained depth. Financial cards, evidence, forms and receipts remain opaque. Glass surfaces do not overlap one another. Unsupported backdrop filtering and reduced transparency fall back to opaque chrome; increased contrast removes blur and strengthens boundaries. Reduced motion disables transitions. Controls have visible four-pixel focus rings and 44-pixel targets. Appearance follows the system or a saved light/dark preference, restored before React renders to avoid a theme flash.
 
-The primary responsive boundaries are 1068 px and 734 px. Small screens use a floating bottom navigation, stacked cards and stacked review actions. Native radio controls provide keyboard behavior for appearance and sample-proof choices.
+The primary responsive boundaries are 1068 px and 734 px. Small screens use a floating bottom navigation, stacked cards and stacked review actions. Scrolling content is blurred beneath both navigation bars. A separate, non-interactive gradient scrim softens the viewport gap above the toolbar without filtering its labels; reduced transparency and increased contrast make the gap opaque. The scrim lives outside the toolbar because a filtered ancestor limits the backdrop sampled by its descendants. Native radio controls provide keyboard behavior for appearance and sample-proof choices.
 
 ## Routes
 
@@ -48,4 +48,8 @@ Connected mode reads `/healthz`, `/metrics`, `/proposals`, `/bank-lines?limit=10
 
 Unit checks cover sample network isolation, temporary allocation validation, missing-proposal handling, route selection and offline source switching. Browser checks cover real connected approval/rejection/correction/uploads, entirely offline sample actions/proofs, deep-link refresh, query/history navigation, dark preference persistence, mobile overflow, focus/reduced-motion/increased-contrast behavior, and actual live-panel values/pause/recovery.
 
+Production browser checks also scroll payment text behind the toolbar in light/dark appearance and verify the phone navigation remains operable. Keep prefixed filter declarations before the standard declarations: the production CSS optimizer otherwise removes the standard blur, leaving unsupported prefixed CSS in Chromium. This regression is checked against nginx, not just the development server.
+
 Screenshots in `docs/images/` are captured from the running app. The live-provider and synthetic evaluation boundaries described in the README remain unchanged.
+
+Scroll checks: [desktop light](images/navigation-scroll-light.png) · [desktop dark](images/navigation-scroll-dark.png) · [phone light](images/navigation-phone-light.png) · [phone dark](images/navigation-phone-dark.png).

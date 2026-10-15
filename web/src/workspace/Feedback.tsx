@@ -1,14 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Icon } from '../Icon';
 import { usePreferences } from './Preferences';
 import { useWorkspace } from './Workspace';
 
 export function Toast({ message, clear }: { message: string | null; clear: () => void }) {
+  const dismiss = useRef(clear);
+  useEffect(() => {
+    dismiss.current = clear;
+  }, [clear]);
   useEffect(() => {
     if (!message) return;
-    const timer = setTimeout(clear, 5500);
+    // Polling and parent renders must not extend a notification's lifetime.
+    const timer = setTimeout(() => dismiss.current(), 5500);
     return () => clearTimeout(timer);
-  }, [message, clear]);
+  }, [message]);
   if (!message) return null;
   return (
     <div className="toast" role="status">

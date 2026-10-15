@@ -1,5 +1,8 @@
 import type { Credentials } from './types';
 
+/** Shared contract for HTTP and the isolated sample adapter. */
+export type WorkspaceRequest = typeof request;
+
 export class ApiError extends Error {
   constructor(
     message: string,

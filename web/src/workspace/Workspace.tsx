@@ -8,9 +8,9 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { request as httpRequest } from '../api';
+import { request as httpRequest, type WorkspaceRequest } from '../api';
 import type { ActivityEvent, BankLine, Metrics, Proposal, WorkspaceMode } from '../types';
-import { createSampleClient, type WorkspaceRequest } from './sample';
+import { createSampleClient } from './sample';
 
 export interface Snapshot {
   queue: Proposal[];

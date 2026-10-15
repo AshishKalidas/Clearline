@@ -116,6 +116,7 @@ Partial, split, excess, duplicate, ambiguous, risky and unfamiliar-customer case
 | Retrieval | Local 384-dimensional embeddings, customer-filtered pgvector cosine search, transactionally indexed resolutions, on/off ablation |
 | Privacy | Stable per-investigation masking, outbound-request capture, masked audit/retrieval text, least-privilege roles and proof-file retention |
 | Product workflow | Routed overview, isolated sample mode, live activity panel, human corrections, keyboard actions, proof checks and browser tests against the real API |
+| Maintainability | Strict Python/TypeScript checks, unused-code compiler gates, small request adapters, formatting checks and regressions for async UI races |
 | Reproducibility | Deterministic data/PDF generator, locked dependencies, Docker migrations, disposable evaluation schemas and generated results |
 | Integrations | Eight masked read-only tools over stdio using the [official MCP SDK](docs/MCP.md) |
 

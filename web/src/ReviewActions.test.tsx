@@ -1,8 +1,8 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, expect, it, vi } from 'vitest';
 import { ReviewActions } from './ReviewActions';
-import type { ProposalDetail } from './types';
+import type { Invoice, ProposalDetail } from './types';
 import { request } from './api';
 
 vi.mock('./api', async (importOriginal) => ({
@@ -39,6 +39,29 @@ export const detail: ProposalDetail = {
   linked_pops: [],
 };
 beforeEach(() => vi.mocked(request).mockReset());
+
+it('ignores an old invoice response after correction is cancelled and reopened', async () => {
+  let finishOldRequest!: (value: Invoice[]) => void;
+  vi.mocked(request)
+    .mockReturnValueOnce(
+      new Promise<Invoice[]>((resolve) => {
+        finishOldRequest = resolve;
+      }),
+    )
+    .mockResolvedValueOnce([
+      { invoice_number: 'INV-CURRENT', customer_name: 'Current fixture', outstanding_cents: 100 },
+    ]);
+  const user = userEvent.setup();
+  render(<ReviewActions detail={detail} busy={false} onDecision={vi.fn()} />);
+  await user.click(screen.getByRole('button', { name: /Correct/ }));
+  await user.click(screen.getByRole('button', { name: 'Cancel' }));
+  await user.click(screen.getByRole('button', { name: /Correct/ }));
+  await screen.findByRole('option', { name: /INV-CURRENT/ });
+  await act(async () => {
+    finishOldRequest([]);
+  });
+  expect(screen.getByRole('option', { name: /INV-CURRENT/ })).toBeInTheDocument();
+});
 
 it('requires a note for rejection and supports the R shortcut', async () => {
   const onDecision = vi.fn().mockResolvedValue(undefined);
