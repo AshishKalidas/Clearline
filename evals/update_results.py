@@ -1,4 +1,4 @@
-"""Generate a compact README summary from committed evaluation evidence."""
+"""Generate a detailed results summary from committed evaluation evidence."""
 
 import argparse
 import json
@@ -79,12 +79,12 @@ def results_table(directory: Path) -> str:
     return "\n".join(lines)
 
 
-def update_readme(readme: Path, reports: Path) -> None:
+def update_document(document: Path, reports: Path) -> None:
     """Replace only the generated summary, preserving authored documentation."""
-    readme.write_text(render_readme(readme.read_text(), reports))
+    document.write_text(render_document(document.read_text(), reports))
 
 
-def render_readme(text: str, reports: Path) -> str:
+def render_document(text: str, reports: Path) -> str:
     """Render measured results into supplied authored content."""
     start, end = "<!-- RESULTS:START -->", "<!-- RESULTS:END -->"
     before, remainder = text.split(start, 1)
@@ -93,18 +93,18 @@ def render_readme(text: str, reports: Path) -> str:
 
 
 def main() -> None:
-    """Regenerate the README evaluation summary."""
+    """Regenerate the detailed evaluation results document."""
     parser = argparse.ArgumentParser()
-    parser.add_argument("--readme", type=Path, default=Path("README.md"))
+    parser.add_argument("--document", type=Path, default=Path("EVALUATION_RESULTS.md"))
     parser.add_argument("--reports", type=Path, default=Path("evals/reports"))
     parser.add_argument(
-        "--stdin", action="store_true", help="Read README from stdin and write stdout"
+        "--stdin", action="store_true", help="Read document from stdin and write stdout"
     )
     args = parser.parse_args()
     if args.stdin:
-        sys.stdout.write(render_readme(sys.stdin.read(), args.reports))
+        sys.stdout.write(render_document(sys.stdin.read(), args.reports))
     else:
-        update_readme(args.readme, args.reports)
+        update_document(args.document, args.reports)
 
 
 if __name__ == "__main__":

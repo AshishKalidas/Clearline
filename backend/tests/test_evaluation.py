@@ -14,7 +14,7 @@ from backend.app.ingest.service import ingest_bank_lines, ingest_invoices
 from evals.gates import release_gates
 from evals.generate_dataset import csv_bytes, generate
 from evals.run_eval import evaluate, evaluation_session, refresh_lift
-from evals.update_results import results_table, update_readme
+from evals.update_results import results_table, update_document
 
 
 def test_release_gate_detects_a_deliberately_broken_metric() -> None:
@@ -58,7 +58,7 @@ def test_invariant_catches_unauthorized_ledger_write(session: Session) -> None:
     assert any("no proposal" in error for error in check_invariants(session, Settings()))
 
 
-def test_real_eval_reports_and_readme_table(tmp_path: Path, monkeypatch) -> None:
+def test_real_eval_reports_and_results_document(tmp_path: Path, monkeypatch) -> None:
     # Unit suite stays hermetic; the make eval command independently exercises PostgreSQL.
     monkeypatch.delenv("MIGRATION_DATABASE_URL", raising=False)
     monkeypatch.setenv("DATABASE_URL", "sqlite://")
@@ -80,11 +80,11 @@ def test_real_eval_reports_and_readme_table(tmp_path: Path, monkeypatch) -> None
     assert "No full live-provider evaluation is published." in table
     assert "Claude" not in table and "MiMo" not in table
     assert f"0 / {report['counts']['auto_applied']}" in table
-    readme = tmp_path / "README.md"
-    readme.write_text("Intro\n<!-- RESULTS:START -->\nold\n<!-- RESULTS:END -->\nFooter")
-    update_readme(readme, tmp_path / "reports")
-    assert table in readme.read_text()
-    assert readme.read_text().endswith("Footer")
+    document = tmp_path / "EVALUATION_RESULTS.md"
+    document.write_text("Intro\n<!-- RESULTS:START -->\nold\n<!-- RESULTS:END -->\nFooter")
+    update_document(document, tmp_path / "reports")
+    assert table in document.read_text()
+    assert document.read_text().endswith("Footer")
 
 
 @pytest.mark.parametrize(
@@ -112,7 +112,9 @@ def test_retrieval_lift_rejects_different_execution_protocols_or_routes(
         assert report["metrics"]["retrieval_lift"] is None
 
 
-def test_readme_keeps_failed_live_results_visible_and_omits_pilots(tmp_path: Path) -> None:
+def test_results_document_keeps_failed_live_results_visible_and_omits_pilots(
+    tmp_path: Path,
+) -> None:
     source = json.loads(Path("evals/reports/stub-on/report.json").read_text())
     baseline = tmp_path / "stub-on"
     baseline.mkdir()

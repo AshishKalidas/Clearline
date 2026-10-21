@@ -48,7 +48,7 @@ Preview and import share the same schema/parser in `ingest/validation.py`. Dupli
 
 ## Published evaluation evidence
 
-`evals/export_evidence.py` validates report identities, finite measurements, coherent counts, scenario totals, key ratios and recomputed release gates before exporting six provider/retrieval slots. Missing files remain null. The generated frontend JSON contains only validated report fields and fingerprints of the original source files. It is static published evidence, not operational workspace telemetry. `make evidence` regenerates it after evaluations; rebuilding packages that snapshot into nginx. CI checks the committed snapshot before fresh evaluation runs. The README table and the evidence page use the same report files.
+`evals/export_evidence.py` validates report identities, finite measurements, coherent counts, scenario totals, key ratios and recomputed release gates before exporting six provider/retrieval slots. Missing files remain null. The generated frontend JSON contains only validated report fields and fingerprints of the original source files. It is static published evidence, not operational workspace telemetry. `make evidence` regenerates it after evaluations; rebuilding packages that snapshot into nginx. CI checks the committed snapshot before fresh evaluation runs. The results document and the evidence page use the same report files.
 
 ## Response durability and verification boundaries
 

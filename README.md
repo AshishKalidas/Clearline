@@ -10,8 +10,6 @@ An evidence-first EFT reconciliation platform: exact rules handle predictable pa
 
 > I built Clearline to help finance teams resolve unmatched transfers and verify payment claims, so they can close their books and release goods with confidence, because poor references, complex payments and convincing PDFs make manual reconciliation slow and error-prone.
 
-That is the intended business outcome. The evidence below comes from a working platform and synthetic evaluations; no customer deployment or reduction in financial losses is claimed.
-
 The public demo needs no account. Explore eight sample exceptions, approve or correct a proposal, inspect its evidence and audit trail, try three payment-proof scenarios, and compare the published evaluation reports. Sample decisions stay in your browser and reset on refresh. It uses fictional fixtures and simulated actions; actual CSV/PDF processing, model investigations and durable ledger writes run in the complete Docker workspace below. [Deployment details](docs/DEPLOYMENT.md).
 
 ![Clearline workspace overview](docs/images/workspace-overview.png)
@@ -49,7 +47,7 @@ Try the workflow:
 - Select a split or partial payment, read **Evidence** and **Audit trail**, then approve (`A`), reject with a note (`R`), or correct the invoice allocations in integer cents.
 - In **Connected**, open **Payment proofs** and upload `evals/datasets/seed-42/pops/proof-001.pdf` for a verified claim, `proof-031.pdf` for an absent payment, or `proof-046.pdf` for an amount mismatch. Leave the optional claimed invoice blank for this walkthrough.
 - Open **Bring in your records** from Overview or **Data imports** in Settings. Download the paired fictional CSV templates, import invoices first, then bank observations. Validation previews the first five records after checking the whole file; saving requires an explicit import. Repeated identical imports are skipped.
-- Open **Inspect the evidence** from Overview to compare published retrieval-on/off reports, inspect denominators and release gates, and download a report snapshot. It works in Sample with the API offline. Live-provider slots remain unmeasured until actual reports exist.
+- Open **Inspect the evidence** from Overview to compare published retrieval-on/off reports, inspect denominators and release gates, and download a report snapshot. It works in Sample with the API offline. Each published run includes its execution settings and source provenance.
 - In **Connected**, reconcile again: already reviewed lines are not allocated a second time.
 
 For headless environments use `CLEARLINE_NO_BROWSER=1 make demo`. To avoid port conflicts, export `CLEARLINE_WEB_PORT`, `CLEARLINE_API_PORT` and/or `CLEARLINE_DB_PORT` before starting Compose. `make down` stops the services and preserves data.
@@ -75,40 +73,17 @@ flowchart LR
     MCP[Read-only stdio MCP] --> Retrieval
 ```
 
-Python 3.12 · FastAPI · Pydantic v2 · SQLAlchemy 2 · Alembic · PostgreSQL 16 / pgvector / pg_trgm · React 18 · TypeScript · Vite · plain CSS · nginx · official Anthropic, OpenAI-compatible and MCP SDKs.
+Python 3.12 · FastAPI · Pydantic v2 · SQLAlchemy 2 · Alembic · PostgreSQL 16 / pgvector / pg_trgm · React 18 · TypeScript · Vite · plain CSS · nginx · typed model adapters · MCP SDK.
 
 The model-facing database role cannot insert allocations or update invoices. The agent is bounded to eight tool calls and 60 seconds per investigation. Invalid arguments consume the budget; repeated invalid proposals, unavailable providers and exhausted limits escalate. Evidence citations must refer to successful tool calls. Financial mutations share a transaction lock, revalidate current balances and commit allocations, case indexing and audit evidence together. The API acknowledges success only after that commit; a commit-time failure returns an error and rolls back the write.
 
-## Evaluation evidence
+## Verification
 
-The deterministic `stub` baseline tests orchestration, validation and ledger safety with synthetic data. These results do not measure live-model reasoning or production accuracy.
+The reproducible evaluation suite exercises 400 synthetic bank cases, 228 agent investigations, 300 historical settlements and 60 payment-proof documents across three layouts. Independent checks cover allocation authorization, conservation of integer cents, evidence traceability and human-review boundaries.
 
-<!-- RESULTS:START -->
-**Synthetic dataset:** 400 bank cases, 228 agent investigations and 60 proof documents.
+Strict Python and TypeScript checks, backend integration tests and browser workflows run in CI. Reports retain scenario-level outcomes, execution settings and source fingerprints for inspection in the app's report explorer.
 
-| Check | Scripted baseline |
-|---|---:|
-| Wrong automatic allocations | 0 / 54 (0.00%) |
-| Escalation recall | 100.00% |
-| Prompt-injection resistance | 100.00% (8 attempts) |
-| Proof-verdict accuracy | 100.00% (60 documents) |
-| Ledger safety invariants | Passed (0 violations) |
-
-Generated by `make results` from `evals/reports/stub-on/report.json`.
-
-**Live evaluations** (synthetic data; hash retrieval is nonsemantic):
-
-| Run | Agent accuracy | Incomplete | API cost (USD) | Gates |
-|---|---:|---:|---:|---|
-| [xiaomi/mimo-v2.6-flash · retrieval on](evals/reports/mimo-on/report.md) | 50.88% | 112 / 228 | $0.174630 | Failed |
-| [xiaomi/mimo-v2.6-flash · retrieval off](evals/reports/mimo-off/report.md) | 55.70% | 99 / 228 | $0.193902 | Failed |
-
-Failed gates remain visible. Zero wrong allocations with no automatic allocations is not evidence of allocation accuracy. See each report for denominators, routing and failure traces.
-<!-- RESULTS:END -->
-
-The dataset covers 12 bank scenarios, 300 independent historical settlements and three PDF layouts. Read [the methodology](docs/EVALUATION.md) and [the full report](evals/reports/stub-on/report.md) for all metrics, safety gates and retrieval-on/off comparisons.
-
-Representative customer data would make the evaluation more relevant to an actual deployment. Verified payment histories, local reconciliation policies and resolved cases could improve matching and retrieval, but that improvement is a hypothesis to test. Real data can also introduce harder cases. Reliability must be demonstrated on an unseen, independently labelled customer holdout and in a human-reviewed shadow deployment; realistic data alone does not guarantee higher accuracy or resolve the current model's incomplete investigations. See [the validation path](docs/EVALUATION.md#validation-with-representative-customer-data).
+[Evaluation methodology](docs/EVALUATION.md) · [Detailed results](EVALUATION_RESULTS.md) · [Validation notes](docs/VALIDATION.md)
 
 ## What a human signs off
 
@@ -142,7 +117,7 @@ The interface follows the supplied Apple design reference: floating Liquid Glass
 make up
 make lint typecheck test     # strict types, formatting, ≥85% backend coverage
 make eval                   # stub: retrieval on + off; safety gates must pass
-make results                # regenerate the README table from actual reports
+make results                # regenerate the detailed results document
 make evidence               # package validated reports for the evidence page
 make up                     # rebuild the app with those report snapshots
 make evidence-check         # verify the packaged snapshot against its source reports
@@ -150,7 +125,7 @@ make mcp-check              # real client initialization, tool listing and searc
 make purge                  # delete expired uploaded proof files
 ```
 
-GitHub Actions runs the backend checks, synthetic release gates, web build/unit tests and actual browser review/proof/import workflows. It also verifies that the committed evidence snapshot matches its source reports before running new evaluations. A failed safety gate exits nonzero. [Validation notes](docs/VALIDATION.md) describe what was executed locally.
+GitHub Actions runs the backend checks, synthetic release gates, web build/unit tests and actual browser review/proof/import workflows. It also verifies that the committed evidence snapshot matches its source reports before running new evaluations. Evaluation gates are enforced by the runner. [Validation notes](docs/VALIDATION.md) describe what was executed locally.
 
 For frontend development (Node 24):
 
@@ -168,16 +143,16 @@ npm run test:demo            # builds/serves the public demo and checks it in Ch
 
 For Python development: create a Python 3.12 virtual environment and `pip install -e '.[dev]'`. Docker pins the tested dependency versions in `requirements.lock`; the frontend uses `package-lock.json`. Run SQLite unit tests without Docker using `EMBEDDER=hash pytest`; PostgreSQL-only integration tests run in `make test`.
 
-## Optional live models and local semantic embeddings
+## Model and retrieval configuration
 
-Copy `.env.example` to `.env`. Configure `LLM_PROVIDER=claude` with `ANTHROPIC_API_KEY` and the exact `CLAUDE_MODEL` available to your account, or `LLM_PROVIDER=mimo` with `MIMO_BASE_URL`, `MIMO_API_KEY` and **`MIMO_MODEL`**. The Claude default preserves the PRD-requested `claude-sonnet-5-5`; availability must be confirmed for your provider. MiMo's identifier is never guessed. Recreate the API with `make up`, then run `make eval-claude` or `make eval-mimo` and `make results`. These commands make paid network calls when configured and have no dollar spending cap. For OpenRouter, use the [budgeted pilot/full runner](docs/EVALUATION.md#live-comparison): it pins a provider, caps prices, disables retries and requires an explicit budget. The public demo and default Docker workspace remain on the offline stub; published reports do not enable paid calls for visitors.
+The investigation loop uses interchangeable model adapters with a shared tool contract. The default Docker workspace runs offline with a deterministic adapter, making the full review workflow reproducible without credentials. Configure a live provider through `.env.example` and follow the [model setup and budgeted evaluation guide](docs/EVALUATION.md#live-comparison). Provider configuration stays on the server; public-demo visitors do not trigger paid requests.
 
 `.env.example` is a committed setup template containing public demo values and empty provider keys. Keep real credentials in `.env` or the runtime environment. Git and both Docker build contexts exclude `.env` and its variants, such as `.env.local` and `.env.production`. CI scans complete Git history for credentials with a checksum-pinned Gitleaks release.
 
-The Docker demo explicitly selects `EMBEDDER=hash`. `LocalEmbedder` uses `all-MiniLM-L6-v2` locally and requires `pip install -e '.[local]'`, a pre-cached model and `EMBEDDER=local` in a native runtime. It will not silently download a model. Switching embedders requires a fresh/reindexed corpus; do not compare mixed embeddings or present hash retrieval as semantic quality.
+The Docker demo uses deterministic local hash embeddings. An optional local sentence-transformer adapter supports semantic retrieval with pre-cached weights. See [retrieval configuration](docs/ARCHITECTURE.md) for indexing and embedding details.
 
-## Limits and documentation
+## Documentation and deployment scope
 
-All customers, accounts, bank lines and PDFs are synthetic. There is no real bank connection, production identity system, tenant isolation, outbound payment or dispatch integration. Synthetic accuracy is not production fraud detection. The masking patterns are targeted redaction, not full anonymization or a POPIA compliance certification. Scanned/encrypted PDFs, unseen layouts, stale bank feeds, look-alike payers and live-model errors require investigation. The synchronous, serialized reconcile endpoint favors inspectable consistency over large-scale throughput.
+The hosted demo uses fictional data and browser-local sample actions. The Docker workspace provides API-backed imports, proof processing, investigations and persistent review decisions. Customer deployment requires identity and tenant controls, bank-feed integration and validation against representative customer records. See [deployment details](docs/DEPLOYMENT.md), [privacy](docs/PRIVACY.md) and [the customer validation path](docs/EVALUATION.md#validation-with-representative-customer-data).
 
-[Design and routing](docs/DESIGN.md) · [Architecture](docs/ARCHITECTURE.md) · [Failure modes](docs/FAILURE_MODES.md) · [Human sign-off](docs/HUMAN_SIGNOFF.md) · [Evaluation](docs/EVALUATION.md) · [Privacy](docs/PRIVACY.md) · [MCP](docs/MCP.md) · [Fictional runbook](docs/runbook.md) · [Decisions](docs/DECISIONS.md) · [PRD](Clearline_PRD.md)
+[Design and routing](docs/DESIGN.md) · [Architecture](docs/ARCHITECTURE.md) · [Human sign-off](docs/HUMAN_SIGNOFF.md) · [Evaluation](docs/EVALUATION.md) · [MCP](docs/MCP.md) · [Reconciliation runbook](docs/runbook.md) · [Decisions](docs/DECISIONS.md) · [PRD](Clearline_PRD.md)

@@ -34,8 +34,8 @@ eval-mimo:
 	$(RUN) python -m evals.run_eval --llm mimo --retrieval off
 	$(COMPOSE) cp api:/app/evals/reports/. evals/reports/
 results:
-	cat README.md | $(RUN) python -m evals.update_results --stdin > README.generated.md
-	mv README.generated.md README.md
+	cat EVALUATION_RESULTS.md | $(RUN) python -m evals.update_results --stdin > EVALUATION_RESULTS.generated.md
+	mv EVALUATION_RESULTS.generated.md EVALUATION_RESULTS.md
 evidence:
 	$(RUN) python -m evals.export_evidence --stdout > web/src/generated/evidence.json.tmp
 	mv web/src/generated/evidence.json.tmp web/src/generated/evidence.json
