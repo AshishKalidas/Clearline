@@ -1,14 +1,15 @@
 # Executed validation
 
-Build verification updated on 21 October 2026; the base platform was completed on 7 October 2026. All financial fixtures are synthetic. The checks below record local execution. The GitHub Actions workflow repeats the release checks on pushes and pull requests; its current status is linked from the README. No public application deployment is claimed.
+Build verification updated on 21 October 2026; the base platform was completed on 7 October 2026. All financial fixtures are synthetic. The checks below record local execution. The GitHub Actions workflow repeats the release checks on pushes and pull requests; its current status is linked from the README. The public static demo is described in [Deployment](DEPLOYMENT.md); the API-backed application remains a local Docker workspace.
 
 | Check | Observed result |
 |---|---|
 | Docker backend suite | 110 passed; 95.50% statement coverage on `backend/app`; required threshold 85% |
 | Ruff lint and formatting | Clean |
 | Strict mypy | Clean on `backend/app`, `mcp_server` and the report exporter (58 source files) |
-| Frontend unit suite | 33 tests passed in 8 files |
-| Frontend build | TypeScript check and Vite production build passed; React bundle 271.13 kB before gzip |
+| Frontend unit suite | 37 tests passed in 8 files |
+| Frontend build | TypeScript check and Vite production build passed; React bundle 271.72 kB before gzip; standalone demo build also passed |
+| Standalone public demo | 2 Playwright workflows passed locally and against the anonymous Vercel production URL; deep links, review/activity, proof scenarios, reports and phone navigation worked without API requests |
 | Browser against nginx + actual API | 11 Playwright tests passed: actual reviews/uploads, API-blocked sample use, deep links/history, mobile layouts, saved appearance, reduced transparency/motion, increased contrast, live polling pause/recovery, navigation during a pending approval, scrolling navigation blur, offline published evidence, and actual CSV validation/import/deduplication in desktop/phone layouts |
 | Live SDK adapters | Recorded HTTP response tests exercised both real SDKs, retries, request masking, tool translation, malformed replies, usage and transport closure; no paid network calls |
 | MCP stdio client | Initialized; exactly 8 read-only tools listed; `search_invoices` succeeded against PostgreSQL |
@@ -41,7 +42,7 @@ The October 21 pass adds guided CSV imports and an offline-capable report explor
 
 Both PostgreSQL stub evaluations were rerun on October 21: retrieval on/off passed every gate, with 400 bank cases, 228 agent investigations, 54 automatic agent allocations, zero wrong auto allocations and 60 proofs per run. The README table and generated frontend snapshot match those current report files. The production browser suite exercises invalid-file feedback, explicit import confirmation, both CSV kinds, repeated import skips, activity events, template download, report query/history state, API-blocked evidence access, and desktop/phone overflow checks. Light/dark screenshots were visually inspected. A template ID collision with seeded history was caught during browser validation and corrected before release.
 
-The clean-checkout smoke check recorded above predates this refinement. The current pass rebuilt and tested the main Docker/nginx application with its existing synthetic ledger; no public deployment, remote CI execution or paid live-model run was performed.
+The clean-checkout smoke check recorded above predates this refinement. The original import/evidence pass rebuilt and tested the main Docker/nginx application with its existing synthetic ledger. Public deployment and remote CI verification were performed in subsequent passes, as recorded below. No paid live-model run was performed.
 
 ## Transaction and verification contracts
 
@@ -60,3 +61,9 @@ Configuration regressions verify that provider/mutation keys and database URLs d
 Temporary synthetic environment probes at the repository root, frontend root and nested frontend source directory were excluded from the rebuilt API image and frontend build stage. All probes and the temporary builder tag were removed after verification.
 
 Proof verification now has explicit idle, verifying, loading-bank and complete states. UI regressions cover locked inputs, synchronous duplicate-event suppression, invoice-change invalidation, exact bank-record lookup, preservation of a saved verdict when its supplementary read fails, upload completion after navigation, read cancellation and failed-upload retry. A backend regression places the linked bank record outside a 1,000-record feed and confirms that it remains individually addressable. The browser workflow checks the actual linked bank observation before proceeding to the next upload.
+
+## Public demo deployment
+
+The standalone demo was built and deployed to [clearline-ecru.vercel.app](https://clearline-ecru.vercel.app) in the owner's Vercel project. Anonymous HTTP checks confirmed the SPA routes, JavaScript/CSS content types and security headers. The same two Playwright workflows passed locally and at the production URL; they block/count API requests and exercise reviews, activity, proof scenarios, evidence reports, deep-link refreshes, connected/legacy redirects and phone layouts. Desktop and phone screenshots of the actual production URL were visually inspected. The complete Docker/nginx application's eleven browser workflows also passed after adding the demo build.
+
+The CLI dry run contained 62 frontend files and excluded environment files, Vercel credentials, dependencies, browser artifacts and backend data. The repository's GitHub website field and README link to the public alias. Deployment settings and the distinction between simulated browser actions and the full API-backed application are documented in [Deployment](DEPLOYMENT.md).

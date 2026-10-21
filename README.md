@@ -4,11 +4,15 @@
 
 [![Release gates](https://github.com/AshishKalidas/Clearline/actions/workflows/ci.yml/badge.svg)](https://github.com/AshishKalidas/Clearline/actions/workflows/ci.yml)
 
+[**Open the interactive demo →**](https://clearline-ecru.vercel.app)
+
 An evidence-first EFT reconciliation platform: exact rules handle predictable payments, a bounded agent investigates exceptions, and deterministic policy controls what reaches the ledger.
 
 > I built Clearline to help finance teams resolve unmatched transfers and verify payment claims, so they can close their books and release goods with confidence, because poor references, complex payments and convincing PDFs make manual reconciliation slow and error-prone.
 
 That is the intended business outcome. The evidence below comes from a working platform and synthetic evaluations; no customer deployment or reduction in financial losses is claimed.
+
+The public demo needs no account. Explore eight sample exceptions, approve or correct a proposal, inspect its evidence and audit trail, try three payment-proof scenarios, and compare the published evaluation reports. Sample decisions stay in your browser and reset on refresh. It uses fictional fixtures and simulated actions; actual CSV/PDF processing, model investigations and durable ledger writes run in the complete Docker workspace below. [Deployment details](docs/DEPLOYMENT.md).
 
 ![Clearline workspace overview](docs/images/workspace-overview.png)
 
@@ -155,8 +159,10 @@ npm ci
 npm run dev                 # Vite uses the local API on port 18000
 npm test
 npm run build
+npm run build:demo           # standalone sample deployment; no API required
 npx playwright install chromium
 npm run test:e2e             # Docker services and seeded stub data must be running
+npm run test:demo            # builds/serves the public demo and checks it in Chromium
 ```
 
 For Python development: create a Python 3.12 virtual environment and `pip install -e '.[dev]'`. Docker pins the tested dependency versions in `requirements.lock`; the frontend uses `package-lock.json`. Run SQLite unit tests without Docker using `EMBEDDER=hash pytest`; PostgreSQL-only integration tests run in `make test`.
