@@ -49,3 +49,9 @@ Preview and import share the same schema/parser in `ingest/validation.py`. Dupli
 ## Published evaluation evidence
 
 `evals/export_evidence.py` validates report identities, finite measurements, coherent counts, scenario totals, key ratios and recomputed release gates before exporting six provider/retrieval slots. Missing files remain null. The generated frontend JSON contains only validated report fields and fingerprints of the original source files. It is static published evidence, not operational workspace telemetry. `make evidence` regenerates it after evaluations; rebuilding packages that snapshot into nginx. CI checks the committed snapshot before fresh evaluation runs. The README table and the evidence page use the same report files.
+
+## Response durability and verification boundaries
+
+HTTP database dependencies use function scope: their transaction commits before FastAPI sends success. If commit fails, the request returns an error and both imported records and their audit event roll back. API handlers materialize response data while the session is open; no endpoint streams lazy ORM records after transaction completion. `test_transactions.py` injects a commit failure at this boundary.
+
+Release gates accept only measured finite rates in [0, 1], reject boolean/coerced values, and require an explicitly observed zero incomplete-investigation count. The same gate function is used by the evaluation runner and published-evidence validator. MCP connectivity checks accept an empty result set and separately verify the exact read-only tool inventory. The protocol suite exercises both empty and populated databases, including an isolated PostgreSQL schema.

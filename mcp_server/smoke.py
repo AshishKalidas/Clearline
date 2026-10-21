@@ -29,10 +29,14 @@ async def main() -> None:
     async with stdio_client(params) as (read, write), ClientSession(read, write) as client:
         await client.initialize()
         tools = (await client.list_tools()).tools
-        assert {tool.name for tool in tools} == EXPECTED_TOOLS
-        assert all(tool.annotations and tool.annotations.readOnlyHint for tool in tools)
+        if {tool.name for tool in tools} != EXPECTED_TOOLS:
+            raise RuntimeError("MCP tool inventory differs from the read-only contract")
+        if not all(tool.annotations and tool.annotations.readOnlyHint for tool in tools):
+            raise RuntimeError("Every MCP tool must declare its read-only contract")
         result = await client.call_tool("search_invoices", {"tolerance_cents": 0})
-        assert not result.isError and result.content
+        # The SDK serializes an empty list as empty content; an empty ledger is valid.
+        if result.isError:
+            raise RuntimeError("MCP invoice search returned a tool error")
         print("MCP stdio: initialized; 8 read-only tools; search_invoices succeeded.")
 
 

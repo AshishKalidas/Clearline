@@ -33,7 +33,7 @@ An operational gate also fails runs with incomplete investigations (provider err
 
 Claude and MiMo evaluations are opt-in: configure the provider variables in `.env`, recreate the API service, then use `make eval-claude` or `make eval-mimo`. MiMo requires the exact model ID supplied by your provider; no ID is guessed. The Claude default is the PRD-requested ID and can be overridden for an available account model.
 
-No live comparison or recommended live-model default is asserted until both providers have measured reports. The README displays “not yet run” for missing live runs. This repository's results are engineering evidence on synthetic fixtures, not production accuracy, fraud-loss reduction or a guarantee of employment.
+No live comparison or recommended live-model default is asserted until both providers have measured reports. The README displays “not yet run” for missing live runs. This repository's results are engineering evidence on synthetic fixtures, not production accuracy or measured fraud-loss reduction.
 
 ## Inspecting and publishing results
 

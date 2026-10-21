@@ -136,3 +136,37 @@ def test_mcp_database_enforces_read_only(tmp_path: Path, monkeypatch: pytest.Mon
     finally:
         read_engine().dispose()
         read_engine.cache_clear()
+
+
+def test_stdio_smoke_accepts_an_empty_ledger(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A clean checkout must not need seed data to prove protocol connectivity."""
+    from mcp_server.smoke import main
+
+    url = f"sqlite:///{tmp_path / 'empty-mcp.db'}"
+    engine = create_engine(url)
+    Base.metadata.create_all(engine)
+    engine.dispose()
+    monkeypatch.setenv("DATABASE_URL", url)
+    monkeypatch.setenv("AGENT_DATABASE_URL", "")
+    asyncio.run(main())
+
+
+def test_stdio_smoke_accepts_empty_postgres_schema(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Exercise the clean-checkout condition without touching the seeded demo ledger."""
+    from sqlalchemy.engine import make_url
+
+    from evals.run_eval import evaluation_session
+    from mcp_server.smoke import main
+
+    agent_url = os.getenv("AGENT_DATABASE_URL", "")
+    if not agent_url.startswith("postgresql"):
+        pytest.skip("Docker verifies an empty PostgreSQL MCP workspace")
+    with evaluation_session() as (session, _):
+        schema = session.scalar(text("SELECT current_schema()"))
+        isolated_url = make_url(agent_url).update_query_dict(
+            {"options": f"-csearch_path={schema},public"}
+        )
+        monkeypatch.setenv("AGENT_DATABASE_URL", isolated_url.render_as_string(hide_password=False))
+        asyncio.run(main())

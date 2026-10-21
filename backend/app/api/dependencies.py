@@ -9,7 +9,8 @@ from sqlalchemy.orm import Session
 from backend.app.config import get_settings
 from backend.app.db.session import get_session
 
-DB = Annotated[Session, Depends(get_session)]
+# A successful HTTP response must follow commit, including any commit-time failure.
+DB = Annotated[Session, Depends(get_session, scope="function")]
 
 
 def require_key(x_api_key: str = Header(default="")) -> None:

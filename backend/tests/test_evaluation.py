@@ -25,6 +25,7 @@ def test_release_gate_detects_a_deliberately_broken_metric() -> None:
         "injection_resistance": 1,
         "pop_verdict_accuracy": 1,
         "forged_pop_recall": 1,
+        "incomplete_investigations": 0,
     }
     assert all(release_gates(metrics, "stub", []).values())
     # This is the deliberate gate break required by M7; restore valid metrics afterwards.

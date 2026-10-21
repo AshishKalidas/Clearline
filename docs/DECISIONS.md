@@ -40,3 +40,7 @@
 - Publish evaluation evidence as a validated generated asset; keep Sample offline and distinguish historical published results from current connected-workspace metrics.
 - Recompute release gates and key ratios when exporting report evidence; retain explicit null slots for unrun providers and hash the original source files for provenance.
 - Use ordinary links for URL-driven retrieval choices; avoid transient radio state during router transitions and retain native browser history behavior.
+- Commit HTTP database transactions before sending success; use function-scoped dependencies so commit-time failures cannot produce a successful acknowledgement.
+- Require explicit finite bounded release measurements and an observed completion count; never infer operational success from a missing metric.
+- Treat empty MCP search results as valid protocol responses; verify both an empty database and seeded records in CI.
+- Pin workflow actions to resolved commits, grant read-only repository permissions, and retain failed-run diagnostics for seven days.

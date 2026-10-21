@@ -1,24 +1,60 @@
 name: Clearline release gates
 on: [push, pull_request]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      LLM_PROVIDER: stub
     steps:
-      - uses: actions/checkout@v4
-      - run: make up
-      - run: make lint typecheck test
-      - run: make evidence-check
-      - run: make eval
-      - run: make mcp-check
-      - run: make seed
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Build and start services
+        run: make up
+      - name: Check backend contracts and coverage
+        run: make lint typecheck test
+      - name: Verify published evidence
+        run: make evidence-check
+      - name: Check MCP against an empty ledger
+        run: make mcp-check
+      - name: Evaluate retrieval on and off
+        run: make eval
+      - name: Seed the browser workspace
+        run: make seed
+      - name: Check MCP against seeded records
+        run: make mcp-check
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 24
           cache: npm
           cache-dependency-path: web/package-lock.json
-      - run: npm ci && npm run build && npm test && npx prettier --check src e2e '*.ts' '*.json' index.html
+      - name: Check web types, units and formatting
+        run: npm ci && npm run build && npm test && npx prettier --check src e2e '*.ts' '*.json' index.html
         working-directory: web
-      - run: npx playwright install --with-deps chromium && npm run test:e2e
+      - name: Exercise browser workflows against nginx
+        run: npx playwright install --with-deps chromium && npm run test:e2e
         working-directory: web
-      - if: always()
-        run: docker compose logs && make down
+      - name: Collect service diagnostics
+        if: failure()
+        continue-on-error: true
+        run: docker compose logs --no-color > compose.log
+      - name: Preserve failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: verification-failure
+          path: |
+            compose.log
+            web/test-results/
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Stop services
+        if: always()
+        run: make down

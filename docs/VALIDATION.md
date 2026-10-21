@@ -1,10 +1,10 @@
 # Executed validation
 
-Build verification updated on 21 October 2026; the base platform was completed on 7 October 2026. All financial fixtures are synthetic. The checks below were executed locally; the GitHub Actions workflow is configured to repeat them, but no remote GitHub workflow or deployment is claimed.
+Build verification updated on 21 October 2026; the base platform was completed on 7 October 2026. All financial fixtures are synthetic. The checks below record local execution. The GitHub Actions workflow repeats the release checks on pushes and pull requests; its current status is linked from the README. No public application deployment is claimed.
 
 | Check | Observed result |
 |---|---|
-| Docker backend suite | 80 passed; 95.48% statement coverage on `backend/app`; required threshold 85% |
+| Docker backend suite | 101 passed; 95.48% statement coverage on `backend/app`; required threshold 85% |
 | Ruff lint and formatting | Clean |
 | Strict mypy | Clean on `backend/app`, `mcp_server` and the report exporter (58 source files) |
 | Frontend unit suite | 20 tests passed in 7 files |
@@ -42,3 +42,7 @@ The October 21 pass adds guided CSV imports and an offline-capable report explor
 Both PostgreSQL stub evaluations were rerun on October 21: retrieval on/off passed every gate, with 400 bank cases, 228 agent investigations, 54 automatic agent allocations, zero wrong auto allocations and 60 proofs per run. The README table and generated frontend snapshot match those current report files. The production browser suite exercises invalid-file feedback, explicit import confirmation, both CSV kinds, repeated import skips, activity events, template download, report query/history state, API-blocked evidence access, and desktop/phone overflow checks. Light/dark screenshots were visually inspected. A template ID collision with seeded history was caught during browser validation and corrected before release.
 
 The clean-checkout smoke check recorded above predates this refinement. The current pass rebuilt and tested the main Docker/nginx application with its existing synthetic ledger; no public deployment, remote CI execution or paid live-model run was performed.
+
+## Transaction and verification contracts
+
+Commit-failure injection confirms that HTTP success follows database commit: a refused commit returns 500 and leaves no imported bank records or import audit event. The shared database dependency enforces the same boundary for review writes. Rate-gate regressions cover missing metrics, booleans, strings, non-finite and out-of-range values, operational completion evidence and inclusive provider thresholds. MCP stdio tests accept empty ledgers on SQLite and an isolated PostgreSQL schema while retaining the existing populated-tool and read-only checks. CI executes protocol checks before and after seeding, pins action implementations and preserves failure diagnostics.
