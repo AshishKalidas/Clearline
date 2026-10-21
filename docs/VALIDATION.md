@@ -4,11 +4,11 @@ Build verification updated on 21 October 2026; the base platform was completed o
 
 | Check | Observed result |
 |---|---|
-| Docker backend suite | 101 passed; 95.48% statement coverage on `backend/app`; required threshold 85% |
+| Docker backend suite | 110 passed; 95.50% statement coverage on `backend/app`; required threshold 85% |
 | Ruff lint and formatting | Clean |
 | Strict mypy | Clean on `backend/app`, `mcp_server` and the report exporter (58 source files) |
-| Frontend unit suite | 27 tests passed in 8 files |
-| Frontend build | TypeScript check and Vite production build passed; React bundle 269.77 kB before gzip |
+| Frontend unit suite | 33 tests passed in 8 files |
+| Frontend build | TypeScript check and Vite production build passed; React bundle 271.13 kB before gzip |
 | Browser against nginx + actual API | 11 Playwright tests passed: actual reviews/uploads, API-blocked sample use, deep links/history, mobile layouts, saved appearance, reduced transparency/motion, increased contrast, live polling pause/recovery, navigation during a pending approval, scrolling navigation blur, offline published evidence, and actual CSV validation/import/deduplication in desktop/phone layouts |
 | Live SDK adapters | Recorded HTTP response tests exercised both real SDKs, retries, request masking, tool translation, malformed replies, usage and transport closure; no paid network calls |
 | MCP stdio client | Initialized; exactly 8 read-only tools listed; `search_invoices` succeeded against PostgreSQL |
@@ -23,7 +23,7 @@ The clean demo used alternate loopback ports (web 5175, API 18001, PostgreSQL 54
 
 The current report files are the source of truth for exact evaluation metrics and timing. Stub throughput is machine/load dependent; synthetic decision accuracy is not an estimate of live-model quality. The local embedding interface is tested with a stand-in cached encoder; a downloaded MiniLM checkpoint and real provider inference were not benchmarked. Missing live results remain “not yet run.”
 
-A credential/private-key pattern scan of committed source trees found no matches. This is a targeted repository check, not a general security audit. Public local Docker passwords and the local demo mutation key are intentionally documented demonstration values.
+Gitleaks 8.30.1 scanned complete Git history with redacted output and found no leaks. The release archive was checked against its published SHA-256 checksum. Repository-local ignore rules were verified with global Git exclusions disabled: `.env` and nested environment variants are ignored while `.env.example` remains eligible for tracking. Public local Docker passwords and the local demo mutation key are intentionally documented demonstration values. Pattern scanning is not a general security audit.
 
 ## Workspace redesign checks
 
@@ -52,3 +52,11 @@ Commit-failure injection confirms that HTTP success follows database commit: a r
 The import controller now represents idle, validating, ready, importing and complete states as a discriminated TypeScript union. Ready/active/completed states require their file and preview data; only a confirmed ready state can write. Seven controller tests cover file/confirmation identity, synchronous duplicate-event suppression, cancellation on unmount, expired responses, completion after navigation, safe error/retry state and disabled-workspace isolation. A browser regression delays a genuine import response, navigates away, releases the response and verifies that the write completes and the selected route remains unchanged.
 
 [GitHub release verification](https://github.com/AshishKalidas/Clearline/actions/runs/39589588539) completed successfully on a clean Ubuntu runner for the transaction/verification changes, including both MCP data states, retrieval-on/off evaluation, backend/web checks and the browser workflows. The workflow repeats the same release process for subsequent commits.
+
+## Configuration and proof-verification contracts
+
+Configuration regressions verify that provider/mutation keys and database URLs do not appear in settings diagnostics, live SDK constructors receive the unwrapped test key without making a request, an empty mutation key fails configuration, and invalid/non-ASCII headers return 401. CI independently scans complete Git history with a pinned, checksum-verified Gitleaks binary. Neither Docker build context admits local environment files.
+
+Temporary synthetic environment probes at the repository root, frontend root and nested frontend source directory were excluded from the rebuilt API image and frontend build stage. All probes and the temporary builder tag were removed after verification.
+
+Proof verification now has explicit idle, verifying, loading-bank and complete states. UI regressions cover locked inputs, synchronous duplicate-event suppression, invoice-change invalidation, exact bank-record lookup, preservation of a saved verdict when its supplementary read fails, upload completion after navigation, read cancellation and failed-upload retry. A backend regression places the linked bank record outside a 1,000-record feed and confirms that it remains individually addressable. The browser workflow checks the actual linked bank observation before proceeding to the next upload.

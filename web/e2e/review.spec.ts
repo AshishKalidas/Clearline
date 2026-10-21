@@ -98,6 +98,8 @@ test('verify genuine and absent payment claims from the browser', async ({ page 
     .setInputFiles('../evals/datasets/seed-42/pops/proof-001.pdf');
   await page.getByRole('button', { name: /Verify payment claim/ }).click();
   await expect(page.locator('.verdict-heading h2')).toHaveText('verified');
+  await expect(page.locator('.bank-proof')).toContainText('LINKED BANK OBSERVATION');
+  await expect(page.getByRole('button', { name: /Verify payment claim/ })).toBeEnabled();
   await page.screenshot({ path: '../docs/images/proof-verification.png', fullPage: true });
   await page
     .getByLabel('Proof of payment PDF')

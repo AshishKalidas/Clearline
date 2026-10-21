@@ -121,7 +121,7 @@ function SampleProofView() {
   );
 }
 export function ProofPage() {
-  const { mode } = useWorkspace();
+  const { mode, reload } = useWorkspace();
   const { credentials } = usePreferences();
   return (
     <>
@@ -130,7 +130,11 @@ export function ProofPage() {
         title="Verify before you release."
         description="A proof is a claim. The bank feed is the evidence."
       />
-      {mode === 'sample' ? <SampleProofView /> : <ProofView credentials={credentials} />}
+      {mode === 'sample' ? (
+        <SampleProofView />
+      ) : (
+        <ProofView credentials={credentials} onVerified={reload} />
+      )}
     </>
   );
 }

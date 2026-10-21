@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
 import { Icon } from './Icon';
 import { dateLabel, money } from './api';
+import { useProofVerification } from './proofs/useProofVerification';
 import { useWorkspaceRequest } from './workspace/Workspace';
-import type { BankLine, Credentials, PopResult } from './types';
+import type { Credentials } from './types';
 
 const checkNames: Record<string, string> = {
   bank_presence: 'Payment in bank feed',
@@ -15,46 +16,21 @@ const checkNames: Record<string, string> = {
   required_fields: 'Required fields readable',
 };
 
-export function ProofView({ credentials }: { credentials: Credentials }) {
+export function ProofView({
+  credentials,
+  onVerified,
+}: {
+  credentials: Credentials;
+  onVerified: () => void;
+}) {
   const request = useWorkspaceRequest();
   const [file, setFile] = useState<File | null>(null);
   const [invoice, setInvoice] = useState('');
-  const [result, setResult] = useState<PopResult | null>(null);
-  const [bank, setBank] = useState<BankLine | null>(null);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { state, busy, reset, verify } = useProofVerification({ request, credentials, onVerified });
+  const result = 'result' in state ? state.result : null;
+  const bank = state.phase === 'complete' ? state.bank : null;
+  const error = state.phase === 'idle' ? state.error : null;
   const fileInput = useRef<HTMLInputElement>(null);
-
-  async function verify() {
-    if (!file || busy) return;
-    if (file.size > 5000000) {
-      setError('Choose a PDF smaller than 5 MB.');
-      return;
-    }
-    setBusy(true);
-    setError(null);
-    setResult(null);
-    setBank(null);
-    const data = new FormData();
-    data.append('file', file);
-    if (invoice.trim()) data.append('claimed_invoice_number', invoice.trim().toUpperCase());
-    try {
-      const verdict = await request<PopResult>(
-        '/pops',
-        { method: 'POST', body: data },
-        credentials,
-      );
-      setResult(verdict);
-      if (verdict.matched_bank_line_id) {
-        const lines = await request<BankLine[]>('/bank-lines?limit=1000');
-        setBank(lines.find((line) => line.id === verdict.matched_bank_line_id) ?? null);
-      }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Could not verify this document.');
-    } finally {
-      setBusy(false);
-    }
-  }
 
   return (
     <div className="proof-workspace">
@@ -64,6 +40,7 @@ export function ProofView({ credentials }: { credentials: Credentials }) {
         <p className="subtle">Check the payment against the bank feed before releasing goods.</p>
         <button
           className={`dropzone ${file ? 'has-file' : ''}`}
+          disabled={busy}
           onClick={() => fileInput.current?.click()}
         >
           <div className="upload-symbol">
@@ -82,24 +59,28 @@ export function ProofView({ credentials }: { credentials: Credentials }) {
           accept="application/pdf,.pdf"
           aria-label="Proof of payment PDF"
           className="visually-hidden"
+          disabled={busy}
           onChange={(e) => {
             setFile(e.target.files?.[0] ?? null);
-            setResult(null);
-            setError(null);
+            reset();
           }}
         />
         <label>
           Claimed invoice <span className="subtle">Optional</span>
           <input
             value={invoice}
+            disabled={busy}
             placeholder="INV-100123"
-            onChange={(e) => setInvoice(e.target.value)}
+            onChange={(e) => {
+              setInvoice(e.target.value);
+              reset();
+            }}
           />
         </label>
         <button
           className="primary-button full"
           disabled={!file || busy}
-          onClick={() => void verify()}
+          onClick={() => void verify(file, invoice)}
         >
           <Icon name="shield" />
           {busy ? 'Checking bank evidence…' : 'Verify payment claim'}
@@ -149,6 +130,12 @@ export function ProofView({ credentials }: { credentials: Credentials }) {
                 </div>
               ))}
             </div>
+            {state.phase === 'loading-bank' && <p role="status">Loading linked bank evidence…</p>}
+            {state.phase === 'complete' && state.evidenceError && (
+              <p className="form-error" role="alert">
+                {state.evidenceError}
+              </p>
+            )}
             {bank && (
               <div className="bank-proof">
                 <span className="eyebrow">LINKED BANK OBSERVATION</span>

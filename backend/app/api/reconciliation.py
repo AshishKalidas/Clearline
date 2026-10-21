@@ -102,6 +102,15 @@ def proposals(session: DB, status: str = "pending") -> list[dict[str, Any]]:
     return [serialize_proposal(p, line) for p, line in session.execute(query)]
 
 
+@router.get("/bank-lines/{bank_line_id}")
+def bank_line_detail(bank_line_id: str, session: DB) -> dict[str, Any]:
+    """Read one bank observation independently of the feed's display limit."""
+    line = session.get(BankLine, bank_line_id)
+    if line is None:
+        raise HTTPException(404, "Bank line not found")
+    return serialize_line(line)
+
+
 @router.get("/audit/{bank_line_id}")
 def audit(bank_line_id: str, session: DB) -> list[dict[str, Any]]:
     """Read the complete ordered append-only trace for a bank line."""
