@@ -1,6 +1,7 @@
 """MiMo adapter for a configured OpenAI-compatible Chat Completions endpoint."""
 
 import json
+from decimal import Decimal
 from typing import Any, cast
 
 from openai import AsyncOpenAI
@@ -23,12 +24,19 @@ def parse_arguments(raw: str) -> dict[str, Any]:
 class OpenAICompatLLM:
     """Opt-in MiMo client; the exact model ID must come from MIMO_MODEL."""
 
-    def __init__(self, settings: Settings, sdk: AsyncOpenAI | None = None) -> None:
+    def __init__(
+        self,
+        settings: Settings,
+        sdk: AsyncOpenAI | None = None,
+        *,
+        provider_options: dict[str, object] | None = None,
+    ) -> None:
         if not settings.mimo_model:
             raise ValueError("MIMO_MODEL must be configured; no model ID is guessed")
         if sdk is None and (not settings.mimo_api_key or not settings.mimo_base_url):
             raise ValueError("MIMO_API_KEY and MIMO_BASE_URL are required")
         self.model = settings.mimo_model
+        self.provider_options = provider_options
         self.sdk = sdk or AsyncOpenAI(
             api_key=settings.mimo_api_key.get_secret_value(),
             base_url=settings.mimo_base_url,
@@ -54,6 +62,8 @@ class OpenAICompatLLM:
             tools=tools,
             tool_choice="auto",
             temperature=0,
+            max_tokens=2048,
+            extra_body=self.provider_options,
         )
         calls = []
         for choice in response.choices:
@@ -65,8 +75,15 @@ class OpenAICompatLLM:
                         )
                     )
         usage = response.usage
+        raw_cost = (usage.model_extra or {}).get("cost") if usage else None
+        cost = Decimal(str(raw_cost)) if raw_cost is not None else None
+        if cost is not None and (not cost.is_finite() or cost < 0):
+            raise ValueError("Provider returned an invalid cost measurement")
         return ModelReply(
-            calls, usage.prompt_tokens if usage else 0, usage.completion_tokens if usage else 0
+            calls,
+            usage.prompt_tokens if usage else 0,
+            usage.completion_tokens if usage else 0,
+            cost,
         )
 
     async def aclose(self) -> None:

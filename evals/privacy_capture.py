@@ -1,5 +1,6 @@
 """Observe the final normalized model boundary without persisting unmasked inputs."""
 
+from decimal import Decimal
 from typing import Any
 
 from backend.app.agent.llm.base import LLMClient, ModelReply
@@ -14,6 +15,8 @@ class PrivacyCapture:
         self.model = client.model
         self.request_count = 0
         self.errors: list[str] = []
+        self.metered_requests = 0
+        self.cost_usd = Decimal(0)
 
     async def complete(
         self, messages: list[dict[str, Any]], schemas: list[dict[str, object]], timeout: float
@@ -25,7 +28,11 @@ class PrivacyCapture:
             self.errors.append(
                 f"Outbound request {self.request_count} contained a sensitive pattern"
             )
-        return await self.client.complete(cleaned, schemas, timeout)
+        reply = await self.client.complete(cleaned, schemas, timeout)
+        if reply.cost_usd is not None:
+            self.metered_requests += 1
+            self.cost_usd += reply.cost_usd
+        return reply
 
     async def aclose(self) -> None:
         """Release the wrapped provider's transport."""

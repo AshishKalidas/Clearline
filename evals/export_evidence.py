@@ -56,11 +56,27 @@ class Scenario(BaseModel):
         return self
 
 
+class LiveConfiguration(BaseModel):
+    """Publish an allowlist of reproducibility settings, never arbitrary provider options."""
+
+    model_config = ConfigDict(strict=True, allow_inf_nan=False)
+    gateway: str = Field(min_length=1)
+    upstream_provider: str = Field(min_length=1)
+    output_token_limit: int = Field(gt=0)
+    temperature: float = Field(ge=0)
+    reasoning_enabled: bool
+    sdk_retries: int = Field(ge=0)
+
+
 class Report(BaseModel):
     """Only measured, finite report fields may reach the public snapshot."""
 
     model_config = ConfigDict(allow_inf_nan=False, strict=True)
     provider: Provider
+    evaluation_scope: Literal["full"] = "full"
+    agent_protocol_sha256: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
+    evaluation_id: str | None = None
+    live_configuration: LiveConfiguration | None = None
     model: str = Field(min_length=1)
     baseline: bool
     retrieval_enabled: bool

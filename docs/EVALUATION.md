@@ -19,7 +19,7 @@ Rules match rate is rules matches divided by all 400 labelled observations. Rule
 
 Escalation recall covers unknown, ambiguous and injected lines that must escalate. Precision counts how many proposed escalations are required by the labels. Injection resistance checks whether an injected target invoice was proposed. PoP verdict accuracy is exact four-class agreement; forged-PoP recall detects absent and inconsistent claims. These classes describe fixture manipulation, not an assertion that an unreadable real-world PDF is fraudulent.
 
-Steps, tokens and latency come from the executed loop and SDK usage. Stub tokens and model API cost are zero because it makes no network requests. Live API cost is left unpriced rather than guessing current vendor rates. Token counts remain available for costing with your actual contracted prices. Retrieval lift is the accuracy difference between compatible on/off reports. The scripted baseline does not use semantic inference, so a zero lift is expected and does not test an LLM's use of retrieved context.
+Steps, tokens and latency come from the executed loop and SDK usage. Stub tokens and model API cost are zero because it makes no network requests. Live API cost is the sum of provider-reported USD charges when every request is metered; missing billing remains null. No token-price estimate is substituted for an actual charge. Costs exclude local infrastructure. Retrieval lift is the accuracy difference between full on/off reports with matching dataset, model, database, embedder, agent protocol and live routing configuration. Budgeted pairs also share an execution ID. The scripted baseline does not use semantic inference, so a zero lift is expected and does not test an LLM's use of retrieved context.
 
 ## Release gates
 
@@ -33,7 +33,23 @@ An operational gate also fails runs with incomplete investigations (provider err
 
 Claude and MiMo evaluations are opt-in: configure the provider variables in `.env`, recreate the API service, then use `make eval-claude` or `make eval-mimo`. MiMo requires the exact model ID supplied by your provider; no ID is guessed. The Claude default is the PRD-requested ID and can be overridden for an available account model.
 
-No live comparison or recommended live-model default is asserted until both providers have measured reports. The README displays “not yet run” for missing live runs. This repository's results are engineering evidence on synthetic fixtures, not production accuracy or measured fraud-loss reduction.
+The OpenRouter runner requires an explicit dollar budget and pins one upstream provider. With `MIMO_BASE_URL=https://openrouter.ai/api/v1`, a key in the runtime environment and the exact `MIMO_MODEL`, start with a pilot:
+
+```bash
+docker compose exec -T api python -m evals.live_run \
+  --provider Relace --budget-usd 1.00 \
+  --max-agent-cases 20 --out evals/pilots/my-pilot
+```
+
+This reads the public endpoint catalog, requires tool/output-limit support, caps upstream prices, reserves the entire context plus maximum output cost before each request, then reconciles the reservation with observed billing. It disables SDK retries. Missing/invalid billing, a transport failure or an insufficient remaining budget blocks further paid requests. An unsettled reservation is a conservative maximum, not a measured bill. `execution.json` records both quantities, request attempts, configuration and completed modes even when a run aborts. The limit applies to one invocation; subtract earlier runs when enforcing an overall session budget. Direct `make eval-mimo` / `make eval-claude` runs do not provide this spending guard. The provider contracts are documented under [routing and price ceilings](https://openrouter.ai/docs/guides/routing/provider-selection) and [usage accounting](https://openrouter.ai/docs/cookbook/administration/usage-accounting).
+
+A 20-case pilot samples two cases from each of the ten agent scenarios. Rules and proofs still run over the complete fixture set; only the model-investigation denominator is reduced. Reports explicitly record `evaluation_scope=pilot` and the eligible population. Pilots cannot be exported as full results or used for retrieval-lift claims. Keep them under `evals/pilots/`. Omit `--max-agent-cases` for a full retrieval-on/off pair, then copy the reports from the container and regenerate the published snapshot. Both modes use the same protocol, output limit, temperature, upstream route and dataset; temperature zero is not a guarantee of deterministic vendor inference.
+
+Use `--retrieval on` or `--retrieval off` to run one mode after an interruption. Choose a fresh `--out` directory: the runner refuses to overwrite an existing execution receipt or selected-mode report. Preserve the interrupted receipt and its unsettled reservations in the overall budget. A restarted invocation receives a new execution ID; independently completed modes can be published, but their retrieval lift remains unmeasured.
+
+These fixtures are a development benchmark: failure traces were inspected to improve tool feedback and schema handling. They are not an unseen holdout. No recommended live-model default or Claude/MiMo comparison is asserted until both providers have measured reports. Unrun slots remain “Not yet run.” This repository's results are engineering evidence on synthetic fixtures, not production accuracy or measured fraud-loss reduction.
+
+The budgeted configuration disables model reasoning explicitly. The common transcript currently retains tool calls/results, not provider-specific reasoning continuation blocks; reasoning-enabled multi-turn inference is outside the validated integration. Do not generalize the measured configuration's outcomes to other reasoning modes, routes or model versions.
 
 ## Inspecting and publishing results
 

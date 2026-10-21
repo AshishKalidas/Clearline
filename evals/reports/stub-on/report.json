@@ -1,13 +1,16 @@
 {
   "provider": "stub",
+  "evaluation_scope": "full",
+  "eligible_agent_cases": 228,
   "model": "stub-baseline-v1",
   "baseline": true,
   "retrieval_enabled": true,
   "embedder": "hash",
   "database": "postgresql16-pgvector",
-  "created_at": "2026-10-21T09:56:52.691280+00:00",
+  "created_at": "2026-10-21T14:20:29.150136+00:00",
   "seed": 42,
   "dataset_sha256": "087257cadde5534f7ca15a31f93f2b18cfa0e7171c92508581db7edad0074db1",
+  "agent_protocol_sha256": "8ad84e9ff74d6cd223486cfaec923e5be1ccbe4f9c61cb62fa518da0a02d0bcb",
   "counts": {
     "bank_cases": 400,
     "agent_cases": 228,
@@ -32,7 +35,7 @@
     "mean_steps": 6,
     "mean_prompt_tokens": 0,
     "mean_completion_tokens": 0,
-    "mean_latency_ms": 24.63157894736842,
+    "mean_latency_ms": 21.81578947368421,
     "model_api_cost_usd": 0,
     "retrieval_lift": 0.0
   },

@@ -21,11 +21,14 @@ def anthropic_messages(messages: list[dict[str, Any]]) -> tuple[str, list[Messag
             continue
         if role == "tool":
             result = json.loads(message["content"])
+            tool_result = (
+                result["result"] if isinstance(result, dict) and "evidence_id" in result else result
+            )
             block = {
                 "type": "tool_result",
                 "tool_use_id": message["tool_call_id"],
                 "content": message["content"],
-                "is_error": isinstance(result, dict) and "error" in result,
+                "is_error": isinstance(tool_result, dict) and "error" in tool_result,
             }
             if (
                 translated

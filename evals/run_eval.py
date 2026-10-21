@@ -3,12 +3,14 @@
 import argparse
 import asyncio
 import hashlib
+import inspect
 import json
 import os
 import tempfile
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from datetime import UTC, datetime
+from itertools import zip_longest
 from pathlib import Path
 from statistics import mean
 from typing import Any
@@ -18,9 +20,12 @@ from sqlalchemy import create_engine, select, text
 from sqlalchemy.orm import Session
 
 from backend.app.agent.invariants import check_invariants
+from backend.app.agent.llm.base import LLMClient
 from backend.app.agent.llm.factory import create_client
 from backend.app.agent.loop import investigate
-from backend.app.config import get_settings
+from backend.app.agent.prompts import SYSTEM_PROMPT
+from backend.app.agent.schemas import tool_schemas
+from backend.app.config import Settings, get_settings
 from backend.app.db.models import AuditEvent, BankLine, Base, Proposal
 from backend.app.ingest.seed import load_dataset
 from backend.app.matching.service import run_rules, snapshot
@@ -85,13 +90,25 @@ def ratio(numerator: int, denominator: int) -> float:
     return numerator / denominator if denominator else 0.0
 
 
-async def evaluate(provider: str, retrieval: bool, out: Path) -> dict[str, Any]:
+async def evaluate(
+    provider: str,
+    retrieval: bool,
+    out: Path,
+    *,
+    max_agent_cases: int | None = None,
+    client_factory: Callable[[Settings], LLMClient] = create_client,
+    progress: Callable[[int, int], None] | None = None,
+) -> dict[str, Any]:
     """Run an evaluation without leaking provider/ablation settings into its caller."""
     keys = ("RETRIEVAL_ENABLED", "LLM_PROVIDER", "EMBEDDER")
     previous = {key: os.environ.get(key) for key in keys}
     clients: list[PrivacyCapture] = []
     try:
-        return await _evaluate(provider, retrieval, out, clients)
+        if max_agent_cases is not None and max_agent_cases < 1:
+            raise ValueError("Pilot size must be positive")
+        return await _evaluate(
+            provider, retrieval, out, clients, max_agent_cases, client_factory, progress
+        )
     finally:
         for client in clients:
             await client.aclose()
@@ -105,7 +122,13 @@ async def evaluate(provider: str, retrieval: bool, out: Path) -> dict[str, Any]:
 
 
 async def _evaluate(
-    provider: str, retrieval: bool, out: Path, clients: list[PrivacyCapture]
+    provider: str,
+    retrieval: bool,
+    out: Path,
+    clients: list[PrivacyCapture],
+    max_agent_cases: int | None,
+    client_factory: Callable[[Settings], LLMClient],
+    progress: Callable[[int, int], None] | None,
 ) -> dict[str, Any]:
     """Run a fresh 400-case bank set and 60 proofs through real application paths."""
     os.environ["RETRIEVAL_ENABLED"] = str(retrieval).lower()
@@ -114,7 +137,7 @@ async def _evaluate(
     get_settings.cache_clear()
     get_embedder.cache_clear()
     settings = get_settings()
-    client = PrivacyCapture(create_client(settings))
+    client = PrivacyCapture(client_factory(settings))
     clients.append(client)
     failures: list[dict[str, Any]] = []
     with tempfile.TemporaryDirectory(prefix="clearline-eval-") as temporary:
@@ -140,15 +163,30 @@ async def _evaluate(
                 .where(BankLine.status == "unmatched", BankLine.id.in_(labels))
                 .order_by(BankLine.value_date, BankLine.id)
             ).all()
-            for line in agent_lines:
+            eligible_agent_cases = len(agent_lines)
+            if max_agent_cases is not None:
+                groups: dict[str, list[BankLine]] = {}
+                for line in agent_lines:
+                    groups.setdefault(labels[line.id]["scenario"], []).append(line)
+                # Round-robin across scenarios prevents a pilot from selecting only easy cases.
+                agent_lines = [
+                    line
+                    for batch in zip_longest(*(groups[name] for name in sorted(groups)))
+                    for line in batch
+                    if line is not None
+                ][:max_agent_cases]
+            for position, line in enumerate(agent_lines, start=1):
                 await investigate(session, line, client, settings)
+                if progress:
+                    progress(position, len(agent_lines))
             session.flush()
             proposals = session.scalars(
                 select(Proposal).where(Proposal.bank_line_id.in_(labels))
             ).all()
             correct = auto = wrong_auto = escalations = correct_escalations = injections_safe = 0
-            must_escalate = sum(label["decision"] == "escalate" for label in labels.values())
-            injection_count = sum(label["scenario"] == "injection" for label in labels.values())
+            evaluated_labels = [labels[line.id] for line in agent_lines]
+            must_escalate = sum(label["decision"] == "escalate" for label in evaluated_labels)
+            injection_count = sum(label["scenario"] == "injection" for label in evaluated_labels)
             scenario_scores: dict[str, dict[str, int]] = {}
             for proposal in proposals:
                 label = labels[proposal.bank_line_id]
@@ -225,7 +263,13 @@ async def _evaluate(
                 "mean_prompt_tokens": mean(p.prompt_tokens for p in proposals),
                 "mean_completion_tokens": mean(p.completion_tokens for p in proposals),
                 "mean_latency_ms": mean(p.latency_ms for p in proposals),
-                "model_api_cost_usd": 0 if provider == "stub" else None,
+                "model_api_cost_usd": (
+                    0
+                    if provider == "stub"
+                    else float(client.cost_usd)
+                    if client.metered_requests == client.request_count
+                    else None
+                ),
                 "retrieval_lift": None,
             }
             traces = []
@@ -249,6 +293,8 @@ async def _evaluate(
             gates = release_gates(metrics, provider, invariant_errors)
             report = {
                 "provider": provider,
+                "evaluation_scope": "full" if max_agent_cases is None else "pilot",
+                "eligible_agent_cases": eligible_agent_cases,
                 "model": client.model,
                 "baseline": provider == "stub",
                 "retrieval_enabled": retrieval,
@@ -258,6 +304,16 @@ async def _evaluate(
                 "seed": 42,
                 "dataset_sha256": hashlib.sha256(
                     (directory / "labels.json").read_bytes()
+                ).hexdigest(),
+                "agent_protocol_sha256": hashlib.sha256(
+                    json.dumps(
+                        {
+                            "prompt": SYSTEM_PROMPT,
+                            "tools": tool_schemas(),
+                            "loop": inspect.getsource(investigate),
+                        },
+                        sort_keys=True,
+                    ).encode()
                 ).hexdigest(),
                 "counts": {
                     "bank_cases": len(labels),
@@ -286,7 +342,8 @@ async def _evaluate(
     refresh_lift(provider, out)
     for path in out.glob(f"{provider}-*/report.json"):
         regenerate_markdown(path)
-    return json.loads((run_directory / "report.json").read_text())
+    saved_report: dict[str, Any] = json.loads((run_directory / "report.json").read_text())
+    return saved_report
 
 
 def refresh_lift(provider: str, out: Path) -> None:
@@ -298,6 +355,13 @@ def refresh_lift(provider: str, out: Path) -> None:
     compatible = all(
         reports[0][key] == reports[1][key]
         for key in ("dataset_sha256", "model", "embedder", "database")
+    )
+    compatible = compatible and all(
+        report.get("evaluation_scope", "full") == "full" for report in reports
+    )
+    compatible = compatible and all(
+        reports[0].get(key) == reports[1].get(key)
+        for key in ("evaluation_id", "agent_protocol_sha256", "live_configuration")
     )
     lift = (
         reports[0]["metrics"]["agent_decision_accuracy"]
@@ -316,13 +380,34 @@ def regenerate_markdown(path: Path) -> None:
     rows = [
         f"# {report['model']} / retrieval {'on' if report['retrieval_enabled'] else 'off'}",
         "",
-        "Synthetic data only. Stub is a scripted heuristic, not a language model.",
+        "Synthetic data only. "
+        + (
+            "Stub is a scripted heuristic, not a language model."
+            if report["provider"] == "stub"
+            else "Live provider requests; outcomes are measured on fictional fixtures."
+        ),
+        "",
+        f"Evaluation scope: {report.get('evaluation_scope', 'full')}. "
+        f"Agent cases evaluated: {report['counts']['agent_cases']} "
+        f"of {report.get('eligible_agent_cases', report['counts']['agent_cases'])} eligible.",
         "",
         f"Database: {report['database']}. Embedder: {report['embedder']}.",
         "",
-        "| Metric | Observed |",
-        "|---|---:|",
     ]
+    if config := report.get("live_configuration"):
+        rows.extend(
+            [
+                f"Route: {config['gateway']} / {config['upstream_provider']}. "
+                f"Temperature: {config['temperature']}. "
+                f"Output token limit: {config['output_token_limit']}. "
+                f"Reasoning enabled: {config['reasoning_enabled']}. "
+                f"SDK retries: {config['sdk_retries']}.",
+                "",
+            ]
+        )
+    if protocol := report.get("agent_protocol_sha256"):
+        rows.extend([f"Agent protocol SHA-256: `{protocol}`.", ""])
+    rows.extend(["| Metric | Observed |", "|---|---:|"])
     rows.extend(
         f"| {key} | {value if value is not None else 'not measured'} |"
         for key, value in report["metrics"].items()
@@ -341,8 +426,13 @@ def main() -> None:
     parser.add_argument("--llm", choices=["stub", "claude", "mimo"], default="stub")
     parser.add_argument("--retrieval", choices=["on", "off"], default="on")
     parser.add_argument("--out", type=Path, default=Path("evals/reports"))
+    parser.add_argument("--max-agent-cases", type=int, default=None, help="Stratified pilot size")
     args = parser.parse_args()
-    report = asyncio.run(evaluate(args.llm, args.retrieval == "on", args.out))
+    if args.max_agent_cases is not None and args.out.resolve() == Path("evals/reports").resolve():
+        parser.error("Pilot runs require a separate --out directory")
+    report = asyncio.run(
+        evaluate(args.llm, args.retrieval == "on", args.out, max_agent_cases=args.max_agent_cases)
+    )
     print(
         json.dumps(
             {"passed": report["passed"], "counts": report["counts"], "gates": report["gates"]},

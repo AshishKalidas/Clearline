@@ -1,6 +1,7 @@
 """A small, provider-independent tool-calling boundary."""
 
 from dataclasses import dataclass, field
+from decimal import Decimal
 from typing import Any, Protocol
 
 
@@ -20,6 +21,7 @@ class ModelReply:
     calls: list[ToolCall] = field(default_factory=list)
     prompt_tokens: int = 0
     completion_tokens: int = 0
+    cost_usd: Decimal | None = None
 
 
 class LLMClient(Protocol):

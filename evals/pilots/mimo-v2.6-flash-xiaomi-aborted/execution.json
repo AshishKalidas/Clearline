@@ -1,0 +1,15 @@
+{
+  "model": "xiaomi/mimo-v2.6-flash",
+  "gateway": "OpenRouter",
+  "upstream_provider": "Xiaomi",
+  "evaluation_scope": "pilot",
+  "spend_limit_usd": "0.35",
+  "accounted_cost_usd": "0.148302196",
+  "max_request_reservation_usd": "0.14737408",
+  "request_attempts": 5,
+  "stopped": true,
+  "failure_type": "CancelledError",
+  "completed_modes": {},
+  "measured_cost_usd": "0.000928116",
+  "unsettled_reservation_usd": "0.14737408"
+}

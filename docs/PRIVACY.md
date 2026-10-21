@@ -14,7 +14,7 @@ Pattern redaction does not remove arbitrary names, addresses or every possible i
 
 Default stub/hash operation sends no business context to third-party model or embedding services. Initial dependency/image installation requires network access. LocalEmbedder loads a pre-cached MiniLM model; it does not silently download or call an embedding endpoint.
 
-Opting into Claude or an OpenAI-compatible MiMo endpoint sends masked bank/invoice/customer/runbook/case context and tool schemas to the configured vendor. Credentials come from environment variables and are never part of prompts or reports. SDK errors become safe escalation reasons rather than echoed response bodies. Real model usage is measured from SDK token counts; live cost is left unpriced.
+Opting into Claude or an OpenAI-compatible MiMo endpoint sends masked bank/invoice/customer/runbook/case context and tool schemas to the configured vendor. Credentials come from environment variables and are never part of prompts or reports. SDK errors become safe escalation reasons rather than echoed response bodies. Real model usage comes from SDK token counts; API cost is reported only when all requests include valid provider billing. Otherwise it remains unmeasured. The optional budgeted OpenRouter runner records conservative reservations separately from measured charges.
 
 MCP itself is local stdio, but the connecting host may send its returned masked financial facts to that host's model provider. Evaluate the host's data handling before connecting any real dataset. Tool annotations are descriptive; actual database privileges and read-only transactions enforce the boundary.
 

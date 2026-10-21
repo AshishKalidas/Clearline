@@ -215,6 +215,16 @@ export function EvaluationPage() {
             </div>
             <dl>
               <div>
+                <dt>Model route</dt>
+                <dd>
+                  {report.live_configuration
+                    ? `${report.live_configuration.gateway} / ${report.live_configuration.upstream_provider}`
+                    : report.baseline
+                      ? 'Offline scripted baseline'
+                      : 'See source report'}
+                </dd>
+              </div>
+              <div>
                 <dt>Measured</dt>
                 <dd>{measuredDate(report.created_at)} · Africa/Johannesburg</dd>
               </div>
@@ -252,8 +262,8 @@ export function EvaluationPage() {
             <p className="settings-help">
               The fingerprint identifies the original report file in the source tree. The download
               contains its validated projection and that fingerprint. Hash retrieval lift does not
-              measure semantic retrieval quality; live cost stays unpriced until measured and priced
-              explicitly.
+              measure semantic retrieval quality. API cost uses provider billing when available; it
+              excludes local infrastructure.
             </p>
           </section>
         </>

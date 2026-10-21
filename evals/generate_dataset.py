@@ -9,7 +9,8 @@ from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
-from backend.app.ingest.service import BankRow, bank_hash, stable_id
+from backend.app.ingest.service import bank_hash, stable_id
+from backend.app.ingest.validation import BankRow
 
 SCENARIOS = {
     "exact": 40,
@@ -69,7 +70,7 @@ def generate(seed: int = 42, cases: int = 400) -> dict[str, Any]:
             name = f"{WORDS[rng.randrange(len(WORDS))]} Workshop S{sequence:04d}"
             amount = rng.randrange(20000, 800000, 100)
             number = f"INV-{100000 + sequence * 3:06d}"
-            row = {
+            row: dict[str, Any] = {
                 "invoice_number": number,
                 "account_code": code,
                 "customer_name": name,
@@ -79,7 +80,7 @@ def generate(seed: int = 42, cases: int = 400) -> dict[str, Any]:
                 "amount_cents": amount,
             }
             target = [number]
-            line = {
+            line: dict[str, Any] = {
                 "value_date": str(day + timedelta(days=1)),
                 "amount_cents": amount,
                 "raw_reference": number,

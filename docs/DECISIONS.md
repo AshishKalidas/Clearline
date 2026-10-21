@@ -8,7 +8,7 @@
 - Use a fictional beneficiary suffix of 0042; the sender's stored account suffix is not evidence of the business's beneficiary account.
 - Keep historical bank observations separate from the 400 evaluation cases and authorize their synthetic ledger entries with rules-match audit events.
 - Run evaluations in disposable PostgreSQL schemas; use SQLite only for hermetic unit evaluation tests.
-- Do not estimate live model pricing; report SDK token usage and leave unknown API cost unpriced.
+- Report observed provider billing and SDK token usage; leave unknown API cost unpriced. Keep conservative request reservations separate from measured charges.
 - Serve the UI through nginx with a same-origin API proxy; avoid browser CORS configuration and ship no remote fonts or assets.
 - Use host API port 18000 to avoid an existing service on 8000; the container API remains on 8000.
 - Add a bounded read-only /invoices endpoint for human correction choices; derive labels and outstanding balances from the database.
@@ -46,3 +46,7 @@
 - Pin workflow actions to resolved commits, grant read-only repository permissions, and retain failed-run diagnostics for seven days.
 - Model CSV import stages as a discriminated union in a dedicated controller; keep file identity, preview and confirmation together instead of synchronizing independent state flags.
 - Guard submissions before React's next render; cancel only preview reads and let acknowledged writes refresh workspace state after navigation.
+- Require a budget for controlled OpenRouter evaluations; pin an upstream route and price ceilings, reserve a worst-case request, disable SDK retries and stop after uncertain billing/transport.
+- Label stratified pilots explicitly and reject them at the public report boundary; compare full retrieval pairs only with matching protocol and routing metadata.
+- Return citation IDs, remaining calls and safe schema field errors in tool feedback. Reserve two terminal-call slots and enforce the read boundary inside batches as well as between model turns.
+- Normalize PostgreSQL aggregate balances to integer cents at the tool boundary; exercise the numeric-return behavior against actual PostgreSQL rather than relying on SQLite.

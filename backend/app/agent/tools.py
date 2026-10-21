@@ -74,7 +74,8 @@ class ToolExecutor:
             customer = self.session.get(Customer, args.customer_id)
             if customer is None:
                 return {"error": "customer_not_found"}
-            balance = (
+            # PostgreSQL SUM(bigint) returns Decimal; tool and audit contracts use integer cents.
+            balance = int(
                 self.session.scalar(
                     select(func.sum(Invoice.outstanding_cents)).where(
                         Invoice.customer_id == customer.id

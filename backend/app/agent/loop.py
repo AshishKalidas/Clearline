@@ -62,9 +62,13 @@ async def investigate(
         remaining = max_seconds - (time.monotonic() - start)
         if remaining <= 0:
             break
+        schemas = tool_schemas()
+        # Leave room for a terminal proposal and one validation retry.
+        if steps >= max_steps - 2:
+            schemas = [schema for schema in schemas if schema["name"] == "submit_proposal"]
         try:
             response = await asyncio.wait_for(
-                client.complete(masker.clean(messages), tool_schemas(), remaining), remaining
+                client.complete(masker.clean(messages), schemas, remaining), remaining
             )
         except TimeoutError:
             break
@@ -107,6 +111,12 @@ async def investigate(
                 model = TOOL_MODELS.get(call.name)
                 if model is None:
                     raise ValueError("unknown tool")
+                if (
+                    not any(schema["name"] == call.name for schema in schemas)
+                    or call.name != "submit_proposal"
+                    and steps > max_steps - 2
+                ):
+                    raise ValueError("Read budget exhausted; submit a terminal proposal")
                 args = model.model_validate(masker.clean(call.arguments))
                 if isinstance(args, ProposalInput):
                     validate_proposal(session, line, args)
@@ -132,6 +142,13 @@ async def investigate(
                     if isinstance(exc, ValueError) and not isinstance(exc, ValidationError)
                     else "Arguments do not match the tool schema",
                 }
+                if isinstance(exc, ValidationError):
+                    result["issues"] = [
+                        {"field": ".".join(map(str, error["loc"])), "type": error["type"]}
+                        for error in exc.errors(
+                            include_input=False, include_context=False, include_url=False
+                        )
+                    ]
                 if call.name == "submit_proposal":
                     failures += 1
             event = record_event(
@@ -154,7 +171,14 @@ async def investigate(
                     "role": "tool",
                     "tool_call_id": call.id,
                     "name": call.name,
-                    "content": json.dumps(result, default=str),
+                    "content": json.dumps(
+                        {
+                            "evidence_id": citation,
+                            "remaining_tool_calls": max_steps - steps,
+                            "result": result,
+                        },
+                        default=str,
+                    ),
                 }
             )
             if value is not None or failures >= 2:

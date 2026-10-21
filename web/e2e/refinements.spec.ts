@@ -28,6 +28,28 @@ test('published evidence and import templates remain available with the API bloc
     String(report.counts.bank_cases),
   );
   await expect(page.locator('.gate-list li')).toHaveCount(Object.keys(report.gates).length);
+  const live = published.runs.find(
+    (run) => run.provider !== 'stub' && run.retrieval_enabled && run.report,
+  );
+  if (live?.report) {
+    await page.getByLabel('Inspect provider').selectOption(live.provider);
+    await expect(page.locator('.evaluation-population')).toContainText(
+      String(live.report.counts.agent_cases),
+    );
+    await expect(page.locator('.evaluation-detail-grid .status-badge')).toHaveText(
+      live.report.passed ? 'Gates passed' : 'Gates failed',
+    );
+    for (const [key, passed] of Object.entries(live.report.gates)) {
+      const index = Object.keys(live.report.gates).indexOf(key);
+      await expect(page.locator('.gate-list li').nth(index).locator('strong')).toHaveText(
+        passed ? 'Passed' : 'Failed',
+      );
+    }
+    await page.reload();
+    await expect(page.getByLabel('Inspect provider')).toHaveValue(live.provider);
+    await page.goBack();
+    await expect(page.getByLabel('Inspect provider')).toHaveValue('stub');
+  }
   await page.getByRole('link', { name: 'Retrieval off', exact: true }).click();
   await expect(page).toHaveURL(/retrieval=off/);
   await page.reload();

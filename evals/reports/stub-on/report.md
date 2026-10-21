@@ -2,7 +2,11 @@
 
 Synthetic data only. Stub is a scripted heuristic, not a language model.
 
+Evaluation scope: full. Agent cases evaluated: 228 of 228 eligible.
+
 Database: postgresql16-pgvector. Embedder: hash.
+
+Agent protocol SHA-256: `8ad84e9ff74d6cd223486cfaec923e5be1ccbe4f9c61cb62fa518da0a02d0bcb`.
 
 | Metric | Observed |
 |---|---:|
@@ -19,7 +23,7 @@ Database: postgresql16-pgvector. Embedder: hash.
 | mean_steps | 6 |
 | mean_prompt_tokens | 0 |
 | mean_completion_tokens | 0 |
-| mean_latency_ms | 24.63157894736842 |
+| mean_latency_ms | 21.81578947368421 |
 | model_api_cost_usd | 0 |
 | retrieval_lift | 0.0 |
 

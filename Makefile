@@ -15,7 +15,7 @@ lint:
 	$(RUN) ruff check .
 	$(RUN) ruff format --check .
 typecheck:
-	$(RUN) mypy --strict backend/app mcp_server evals/export_evidence.py
+	$(RUN) mypy --strict backend/app mcp_server evals
 seed:
 	$(RUN) python -m evals.generate_dataset --pdfs
 	$(RUN) sh -c 'DATABASE_URL="$$MIGRATION_DATABASE_URL" python -m backend.app.ingest.seed'

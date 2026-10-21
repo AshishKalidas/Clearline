@@ -26,7 +26,8 @@ def test_snapshot_preserves_provenance_and_leaves_missing_runs_unmeasured(tmp_pa
 
 
 @pytest.mark.parametrize(
-    "mutation", ["gate", "counts", "identity", "nan", "baseline", "overall", "ratio", "missing"]
+    "mutation",
+    ["gate", "counts", "identity", "nan", "baseline", "overall", "ratio", "missing", "pilot"],
 )
 def test_export_rejects_contradictory_evidence(tmp_path: Path, mutation: str) -> None:
     report = json.loads(SOURCE.read_text())
@@ -45,6 +46,8 @@ def test_export_rejects_contradictory_evidence(tmp_path: Path, mutation: str) ->
         del report["metrics"]["incomplete_investigations"]
     elif mutation == "ratio":
         report["scenarios"]["split"]["correct"] -= 1
+    elif mutation == "pilot":
+        report["evaluation_scope"] = "pilot"
     else:
         report["passed"] = False
     destination = tmp_path / "stub-on/report.json"
@@ -73,3 +76,24 @@ def test_coherent_failed_run_is_published_without_hiding_its_failed_gate(tmp_pat
     assert not published["passed"]
     assert not published["gates"]["false_allocation_rate"]
     assert published["failure_count"] == 1
+
+
+def test_snapshot_only_exports_allowlisted_live_configuration(tmp_path: Path) -> None:
+    report = json.loads(SOURCE.read_text())
+    report.update(provider="mimo", baseline=False)
+    report["live_configuration"] = {
+        "gateway": "Fixture gateway",
+        "upstream_provider": "Fixture provider",
+        "output_token_limit": 2048,
+        "temperature": 0,
+        "reasoning_enabled": False,
+        "sdk_retries": 0,
+        "provider_options": {"private_option": "do-not-publish"},
+    }
+    destination = tmp_path / "mimo-on/report.json"
+    destination.parent.mkdir()
+    destination.write_text(json.dumps(report))
+    snapshot = evidence_snapshot(tmp_path)
+    exported = json.loads(snapshot)["runs"][4]["report"]["live_configuration"]
+    assert exported["upstream_provider"] == "Fixture provider"
+    assert "do-not-publish" not in snapshot

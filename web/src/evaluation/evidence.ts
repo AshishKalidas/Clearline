@@ -23,6 +23,11 @@ export interface EvaluationReport {
   passed: boolean;
   invariant_errors: string[];
   failure_count: number;
+  agent_protocol_sha256?: string | null;
+  live_configuration?: {
+    gateway: string;
+    upstream_provider: string;
+  } | null;
 }
 export interface PublishedRun {
   provider: string;
@@ -40,6 +45,18 @@ export function findRun(provider: Provider, retrieval: boolean): PublishedRun {
   return run;
 }
 export const metricDefinitions = [
+  {
+    key: 'incomplete_investigations',
+    label: 'Incomplete investigations',
+    format: 'number',
+    note: 'Provider failures, exhausted limits or missing/invalid terminal proposals.',
+  },
+  {
+    key: 'model_api_cost_usd',
+    label: 'Measured model API cost',
+    format: 'currency',
+    note: 'Provider-reported USD for this run; unknown billing remains unmeasured.',
+  },
   {
     key: 'agent_decision_accuracy',
     label: 'Agent decision accuracy',
@@ -110,6 +127,7 @@ export function metricValue(report: EvaluationReport | null, key: string, format
   if (format === 'percent') return `${(value * 100).toFixed(2)}%`;
   if (format === 'points') return `${value >= 0 ? '+' : ''}${(value * 100).toFixed(2)} pp`;
   if (format === 'latency') return `${value.toFixed(2)} ms`;
+  if (format === 'currency') return `$${value.toFixed(6)}`;
   return value.toLocaleString('en-ZA', { maximumFractionDigits: 2 });
 }
 export const gateLabels: Record<string, string> = {

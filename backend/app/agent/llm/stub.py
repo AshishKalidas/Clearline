@@ -25,7 +25,12 @@ class StubLLM:
         results: dict[str, Any] = {}
         for message in messages:
             if message["role"] == "tool":
-                results[message["name"]] = json.loads(message["content"])
+                payload = json.loads(message["content"])
+                results[message["name"]] = (
+                    payload["result"]
+                    if isinstance(payload, dict) and "evidence_id" in payload
+                    else payload
+                )
         text = context["untrusted_bank_text"]
         customers = results.get("find_customers", [])
         candidate = customers[0] if customers and customers[0]["score"] >= 0.95 else None

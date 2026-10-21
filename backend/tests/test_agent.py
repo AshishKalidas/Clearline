@@ -1,4 +1,5 @@
 import asyncio
+import json
 from typing import Any
 
 import pytest
@@ -181,6 +182,111 @@ def test_bounded_loop(session: Session, mode: str, flag: str, steps: int) -> Non
     assert flag in proposal.risk_flags
     assert proposal.steps == steps
     assert session.scalar(select(func.count()).select_from(Allocation)) == 0
+
+
+def test_tool_feedback_exposes_citations_budget_and_safe_field_errors(session: Session) -> None:
+    class FeedbackClient:
+        model = "offline-feedback-fixture"
+
+        async def complete(
+            self,
+            messages: list[dict[str, Any]],
+            schemas: list[dict[str, object]],
+            timeout: float,
+        ) -> ModelReply:
+            if messages[-1]["role"] != "tool":
+                return ModelReply(
+                    [ToolCall("invalid", "search_invoices", {"amount_cents": "12345"})]
+                )
+            feedback = json.loads(messages[-1]["content"])
+            assert feedback["evidence_id"] == "search_invoices#1"
+            assert feedback["remaining_tool_calls"] == 7
+            assert feedback["result"]["issues"] == [{"field": "amount_cents", "type": "int_type"}]
+            return ModelReply(
+                [
+                    ToolCall(
+                        "done",
+                        "submit_proposal",
+                        {"decision": "escalate", "confidence": 0, "reasoning": "Needs review"},
+                    )
+                ]
+            )
+
+        async def aclose(self) -> None:
+            return None
+
+    dataset = load(session)
+    line = session.get(BankLine, dataset["labels"][160]["bank_line_id"])
+    assert line is not None
+    proposal = asyncio.run(investigate(session, line, FeedbackClient(), Settings()))
+    assert proposal.steps == 2
+
+
+def test_read_budget_reserves_terminal_proposal_and_retry_slots(session: Session) -> None:
+    class SchemaAwareClient:
+        model = "offline-budget-fixture"
+
+        async def complete(
+            self,
+            messages: list[dict[str, Any]],
+            schemas: list[dict[str, object]],
+            timeout: float,
+        ) -> ModelReply:
+            if [schema["name"] for schema in schemas] == ["submit_proposal"]:
+                return ModelReply(
+                    [
+                        ToolCall(
+                            "done",
+                            "submit_proposal",
+                            {"decision": "escalate", "confidence": 0, "reasoning": "Needs review"},
+                        )
+                    ]
+                )
+            return ModelReply([ToolCall("read", "find_duplicate_candidates", {})])
+
+        async def aclose(self) -> None:
+            return None
+
+    dataset = load(session)
+    line = session.get(BankLine, dataset["labels"][160]["bank_line_id"])
+    assert line is not None
+    proposal = asyncio.run(investigate(session, line, SchemaAwareClient(), Settings()))
+    assert proposal.steps == 7
+    assert "agent_limit_reached" not in proposal.risk_flags
+
+
+def test_batched_calls_cannot_bypass_the_read_budget(session: Session) -> None:
+    class BatchedClient:
+        model = "offline-batched-fixture"
+
+        async def complete(
+            self,
+            messages: list[dict[str, Any]],
+            schemas: list[dict[str, object]],
+            timeout: float,
+        ) -> ModelReply:
+            return ModelReply(
+                [ToolCall(f"read-{index}", "find_duplicate_candidates", {}) for index in range(8)]
+            )
+
+        async def aclose(self) -> None:
+            return None
+
+    dataset = load(session)
+    line = session.get(BankLine, dataset["labels"][160]["bank_line_id"])
+    assert line is not None
+    proposal = asyncio.run(investigate(session, line, BatchedClient(), Settings()))
+    events = session.scalars(
+        select(AuditEvent)
+        .where(AuditEvent.bank_line_id == line.id, AuditEvent.event_type == "tool_call")
+        .order_by(AuditEvent.created_at, AuditEvent.id)
+    ).all()
+    assert len(events) == proposal.steps == 8
+    assert all("error" not in event.payload_json["result"] for event in events[:6])
+    assert all(
+        event.payload_json["result"]["error"] == "invalid_tool_arguments" for event in events[6:]
+    )
+    assert proposal.decision == "escalate"
 
 
 def test_review_approve_reject_correct(client: TestClient, session: Session) -> None:

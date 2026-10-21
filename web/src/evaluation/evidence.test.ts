@@ -18,4 +18,11 @@ it('distinguishes zero observed errors from having no automatic allocations to e
     ),
   ).toBe('No auto allocations');
   expect(metricValue(report, 'not_measured', 'number')).toBe('Not measured');
+  expect(
+    metricValue(
+      { ...report, metrics: { model_api_cost_usd: 0.00123456 } },
+      'model_api_cost_usd',
+      'currency',
+    ),
+  ).toBe('$0.001235');
 });

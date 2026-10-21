@@ -100,6 +100,16 @@ def test_provider_envelopes_and_malformed_arguments() -> None:
     assert system == "Policy"
     assert len(translated) == 3
     assert translated[-1]["content"][1]["is_error"]
+    messages[-1]["content"] = json.dumps(
+        {
+            "evidence_id": "search_runbook#2",
+            "remaining_tool_calls": 6,
+            "result": {"error": "missing"},
+        }
+    )
+    _, translated = anthropic_messages(messages)
+    assert translated[-1]["content"][1]["is_error"]
+    assert "search_runbook#2" in translated[-1]["content"][1]["content"]
     assert parse_arguments("broken") == {"_invalid_arguments": True}
     assert parse_arguments("[]") == {"_invalid_arguments": True}
     assert parse_arguments('{"k":5}') == {"k": 5}
