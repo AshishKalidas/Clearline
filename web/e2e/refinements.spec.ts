@@ -117,3 +117,47 @@ test('connected CSV previews are write-free, imports are explicit and duplicate 
   await page.getByRole('link', { name: 'Activity', exact: true }).click();
   await expect(page.locator('.activity-item').first()).toContainText('Bank lines imported');
 });
+
+test('a submitted CSV import completes without pulling the user away from another page', async ({
+  page,
+}) => {
+  let release = () => {};
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route('**/api/ingest/bank-lines', async (route) => {
+    await gate;
+    await route.continue();
+  });
+  await page.goto('/workspace/import');
+  await page.getByRole('radio', { name: 'Bank observations', exact: true }).check();
+  await page.getByLabel('CSV file', { exact: true }).setInputFiles({
+    name: 'bank-lines.csv',
+    mimeType: 'text/csv',
+    buffer: Buffer.from(templates['bank-lines'].csv),
+  });
+  await page.getByRole('button', { name: 'Validate and preview' }).click();
+  await expect(page.getByText('Format validated', { exact: true })).toBeVisible();
+  await page.getByRole('checkbox', { name: /Import 1 validated record/ }).check();
+  await Promise.all([
+    page.waitForRequest((request) => new URL(request.url()).pathname === '/api/ingest/bank-lines'),
+    page.getByRole('button', { name: 'Import records', exact: true }).click(),
+  ]);
+  try {
+    await page.getByRole('link', { name: 'Payment proofs', exact: true }).click();
+    await expect(page.getByLabel('Proof of payment PDF')).toBeAttached();
+    const response = page.waitForResponse(
+      (response) => new URL(response.url()).pathname === '/api/ingest/bank-lines',
+    );
+    const refreshed = page.waitForResponse(
+      (response) => new URL(response.url()).pathname === '/api/metrics',
+    );
+    release();
+    expect((await response).status()).toBe(200);
+    await refreshed;
+    await expect(page).toHaveURL(/\/workspace\/proofs$/);
+    await expect(page.getByLabel('Proof of payment PDF')).toBeAttached();
+  } finally {
+    release();
+  }
+});

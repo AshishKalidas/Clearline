@@ -44,3 +44,5 @@
 - Require explicit finite bounded release measurements and an observed completion count; never infer operational success from a missing metric.
 - Treat empty MCP search results as valid protocol responses; verify both an empty database and seeded records in CI.
 - Pin workflow actions to resolved commits, grant read-only repository permissions, and retain failed-run diagnostics for seven days.
+- Model CSV import stages as a discriminated union in a dedicated controller; keep file identity, preview and confirmation together instead of synchronizing independent state flags.
+- Guard submissions before React's next render; cancel only preview reads and let acknowledged writes refresh workspace state after navigation.

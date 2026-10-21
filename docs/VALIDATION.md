@@ -7,9 +7,9 @@ Build verification updated on 21 October 2026; the base platform was completed o
 | Docker backend suite | 101 passed; 95.48% statement coverage on `backend/app`; required threshold 85% |
 | Ruff lint and formatting | Clean |
 | Strict mypy | Clean on `backend/app`, `mcp_server` and the report exporter (58 source files) |
-| Frontend unit suite | 20 tests passed in 7 files |
-| Frontend build | TypeScript check and Vite production build passed; React bundle 268.84 kB before gzip |
-| Browser against nginx + actual API | 10 Playwright tests passed: actual reviews/uploads, API-blocked sample use, deep links/history, mobile layouts, saved appearance, reduced transparency/motion, increased contrast, live polling pause/recovery, navigation during a pending approval, scrolling navigation blur, offline published evidence, and actual CSV validation/import/deduplication in desktop/phone layouts |
+| Frontend unit suite | 27 tests passed in 8 files |
+| Frontend build | TypeScript check and Vite production build passed; React bundle 269.77 kB before gzip |
+| Browser against nginx + actual API | 11 Playwright tests passed: actual reviews/uploads, API-blocked sample use, deep links/history, mobile layouts, saved appearance, reduced transparency/motion, increased contrast, live polling pause/recovery, navigation during a pending approval, scrolling navigation blur, offline published evidence, and actual CSV validation/import/deduplication in desktop/phone layouts |
 | Live SDK adapters | Recorded HTTP response tests exercised both real SDKs, retries, request masking, tool translation, malformed replies, usage and transport closure; no paid network calls |
 | MCP stdio client | Initialized; exactly 8 read-only tools listed; `search_invoices` succeeded against PostgreSQL |
 | MCP safety | Every tool called through the protocol; returned PII-shaped fixture strings and echoed invalid arguments masked; unknown write tool and fractional cents rejected; database transaction rejected an audit INSERT otherwise permitted to the agent role |
@@ -19,7 +19,7 @@ Build verification updated on 21 October 2026; the base platform was completed o
 | Idempotent demo | Repeated seed/run preserves existing history and resolutions; no additional agent investigations on already processed lines |
 | Synthetic PDFs | All three generated layouts rendered and visually inspected; reproducibility and 60-file verdict tests passed |
 
-The clean demo used alternate loopback ports (web 5175, API 18001, PostgreSQL 54330) to preserve the active workspace. Browser workflows were repeated against those freshly seeded services. The main demo remains available on its default web port 5173 and API port 18000. The new workspace routing and all ten browser workflows were verified against the production nginx build on those default ports.
+The clean demo used alternate loopback ports (web 5175, API 18001, PostgreSQL 54330) to preserve the active workspace. Browser workflows were repeated against those freshly seeded services. The main demo remains available on its default web port 5173 and API port 18000. The new workspace routing and all eleven browser workflows were verified against the production nginx build on those default ports.
 
 The current report files are the source of truth for exact evaluation metrics and timing. Stub throughput is machine/load dependent; synthetic decision accuracy is not an estimate of live-model quality. The local embedding interface is tested with a stand-in cached encoder; a downloaded MiniLM checkpoint and real provider inference were not benchmarked. Missing live results remain “not yet run.”
 
@@ -46,3 +46,9 @@ The clean-checkout smoke check recorded above predates this refinement. The curr
 ## Transaction and verification contracts
 
 Commit-failure injection confirms that HTTP success follows database commit: a refused commit returns 500 and leaves no imported bank records or import audit event. The shared database dependency enforces the same boundary for review writes. Rate-gate regressions cover missing metrics, booleans, strings, non-finite and out-of-range values, operational completion evidence and inclusive provider thresholds. MCP stdio tests accept empty ledgers on SQLite and an isolated PostgreSQL schema while retaining the existing populated-tool and read-only checks. CI executes protocol checks before and after seeding, pins action implementations and preserves failure diagnostics.
+
+## Import lifecycle contracts
+
+The import controller now represents idle, validating, ready, importing and complete states as a discriminated TypeScript union. Ready/active/completed states require their file and preview data; only a confirmed ready state can write. Seven controller tests cover file/confirmation identity, synchronous duplicate-event suppression, cancellation on unmount, expired responses, completion after navigation, safe error/retry state and disabled-workspace isolation. A browser regression delays a genuine import response, navigates away, releases the response and verifies that the write completes and the selected route remains unchanged.
+
+[GitHub release verification](https://github.com/AshishKalidas/Clearline/actions/runs/39589588539) completed successfully on a clean Ubuntu runner for the transaction/verification changes, including both MCP data states, retrieval-on/off evaluation, backend/web checks and the browser workflows. The workflow repeats the same release process for subsequent commits.

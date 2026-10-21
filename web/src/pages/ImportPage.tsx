@@ -1,128 +1,30 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ApiError, money, type CsvIssue } from '../api';
+import { money } from '../api';
 import { Icon } from '../Icon';
-import {
-  columnLabels,
-  templates,
-  type ImportKind,
-  type ImportPreview,
-  type ImportResult,
-} from '../imports/templates';
+import { columnLabels, templates } from '../imports/templates';
+import { useCsvImport } from '../imports/useCsvImport';
 import { usePreferences } from '../workspace/Preferences';
 import { useWorkspace } from '../workspace/Workspace';
 import { PageHeader } from '../workspace/PageHeader';
 import { ReconcileAction } from '../workspace/Feedback';
 
-type Phase = 'idle' | 'validating' | 'ready' | 'importing' | 'done';
-
 /** Preview validates the entire file; only an explicit import sends a persistent write. */
 export function ImportPage() {
   const { mode, basePath, request, reload } = useWorkspace();
   const { credentials } = usePreferences();
-  const [kind, setKind] = useState<ImportKind>('invoices');
-  const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<ImportPreview | null>(null);
-  const [result, setResult] = useState<ImportResult | null>(null);
-  const [phase, setPhase] = useState<Phase>('idle');
-  const [error, setError] = useState<string | null>(null);
-  const [issues, setIssues] = useState<CsvIssue[]>([]);
-  const [issueCount, setIssueCount] = useState(0);
-  const [confirmed, setConfirmed] = useState(false);
+  const { state, busy, selectKind, selectFile, confirm, validate, importFile } = useCsvImport({
+    enabled: mode === 'connected',
+    request,
+    credentials,
+    onImported: reload,
+  });
+  const { kind, file, phase } = state;
+  const preview = 'preview' in state ? state.preview : null;
+  const result = state.phase === 'done' ? state.result : null;
+  const problem = 'problem' in state ? state.problem : null;
+  const confirmed = state.phase === 'ready' && state.confirmed;
   const input = useRef<HTMLInputElement>(null);
-  const pending = useRef<AbortController | null>(null);
-  const mounted = useRef(true);
-  const busy = phase === 'validating' || phase === 'importing';
-  useEffect(() => {
-    mounted.current = true;
-    return () => {
-      mounted.current = false;
-      pending.current?.abort();
-    };
-  }, []);
-
-  function reset(nextFile: File | null = null) {
-    setFile(nextFile);
-    setPreview(null);
-    setResult(null);
-    setError(null);
-    setIssues([]);
-    setIssueCount(0);
-    setConfirmed(false);
-    setPhase('idle');
-  }
-  function showError(cause: unknown) {
-    setError(
-      cause instanceof Error ? cause.message : 'The import could not be completed. Please retry.',
-    );
-    setIssues(cause instanceof ApiError ? cause.issues : []);
-    setIssueCount(cause instanceof ApiError ? cause.issueCount : 0);
-  }
-  async function validate() {
-    if (!file || busy || mode !== 'connected') return;
-    if (file.size > 5_000_000) {
-      setError('Choose a CSV no larger than 5 MB.');
-      return;
-    }
-    const controller = new AbortController();
-    pending.current = controller;
-    setPhase('validating');
-    setError(null);
-    setIssues([]);
-    setIssueCount(0);
-    setPreview(null);
-    setConfirmed(false);
-    const deadline = setTimeout(() => controller.abort(), 15000);
-    const body = new FormData();
-    body.append('file', file);
-    try {
-      const checked = await request<ImportPreview>(
-        `/ingest/${kind}/preview`,
-        { method: 'POST', body, signal: controller.signal },
-        credentials,
-      );
-      if (mounted.current) {
-        setPreview(checked);
-        setPhase('ready');
-      }
-    } catch (cause) {
-      if (mounted.current) {
-        if (controller.signal.aborted)
-          setError('Validation took too long. Try a smaller file or retry.');
-        else showError(cause);
-        setPhase('idle');
-      }
-    } finally {
-      clearTimeout(deadline);
-      pending.current = null;
-    }
-  }
-  async function importFile() {
-    if (!file || !preview || !confirmed || busy || phase === 'done' || mode !== 'connected') return;
-    setPhase('importing');
-    setError(null);
-    setIssues([]);
-    setIssueCount(0);
-    const body = new FormData();
-    body.append('file', file);
-    try {
-      const imported = await request<ImportResult>(
-        `/ingest/${kind}`,
-        { method: 'POST', body },
-        credentials,
-      );
-      reload();
-      if (mounted.current) {
-        setResult(imported);
-        setPhase('done');
-      }
-    } catch (cause) {
-      if (mounted.current) {
-        showError(cause);
-        setPhase('ready');
-      }
-    }
-  }
   return (
     <>
       <PageHeader
@@ -149,8 +51,7 @@ export function ImportPage() {
                   name="import-kind"
                   checked={kind === value}
                   onChange={() => {
-                    setKind(value);
-                    reset();
+                    selectKind(value);
                     if (input.current) input.current.value = '';
                   }}
                 />
@@ -188,7 +89,7 @@ export function ImportPage() {
                   type="file"
                   accept=".csv,text/csv"
                   disabled={busy}
-                  onChange={(event) => reset(event.target.files?.[0] ?? null)}
+                  onChange={(event) => selectFile(event.target.files?.[0] ?? null)}
                   aria-describedby="csv-file-help"
                 />
               </label>
@@ -204,17 +105,20 @@ export function ImportPage() {
                 <Icon name="search" size={17} />
                 {phase === 'validating' ? 'Checking every record…' : 'Validate and preview'}
               </button>
-              {error && (
+              {problem && (
                 <div className="import-errors" role="alert">
-                  <strong>{error}</strong>
-                  {issues.length > 0 && (
+                  <strong>{problem.message}</strong>
+                  {problem.issues.length > 0 && (
                     <>
                       <p>
-                        {issueCount} {issueCount === 1 ? 'issue' : 'issues'} found
-                        {issueCount > issues.length ? `; showing the first ${issues.length}` : ''}.
+                        {problem.issueCount} {problem.issueCount === 1 ? 'issue' : 'issues'} found
+                        {problem.issueCount > problem.issues.length
+                          ? `; showing the first ${problem.issues.length}`
+                          : ''}
+                        .
                       </p>
                       <ul>
-                        {issues.map((issue, index) => (
+                        {problem.issues.map((issue, index) => (
                           <li key={index}>
                             Row {issue.row}
                             {issue.field
@@ -309,7 +213,7 @@ export function ImportPage() {
                       type="checkbox"
                       checked={confirmed}
                       disabled={busy}
-                      onChange={(event) => setConfirmed(event.target.checked)}
+                      onChange={(event) => confirm(event.target.checked)}
                     />
                     <span>
                       Import {preview.row_count} validated{' '}

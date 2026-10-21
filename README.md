@@ -121,7 +121,7 @@ Partial, split, excess, duplicate, ambiguous, risky and unfamiliar-customer case
 | Privacy | Stable per-investigation masking, outbound-request capture, masked audit/retrieval text, least-privilege roles and proof-file retention |
 | Product workflow | Routed overview, isolated sample mode, live activity, validated CSV previews/imports, human corrections, keyboard actions and proof checks; browser tests exercise the real API |
 | Evaluation transparency | Offline-capable report explorer, explicit unmeasured live runs, scenario denominators, recomputed release gates and SHA-256 provenance |
-| Maintainability | Strict Python/TypeScript checks, unused-code compiler gates, small request adapters, formatting checks and regressions for async UI races |
+| Maintainability | Strict Python/TypeScript checks, unused-code gates, a [typed import lifecycle](web/src/imports/useCsvImport.ts), small request adapters and regressions for async UI races |
 | Reproducibility | Deterministic data/PDF generator, locked dependencies, Docker migrations, disposable evaluation schemas and generated results |
 | Integrations | Eight masked read-only tools over stdio using the [official MCP SDK](docs/MCP.md) |
 
