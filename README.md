@@ -156,3 +156,7 @@ The Docker demo uses deterministic local hash embeddings. An optional local sent
 The hosted demo uses fictional data and browser-local sample actions. The Docker workspace provides API-backed imports, proof processing, investigations and persistent review decisions. Customer deployment requires identity and tenant controls, bank-feed integration and validation against representative customer records. See [deployment details](docs/DEPLOYMENT.md), [privacy](docs/PRIVACY.md) and [the customer validation path](docs/EVALUATION.md#validation-with-representative-customer-data).
 
 [Design and routing](docs/DESIGN.md) · [Architecture](docs/ARCHITECTURE.md) · [Human sign-off](docs/HUMAN_SIGNOFF.md) · [Evaluation](docs/EVALUATION.md) · [MCP](docs/MCP.md) · [Reconciliation runbook](docs/runbook.md) · [Decisions](docs/DECISIONS.md) · [PRD](Clearline_PRD.md)
+
+## License
+
+[MIT](LICENSE) · Copyright © 2026 Ashish Kalidas.

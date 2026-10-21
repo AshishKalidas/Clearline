@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "clearline"
 version = "0.1.0"
 description = "Evidence-first EFT reconciliation with a bounded agent and human review"
+license = {file = "LICENSE"}
 requires-python = ">=3.12"
 dependencies = [
   "fastapi>=0.115,<1", "uvicorn[standard]>=0.34,<1", "pydantic-settings>=2.7,<3",
