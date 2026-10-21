@@ -108,6 +108,8 @@ Failed gates remain visible. Zero wrong allocations with no automatic allocation
 
 The dataset covers 12 bank scenarios, 300 independent historical settlements and three PDF layouts. Read [the methodology](docs/EVALUATION.md) and [the full report](evals/reports/stub-on/report.md) for all metrics, safety gates and retrieval-on/off comparisons.
 
+Representative customer data would make the evaluation more relevant to an actual deployment. Verified payment histories, local reconciliation policies and resolved cases could improve matching and retrieval, but that improvement is a hypothesis to test. Real data can also introduce harder cases. Reliability must be demonstrated on an unseen, independently labelled customer holdout and in a human-reviewed shadow deployment; realistic data alone does not guarantee higher accuracy or resolve the current model's incomplete investigations. See [the validation path](docs/EVALUATION.md#validation-with-representative-customer-data).
+
 ## What a human signs off
 
 Automatic agent allocations require a **single full invoice match**, confidence ≥ 0.90, amount ≤ R 5 000,00, no risk flags, no linked proof mismatch and at least one prior case for the customer. Exact rules also withhold allocations when proof evidence conflicts.

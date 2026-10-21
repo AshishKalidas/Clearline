@@ -61,6 +61,19 @@ Across pilots, the interrupted attempt and completed runs, provider-reported cha
 
 The proof scores exercise deterministic PDF extraction and bank-feed verification; they do not measure model vision. The fixture set has been inspected during development. A separate holdout and a validated model/configuration that consistently submits complete proposals are still needed before making broader quality claims.
 
+## Validation with representative customer data
+
+The synthetic benchmark exercises known scenarios and safety boundaries. It does not establish how frequently those scenarios occur in a particular business or how well a model handles that business's records. Representative bank descriptions, invoice conventions, verified payment histories and reconciliation policies would make a customer evaluation more informative. Resolved cases could also provide useful retrieval context. Any improvement remains an untested hypothesis: real records may contain missing information, changing formats and ambiguities absent from these fixtures, and better data alone does not fix tool-budget exhaustion or incomplete proposals.
+
+A customer validation would:
+
+1. Use permissioned, appropriately de-identified records with outcomes independently labelled by reconciliation reviewers. Preserve ambiguous cases rather than forcing a match.
+2. Separate development records from an unseen, later-period holdout. Restrict retrieved history to information available before each evaluated payment, preventing future resolutions or evaluation labels from leaking into the investigation.
+3. Freeze the model, route, prompt, tools and retrieval configuration before evaluation. Report scenario frequencies, completion rates, review workload, automatic-allocation coverage and error rates with denominators and uncertainty, alongside ledger invariants. Test retrieval on/off under the same conditions before attributing gains to it.
+4. Run in shadow mode with human review and no autonomous ledger writes. Agree acceptance thresholds before inspecting results, then investigate failures before considering a limited rollout.
+
+This process can establish evidence for a defined customer workflow and operating range. It cannot guarantee correctness on every future payment. The published live configuration currently fails its completion gate; no customer-data improvement or production reliability is claimed.
+
 ## Inspecting and publishing results
 
 Open `/sample/evaluation` or `/workspace/evaluation` to compare the reports shipped with the build. The view works without the API in Sample mode. Provider and retrieval selections are addressable; unavailable runs remain “Not yet run.” Scenario outcomes include their denominators. Zero observed auto errors and having no automatic allocations are displayed differently.
