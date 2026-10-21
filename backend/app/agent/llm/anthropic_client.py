@@ -63,7 +63,7 @@ class AnthropicLLM:
             raise ValueError("ANTHROPIC_API_KEY is required for Claude")
         self.model = settings.claude_model
         self.sdk = sdk or AsyncAnthropic(
-            api_key=settings.anthropic_api_key, timeout=15, max_retries=2
+            api_key=settings.anthropic_api_key.get_secret_value(), timeout=15, max_retries=2
         )
 
     async def complete(

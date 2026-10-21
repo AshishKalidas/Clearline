@@ -1,6 +1,8 @@
 ._*
 .DS_Store
 .env
+.env.*
+!.env.example
 .docker-context.local
 .venv/
 __pycache__/

@@ -30,7 +30,7 @@ class OpenAICompatLLM:
             raise ValueError("MIMO_API_KEY and MIMO_BASE_URL are required")
         self.model = settings.mimo_model
         self.sdk = sdk or AsyncOpenAI(
-            api_key=settings.mimo_api_key,
+            api_key=settings.mimo_api_key.get_secret_value(),
             base_url=settings.mimo_base_url,
             timeout=15,
             max_retries=2,

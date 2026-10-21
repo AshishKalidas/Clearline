@@ -165,6 +165,8 @@ For Python development: create a Python 3.12 virtual environment and `pip instal
 
 Copy `.env.example` to `.env`. Configure `LLM_PROVIDER=claude` with `ANTHROPIC_API_KEY` and the exact `CLAUDE_MODEL` available to your account, or `LLM_PROVIDER=mimo` with `MIMO_BASE_URL`, `MIMO_API_KEY` and **`MIMO_MODEL`**. The Claude default preserves the PRD-requested `claude-sonnet-5-5`; availability must be confirmed for your provider. MiMo's identifier is never guessed. Recreate the API with `make up`, then run `make eval-claude` or `make eval-mimo` and `make results`. These commands make paid network calls when configured. Real SDK retries, timeouts, tool envelopes, masking and token accounting are tested with recorded HTTP fixtures; no paid live evaluation has been performed.
 
+`.env.example` is a committed setup template containing public demo values and empty provider keys. Keep real credentials in `.env` or the runtime environment. Git and both Docker build contexts exclude `.env` and its variants, such as `.env.local` and `.env.production`. CI scans complete Git history for credentials with a checksum-pinned Gitleaks release.
+
 The Docker demo explicitly selects `EMBEDDER=hash`. `LocalEmbedder` uses `all-MiniLM-L6-v2` locally and requires `pip install -e '.[local]'`, a pre-cached model and `EMBEDDER=local` in a native runtime. It will not silently download a model. Switching embedders requires a fresh/reindexed corpus; do not compare mixed embeddings or present hash retrieval as semantic quality.
 
 ## Limits and documentation

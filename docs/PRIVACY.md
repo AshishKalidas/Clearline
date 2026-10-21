@@ -22,7 +22,9 @@ MCP itself is local stdio, but the connecting host may send its returned masked 
 
 The migration owner performs schema setup and synthetic seeding. The API role mutates business records; the agent role has SELECT on business tables and INSERT only on proposals/audit, with no invoice or allocation write privilege. MCP requires `clearline_agent` on PostgreSQL and opens read-only transactions, preventing even its otherwise permitted proposal inserts. Audit events deny update/delete to runtime roles and have an append-only PostgreSQL trigger.
 
-Local credentials in Compose and `.env.example` are public demo values, not deployed secrets. Docker binds to loopback; `.env`, runtime storage, virtual environments and browser artifacts are ignored. The browser stores its local mutation key and reviewer in sessionStorage. Production auth/tenant isolation are explicit non-goals.
+Local credentials in Compose and `.env.example` are public demo values, not deployed secrets. Docker binds to loopback. Git and both Docker build contexts exclude `.env` and `.env.*`, except the setup template `.env.example`; runtime storage, virtual environments and browser artifacts are also excluded. CI scans full Git history with a checksum-pinned Gitleaks binary and redacts findings. Pattern scanning cannot establish that every possible secret is absent.
+
+Pydantic secret fields mask provider and mutation keys in settings representations and JSON serialization. Database URLs are excluded from those diagnostics; their passwords remain available to the connection layer. Only the authentication boundary, demo client and provider SDK constructors unwrap keys. An empty mutation key is rejected during configuration, and malformed/non-ASCII request keys receive 401. The browser stores its local mutation key and reviewer in sessionStorage. Production auth/tenant isolation are explicit non-goals.
 
 ## Retention
 

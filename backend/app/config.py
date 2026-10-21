@@ -4,22 +4,22 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     """Application and safety configuration."""
 
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
-    database_url: str = "sqlite:///./data/clearline.db"
-    agent_database_url: str | None = None
-    api_key: str = "clearline-local-demo"
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore", hide_input_in_errors=True)
+    database_url: str = Field(default="sqlite:///./data/clearline.db", repr=False, exclude=True)
+    agent_database_url: str | None = Field(default=None, repr=False, exclude=True)
+    api_key: SecretStr = Field(default=SecretStr("clearline-local-demo"), min_length=1)
     llm_provider: Literal["stub", "claude", "mimo"] = "stub"
-    anthropic_api_key: str = ""
+    anthropic_api_key: SecretStr = SecretStr("")
     claude_model: str = "claude-sonnet-5-5"
     mimo_base_url: str = ""
-    mimo_api_key: str = ""
+    mimo_api_key: SecretStr = SecretStr("")
     mimo_model: str = ""
     embedder: Literal["local", "hash"] = "local"
     retrieval_enabled: bool = True

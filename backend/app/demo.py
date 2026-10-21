@@ -11,7 +11,7 @@ def main() -> None:
     request = urllib.request.Request(
         "http://localhost:8000/runs/reconcile",
         data=b"",
-        headers={"X-API-Key": get_settings().api_key},
+        headers={"X-API-Key": get_settings().api_key.get_secret_value()},
         method="POST",
     )
     with urllib.request.urlopen(request, timeout=3600) as response:

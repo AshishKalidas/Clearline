@@ -15,7 +15,9 @@ DB = Annotated[Session, Depends(get_session, scope="function")]
 
 def require_key(x_api_key: str = Header(default="")) -> None:
     """Authenticate every state-changing HTTP endpoint."""
-    if not secrets.compare_digest(x_api_key, get_settings().api_key):
+    expected = get_settings().api_key.get_secret_value().encode("utf-8")
+    # compare_digest rejects non-ASCII strings; bytes make malformed headers a normal denial.
+    if not secrets.compare_digest(x_api_key.encode("utf-8"), expected):
         raise HTTPException(401, "A valid X-API-Key is required")
 
 
