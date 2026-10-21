@@ -2,7 +2,7 @@
 COMPOSE := $(shell command -v docker-compose >/dev/null 2>&1 && echo docker-compose || echo docker compose)
 RUN := $(COMPOSE) exec -T api
 
-.PHONY: up down migrate seed test lint typecheck eval eval-claude eval-mimo results demo purge mcp-check
+.PHONY: up down migrate seed test lint typecheck eval eval-claude eval-mimo results evidence evidence-check demo purge mcp-check
 up:
 	$(COMPOSE) up -d --build --wait
 down:
@@ -15,7 +15,7 @@ lint:
 	$(RUN) ruff check .
 	$(RUN) ruff format --check .
 typecheck:
-	$(RUN) mypy --strict backend/app mcp_server
+	$(RUN) mypy --strict backend/app mcp_server evals/export_evidence.py
 seed:
 	$(RUN) python -m evals.generate_dataset --pdfs
 	$(RUN) sh -c 'DATABASE_URL="$$MIGRATION_DATABASE_URL" python -m backend.app.ingest.seed'
@@ -36,6 +36,11 @@ eval-mimo:
 results:
 	cat README.md | $(RUN) python -m evals.update_results --stdin > README.generated.md
 	mv README.generated.md README.md
+evidence:
+	$(RUN) python -m evals.export_evidence --stdout > web/src/generated/evidence.json.tmp
+	mv web/src/generated/evidence.json.tmp web/src/generated/evidence.json
+evidence-check:
+	$(RUN) python -m evals.export_evidence --check
 demo: up seed
 	$(RUN) python -m backend.app.demo
 	@demo_url="http://$$($(COMPOSE) port web 80)"; echo "Clearline: $$demo_url"; \

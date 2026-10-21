@@ -39,3 +39,13 @@ The review workspace displays the actual ordered tool results, case history, con
 ## Routed workspaces
 
 The interface has separate browser-only sample and API-backed workspace providers. The sample contains illustrative fixtures and temporary review simulation; it never calls the API or contributes to evaluation metrics. The connected provider polls health, actual metrics, bank observations, pending proposals and bounded masked `/activity` audit summaries. URL routes preserve proposal and tab selection; mode changes dispose outstanding reads. See [Design and interaction](DESIGN.md).
+
+## CSV preparation and import boundary
+
+`POST /ingest/{invoices|bank-lines}/preview` requires the workspace API key and validates up to 10 000 UTF-8 CSV records within the shared 5 MB upload limit. It opens no database session and calls no model. It returns the validated record count, known columns and first five records. The browser sends the original file again only after the user confirms import. Preview validates format, not current database identity conflicts.
+
+Preview and import share the same schema/parser in `ingest/validation.py`. Duplicate/empty headers, malformed quoting, inconsistent column counts, invalid UTF-8 and invalid records fail before insertion. Diagnostics are bounded to 20 entries; unknown header names and rejected input values are excluded. Row numbers count logical records including the header. Imports revalidate independently, take the existing workflow lock, and commit all records plus an audit event together. Customer/invoice identity or invoice-date conflicts roll back the entire file; existing records are never overwritten. Audit summaries store inserted/skipped counts and a SHA-256 file fingerprint, without filenames or CSV content. Identical bank observations retain the existing canonical-content hash behavior.
+
+## Published evaluation evidence
+
+`evals/export_evidence.py` validates report identities, finite measurements, coherent counts, scenario totals, key ratios and recomputed release gates before exporting six provider/retrieval slots. Missing files remain null. The generated frontend JSON contains only validated report fields and fingerprints of the original source files. It is static published evidence, not operational workspace telemetry. `make evidence` regenerates it after evaluations; rebuilding packages that snapshot into nginx. CI checks the committed snapshot before fresh evaluation runs. The README table and the evidence page use the same report files.

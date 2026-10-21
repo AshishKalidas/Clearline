@@ -148,6 +148,24 @@ export function OverviewPage() {
               View workspace safeguards <Icon name="arrow" size={14} />
             </Link>
           </section>
+          <section className="workspace-resources panel" aria-label="Workspace resources">
+            <Link to={`${basePath}/import`}>
+              <Icon name="upload" size={20} />
+              <span>
+                <strong>Bring in your records</strong>
+                <small>CSV templates, validation and imports.</small>
+              </span>
+              <Icon name="chevron" size={15} />
+            </Link>
+            <Link to={`${basePath}/evaluation`}>
+              <Icon name="shield" size={20} />
+              <span>
+                <strong>Inspect the evidence</strong>
+                <small>Measured runs, release gates and limits.</small>
+              </span>
+              <Icon name="chevron" size={15} />
+            </Link>
+          </section>
         </div>
       </div>
     </>

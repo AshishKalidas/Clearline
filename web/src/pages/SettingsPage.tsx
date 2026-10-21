@@ -26,6 +26,18 @@ export function SettingsPage() {
       />
       <div className="settings-grid">
         <div>
+          <section className="settings-card panel workspace-tools">
+            <h2>Keep the evidence close.</h2>
+            <p>
+              Import records with a preview, or inspect the platform’s published evaluation reports.
+            </p>
+            <Link className="text-link" to={`${basePath}/import`}>
+              Data imports <Icon name="arrow" size={15} />
+            </Link>
+            <Link className="text-link" to={`${basePath}/evaluation`}>
+              Evaluation evidence <Icon name="arrow" size={15} />
+            </Link>
+          </section>
           <section className="settings-card panel">
             <div className="section-heading">
               <h2>Reviewer identity</h2>

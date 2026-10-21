@@ -20,11 +20,15 @@ React Router's declarative routes are pinned to a React 18-compatible version. N
 | `/sample/proofs` | Three explicitly simulated claim-verification scenarios |
 | `/sample/activity` | Sample events, including temporary review decisions |
 | `/sample/settings` | Reviewer identity, appearance and sample reset |
+| `/sample/import` | Fictional CSV templates and explicit link to connected imports; no file upload |
+| `/sample/evaluation` | Published report comparison with no API dependency |
 | `/workspace/overview` | API-backed summary and live panel |
 | `/workspace/review/:proposalId?` | Actual proposal details and validated review actions |
 | `/workspace/proofs` | Actual PDF extraction and imported-bank verification |
 | `/workspace/activity` | Latest 20 meaningful audited events |
 | `/workspace/settings` | Local API mutation key, reviewer and appearance |
+| `/workspace/import` | Full-file validation, five-record preview, explicit atomic import and duplicate counts |
+| `/workspace/evaluation` | The same published report snapshot, separate from current API metrics |
 | `/review`, `/proofs` | Compatibility redirects to connected views |
 | Unknown page or proposal | Recoverable not-found state; no silent substitution |
 
@@ -53,3 +57,9 @@ Production browser checks also scroll payment text behind the toolbar in light/d
 Screenshots in `docs/images/` are captured from the running app. The live-provider and synthetic evaluation boundaries described in the README remain unchanged.
 
 Scroll checks: [desktop light](images/navigation-scroll-light.png) · [desktop dark](images/navigation-scroll-dark.png) · [phone light](images/navigation-phone-light.png) · [phone dark](images/navigation-phone-dark.png).
+
+## Imports and published evidence
+
+Overview resource cards and Settings link to the two additional views; the primary five-item navigation remains compact on phones. Switching Sample/Connected preserves either view. Import validation accepts the same schema as import, checks every record, and returns at most 20 safe field diagnostics with a total issue count. Only the connected view can choose or submit a file. File/type changes invalidate the preview and confirmation; controls remain disabled during a request. Preview reads abort on navigation and time out after 15 seconds. Submitted imports can finish after navigation without redirecting the user.
+
+The evaluation view reads `src/generated/evidence.json`, generated from actual repository reports. Retrieval is a linkable query choice; the inspected provider is also stored in the URL. Missing reports render an explicit unmeasured state. Comparison tables preserve semantic headers and horizontal keyboard scrolling on narrow screens. The report projection exposes model, date, database, embedder, seed, dataset/report fingerprints, scenario denominators and recorded release gates. Downloaded snapshots include the source fingerprint; they are a validated projection rather than a byte-for-byte copy of the source file. Financial sample decisions never change published evaluation scores.

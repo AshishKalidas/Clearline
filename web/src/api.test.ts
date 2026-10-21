@@ -44,3 +44,23 @@ describe('cent-safe display and authenticated requests', () => {
     expect(new ApiError('Example', 422).status).toBe(422);
   });
 });
+
+it('preserves safe CSV diagnostics and ignores malformed issue entries', async () => {
+  const issue = { row: 2, field: 'amount_cents', message: 'Use integer cents.' };
+  vi.stubGlobal(
+    'fetch',
+    vi.fn().mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          detail: 'Correct the CSV.',
+          issues: [issue, null, { row: 'bad', message: 'Invalid' }],
+          issue_count: 25,
+        }),
+        { status: 422 },
+      ),
+    ),
+  );
+  await expect(
+    request('/ingest/invoices/preview', { method: 'POST', body: new FormData() }),
+  ).rejects.toMatchObject({ status: 422, issues: [issue], issueCount: 25 });
+});

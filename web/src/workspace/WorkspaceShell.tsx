@@ -17,12 +17,19 @@ export function WorkspaceShell() {
   const { pathname } = useLocation();
   const section = pathname.split('/')[2] ?? 'overview';
   const current = destinations.find((item) => item.path === section);
+  const auxiliary =
+    section === 'import'
+      ? 'Data imports'
+      : section === 'evaluation'
+        ? 'Evaluation evidence'
+        : undefined;
+  const label = current?.label ?? auxiliary ?? 'Page not found';
   useEffect(() => {
-    document.title = `${current?.label ?? 'Page not found'} · ${mode === 'sample' ? 'Sample' : 'Connected'} · Clearline`;
+    document.title = `${label} · ${mode === 'sample' ? 'Sample' : 'Connected'} · Clearline`;
     document.getElementById('workspace-main')?.focus({ preventScroll: true });
     window.scrollTo({ top: 0 });
-  }, [section, mode, current?.label]);
-  const destination = current?.path ?? 'overview';
+  }, [section, mode, label]);
+  const destination = current?.path ?? (auxiliary ? section : 'overview');
   return (
     <div className="app-shell">
       <a className="skip-link" href="#workspace-main">
@@ -68,7 +75,7 @@ export function WorkspaceShell() {
           <div className="breadcrumb">
             <span>Workspace</span>
             <Icon name="chevron" size={12} />
-            <strong>{current?.label ?? 'Not found'}</strong>
+            <strong>{label}</strong>
           </div>
           <nav className="mode-switch" aria-label="Workspace mode">
             <Link

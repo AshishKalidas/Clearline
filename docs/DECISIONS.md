@@ -34,3 +34,9 @@
 - Place the scroll-edge scrim outside the filtered toolbar; soften the top gap without sampling through a filtered ancestor or intercepting navigation.
 - Define the HTTP/sample request contract in the API module; workspace infrastructure must not depend on a type owned by sample fixtures.
 - Treat notification lifetime as message-owned; unrelated parent renders cannot restart dismissal, and cancelled invoice lookups cannot replace current choices.
+- Expose CSV preparation through a write-free authenticated preview endpoint; share validation with the eventual atomic import so preview cannot weaken server-side checks.
+- Treat preview as a schema check, not a promise that current database identities are conflict-free; revalidate and roll back the whole import on conflict.
+- Record import counts and file fingerprints inside the import transaction; keep filenames and rejected CSV values out of error/audit summaries.
+- Publish evaluation evidence as a validated generated asset; keep Sample offline and distinguish historical published results from current connected-workspace metrics.
+- Recompute release gates and key ratios when exporting report evidence; retain explicit null slots for unrun providers and hash the original source files for provenance.
+- Use ordinary links for URL-driven retrieval choices; avoid transient radio state during router transitions and retain native browser history behavior.

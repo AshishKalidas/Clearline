@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { restoreAppearance } from './workspace/Preferences';
 import './styles.css';
+import './pages/workflows.css';
 
 restoreAppearance();
 ReactDOM.createRoot(document.getElementById('root')!).render(

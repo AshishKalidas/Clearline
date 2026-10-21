@@ -21,3 +21,4 @@ data
 .pytest_cache
 htmlcov
 tmp
+web/src/generated/*.tmp

@@ -19,3 +19,4 @@ build/
 playwright-report/
 test-results/
 README.generated.md
+web/src/generated/*.tmp

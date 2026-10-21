@@ -8,6 +8,8 @@ import { ProofPage } from './pages/ProofPage';
 import { ActivityPage } from './pages/ActivityPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { NotFound } from './pages/NotFound';
+import { ImportPage } from './pages/ImportPage';
+import { EvaluationPage } from './pages/EvaluationPage';
 
 /** URL-addressable workspaces keep sample and API-backed state in separate lifecycles. */
 export function AppRoutes() {
@@ -32,6 +34,8 @@ export function AppRoutes() {
           <Route path="proofs" element={<ProofPage />} />
           <Route path="activity" element={<ActivityPage />} />
           <Route path="settings" element={<SettingsPage />} />
+          <Route path="import" element={<ImportPage />} />
+          <Route path="evaluation" element={<EvaluationPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       ))}

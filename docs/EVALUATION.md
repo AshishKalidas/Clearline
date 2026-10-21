@@ -34,3 +34,9 @@ An operational gate also fails runs with incomplete investigations (provider err
 Claude and MiMo evaluations are opt-in: configure the provider variables in `.env`, recreate the API service, then use `make eval-claude` or `make eval-mimo`. MiMo requires the exact model ID supplied by your provider; no ID is guessed. The Claude default is the PRD-requested ID and can be overridden for an available account model.
 
 No live comparison or recommended live-model default is asserted until both providers have measured reports. The README displays “not yet run” for missing live runs. This repository's results are engineering evidence on synthetic fixtures, not production accuracy, fraud-loss reduction or a guarantee of employment.
+
+## Inspecting and publishing results
+
+Open `/sample/evaluation` or `/workspace/evaluation` to compare the reports shipped with the build. The view works without the API in Sample mode. Provider and retrieval selections are addressable; unavailable runs remain “Not yet run.” Scenario outcomes include their denominators. Zero observed auto errors and having no automatic allocations are displayed differently.
+
+After new report runs, use `make results evidence`, then `make up` to package the updated evidence. `make evidence-check` verifies the reports/snapshot in that rebuilt API image; CI performs this check before generating new evaluation outputs. For native source checks, use `.venv/bin/python -m evals.export_evidence --check`. The exporter checks identities, finite values, denominator consistency and recomputed release gates. It rejects contradictory reports instead of producing a green badge. The exported snapshot contains a SHA-256 fingerprint of each original `report.json`, with no evaluation labels, credentials or failure-trace payloads.

@@ -11,6 +11,7 @@ from backend.app.api.invoices import router as invoices_router
 from backend.app.api.pops import router as pops_router
 from backend.app.api.reconciliation import router as reconciliation_router
 from backend.app.db.session import get_session
+from backend.app.ingest.validation import CsvInputError
 
 app = FastAPI(title="Clearline", version="0.1.0")
 app.include_router(ingest_router)
@@ -18,6 +19,19 @@ app.include_router(reconciliation_router)
 app.include_router(pops_router)
 app.include_router(invoices_router)
 app.include_router(activity_router)
+
+
+@app.exception_handler(CsvInputError)
+async def csv_error(request: Request, exc: CsvInputError) -> JSONResponse:
+    """Return only safe field diagnostics, never rejected CSV values."""
+    return JSONResponse(
+        status_code=422,
+        content={
+            "detail": str(exc),
+            "issues": [issue.model_dump() for issue in exc.issues],
+            "issue_count": exc.issue_count,
+        },
+    )
 
 
 @app.exception_handler(ValueError)

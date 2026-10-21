@@ -3,10 +3,18 @@ import type { Credentials } from './types';
 /** Shared contract for HTTP and the isolated sample adapter. */
 export type WorkspaceRequest = typeof request;
 
+export interface CsvIssue {
+  row: number;
+  field: string | null;
+  message: string;
+}
+
 export class ApiError extends Error {
   constructor(
     message: string,
     public readonly status: number,
+    public readonly issues: CsvIssue[] = [],
+    public readonly issueCount: number = issues.length,
   ) {
     super(message);
   }
@@ -35,6 +43,13 @@ export async function request<T>(
     throw new ApiError(
       typeof detail === 'string' ? detail : `Request failed (${response.status}). Please retry.`,
       response.status,
+      csvIssues(payload),
+      typeof payload === 'object' &&
+      payload !== null &&
+      'issue_count' in payload &&
+      typeof payload.issue_count === 'number'
+        ? payload.issue_count
+        : undefined,
     );
   }
   if (payload === null)
@@ -43,6 +58,24 @@ export async function request<T>(
       response.status,
     );
   return payload as T;
+}
+
+function csvIssues(payload: unknown): CsvIssue[] {
+  if (
+    !payload ||
+    typeof payload !== 'object' ||
+    !('issues' in payload) ||
+    !Array.isArray(payload.issues)
+  )
+    return [];
+  return payload.issues.filter(
+    (issue): issue is CsvIssue =>
+      issue &&
+      typeof issue === 'object' &&
+      Number.isInteger(issue.row) &&
+      (issue.field === null || typeof issue.field === 'string') &&
+      typeof issue.message === 'string',
+  );
 }
 
 /** Monetary state remains integer cents, including display formatting. */
