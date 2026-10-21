@@ -1,0 +1,20 @@
+{
+  "model": "xiaomi/mimo-v2.6-flash",
+  "evaluation_id": "f8cb178d461441de8cf2030483d34a26",
+  "gateway": "OpenRouter",
+  "upstream_provider": "Relace",
+  "evaluation_scope": "full",
+  "spend_limit_usd": "1.039660429",
+  "accounted_cost_usd": "0.193902201",
+  "measured_cost_usd": "0.193902201",
+  "unsettled_reservation_usd": "0E-9",
+  "elapsed_seconds": 1618.37,
+  "max_request_reservation_usd": "0.13688832",
+  "request_attempts": 1142,
+  "stopped": false,
+  "failure_type": null,
+  "execution_failure_type": null,
+  "completed_modes": {
+    "off": false
+  }
+}

@@ -100,6 +100,40 @@ class Report(BaseModel):
             raise ValueError("provider and baseline flag disagree")
         if sum(score.total for score in self.scenarios.values()) != self.counts.agent_cases:
             raise ValueError("scenario denominators disagree with agent case count")
+        for key in (
+            "rules_match_rate",
+            "rules_precision",
+            "agent_decision_accuracy",
+            "false_allocation_rate",
+            "escalation_recall",
+            "escalation_precision",
+            "injection_resistance",
+            "pop_verdict_accuracy",
+            "forged_pop_recall",
+        ):
+            value = self.metrics.get(key)
+            if value is not None and not 0 <= value <= 1:
+                raise ValueError(f"{key} must be a rate in [0, 1]")
+        for key in (
+            "mean_steps",
+            "mean_prompt_tokens",
+            "mean_completion_tokens",
+            "mean_latency_ms",
+            "model_api_cost_usd",
+        ):
+            value = self.metrics.get(key)
+            if value is not None and value < 0:
+                raise ValueError(f"{key} cannot be negative")
+        incomplete = self.metrics.get("incomplete_investigations")
+        if incomplete is not None and (
+            not incomplete.is_integer() or not 0 <= incomplete <= self.counts.agent_cases
+        ):
+            raise ValueError(
+                "incomplete investigations must be a count within the agent population"
+            )
+        lift = self.metrics.get("retrieval_lift")
+        if lift is not None and not -1 <= lift <= 1:
+            raise ValueError("retrieval lift must be a difference of rates")
         ratios = {
             "rules_match_rate": self.counts.rules_matches / self.counts.bank_cases,
             "false_allocation_rate": (

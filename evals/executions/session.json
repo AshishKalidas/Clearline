@@ -1,0 +1,49 @@
+{
+  "session_limit_usd": "1.50",
+  "measured_cost_usd": "0.401518572",
+  "unsettled_reservation_usd": "0.252723200",
+  "accounted_cost_usd": "0.654241772",
+  "within_budget": true,
+  "executions": [
+    {
+      "receipt": "evals/pilots/mimo-v2.6-flash-relace/execution.json",
+      "measured_cost_usd": "0.002714036",
+      "accounted_cost_usd": "0.002714036"
+    },
+    {
+      "receipt": "evals/pilots/mimo-v2.6-flash-relace-diagnostic/execution.json",
+      "measured_cost_usd": "0.002763978",
+      "accounted_cost_usd": "0.002763978"
+    },
+    {
+      "receipt": "evals/pilots/mimo-v2.6-flash-relace-refined/execution.json",
+      "measured_cost_usd": "0.016915948",
+      "accounted_cost_usd": "0.016915948"
+    },
+    {
+      "receipt": "evals/pilots/mimo-v2.6-flash-relace-retry/execution.json",
+      "measured_cost_usd": "0.002625338",
+      "accounted_cost_usd": "0.002625338"
+    },
+    {
+      "receipt": "evals/pilots/mimo-v2.6-flash-xiaomi-aborted/execution.json",
+      "measured_cost_usd": "0.000928116",
+      "accounted_cost_usd": "0.148302196"
+    },
+    {
+      "receipt": "evals/pilots/relace-probe.json",
+      "measured_cost_usd": "0.000184521",
+      "accounted_cost_usd": "0.000184521"
+    },
+    {
+      "receipt": "evals/executions/paused-pair/execution.json",
+      "measured_cost_usd": "0.181484434",
+      "accounted_cost_usd": "0.286833554"
+    },
+    {
+      "receipt": "evals/executions/resumed-off/execution.json",
+      "measured_cost_usd": "0.193902201",
+      "accounted_cost_usd": "0.193902201"
+    }
+  ]
+}

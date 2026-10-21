@@ -4,11 +4,11 @@ Build verification updated on 21 October 2026; the base platform was completed o
 
 | Check | Observed result |
 |---|---|
-| Docker backend suite | 129 passed; 95.48% statement coverage on `backend/app`; required threshold 85% |
+| Docker backend suite | 136 passed; 95.48% statement coverage on `backend/app`; required threshold 85% |
 | Ruff lint and formatting | Clean |
 | Strict mypy | Clean on `backend/app`, `mcp_server` and all evaluation modules (66 source files) |
 | Frontend unit suite | 37 tests passed in 8 files |
-| Frontend build | TypeScript check and Vite production build passed; React bundle 274.45 kB before gzip with the published live report; standalone demo build is checked separately |
+| Frontend build | TypeScript check and Vite production build passed; application bundle 276.23 kB before gzip with both published live reports; standalone demo build also passed |
 | Standalone public demo | 2 Playwright workflows passed locally and against the anonymous Vercel production URL; deep links, review/activity, proof scenarios, reports and phone navigation worked without API requests |
 | Browser against nginx + actual API | 11 Playwright tests passed: actual reviews/uploads, API-blocked sample use, deep links/history, mobile layouts, saved appearance, reduced transparency/motion, increased contrast, live polling pause/recovery, navigation during a pending approval, scrolling navigation blur, offline published evidence, and actual CSV validation/import/deduplication in desktop/phone layouts |
 | Live SDK adapters | Recorded HTTP response tests exercised both real SDKs, retries, request masking, tool translation, malformed replies, usage and transport closure; the unit suite makes no paid network calls |
@@ -16,6 +16,7 @@ Build verification updated on 21 October 2026; the base platform was completed o
 | MCP safety | Every tool called through the protocol; returned PII-shaped fixture strings and echoed invalid arguments masked; unknown write tool and fractional cents rejected; database transaction rejected an audit INSERT otherwise permitted to the agent role |
 | PostgreSQL scripted baseline | Retrieval on/off: every release gate passed; 400 bank cases, 228 agent cases, 54 agent auto allocations, 0 wrong auto allocations and 60 proof documents per run |
 | Live MiMo retrieval on | 400 bank cases, 228 agent investigations, 50.88% decision accuracy, 10 automatic agent allocations, zero wrong automatic allocations and zero invariant errors; 112 incomplete investigations failed the operational gate |
+| Live MiMo retrieval off | Independently restarted full run: 400 bank cases, 228 agent investigations, 55.70% decision accuracy, 7 automatic agent allocations, zero wrong automatic allocations and zero invariant errors; 99 incomplete investigations failed the operational gate; no paired retrieval lift claimed |
 | README generation | Generated table verified equal to the committed report-derived table |
 | Clean-checkout demo | Exported tracked/staged source only, no `.env`, virtual environment, `node_modules` or local Docker settings; fresh isolated Compose project/volumes built, migrated, seeded and reconciled successfully |
 | Idempotent demo | Repeated seed/run preserves existing history and resolutions; no additional agent investigations on already processed lines |

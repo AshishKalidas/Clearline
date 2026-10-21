@@ -1,4 +1,10 @@
 import { expect, test } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+import type { PublishedRun } from '../src/evaluation/evidence';
+
+const published: { runs: PublishedRun[] } = JSON.parse(
+  readFileSync(new URL('../src/generated/evidence.json', import.meta.url), 'utf8'),
+);
 
 test('public demo reviews, proofs and evidence work without sign-in or API requests', async ({
   page,
@@ -35,6 +41,16 @@ test('public demo reviews, proofs and evidence work without sign-in or API reque
   await page.goto('/sample/evaluation');
   await expect(page.getByRole('heading', { name: 'Evidence, in the open.' })).toBeVisible();
   await expect(page.locator('.gate-list li').first()).toBeVisible();
+  for (const run of published.runs.filter((run) => run.provider !== 'stub' && run.report)) {
+    await page.goto(
+      `/sample/evaluation?provider=${run.provider}&retrieval=${run.retrieval_enabled ? 'on' : 'off'}`,
+    );
+    await expect(page.getByLabel('Inspect provider')).toHaveValue(run.provider);
+    await expect(page.locator('.evaluation-detail-grid .status-badge')).toHaveText(
+      run.report!.passed ? 'Gates passed' : 'Gates failed',
+    );
+    await expect(page.locator('.provenance .mono').first()).toHaveText(run.report_sha256!);
+  }
   expect(apiRequests).toEqual([]);
   expect(errors).toEqual([]);
 });

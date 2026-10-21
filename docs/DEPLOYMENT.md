@@ -45,4 +45,4 @@ npm run test:demo
 CLEARLINE_DEMO_URL=https://clearline-ecru.vercel.app npm run test:demo
 ```
 
-The demo browser suite verifies anonymous navigation, deep-link refreshes, review/activity updates, proof scenarios, evidence access, legacy/connected redirects and phone layouts. It blocks and counts `/api/` requests to verify that no backend is required. GitHub Actions runs the same suite locally alongside the full Docker application checks.
+The demo browser suite verifies anonymous navigation, deep-link refreshes, review/activity updates, proof scenarios, evidence access, legacy/connected redirects and phone layouts. For published live runs it checks each source-report fingerprint and gate status against the committed snapshot, including both retrieval modes. It blocks and counts `/api/` requests to verify that no backend is required. GitHub Actions runs the same suite locally alongside the full Docker application checks.

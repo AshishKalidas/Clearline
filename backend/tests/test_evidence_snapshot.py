@@ -97,3 +97,27 @@ def test_snapshot_only_exports_allowlisted_live_configuration(tmp_path: Path) ->
     exported = json.loads(snapshot)["runs"][4]["report"]["live_configuration"]
     assert exported["upstream_provider"] == "Fixture provider"
     assert "do-not-publish" not in snapshot
+
+
+@pytest.mark.parametrize(
+    ("metric", "value"),
+    [
+        ("model_api_cost_usd", -0.01),
+        ("mean_latency_ms", -1),
+        ("escalation_precision", 1.1),
+        ("incomplete_investigations", 0.5),
+        ("retrieval_lift", 1.1),
+    ],
+)
+def test_snapshot_rejects_impossible_measurements_even_with_recomputed_gates(
+    tmp_path: Path, metric: str, value: float
+) -> None:
+    report = json.loads(SOURCE.read_text())
+    report["metrics"][metric] = value
+    report["gates"] = release_gates(report["metrics"], "stub", [])
+    report["passed"] = all(report["gates"].values())
+    destination = tmp_path / "stub-on/report.json"
+    destination.parent.mkdir()
+    destination.write_text(json.dumps(report))
+    with pytest.raises(ValidationError):
+        evidence_snapshot(tmp_path)
