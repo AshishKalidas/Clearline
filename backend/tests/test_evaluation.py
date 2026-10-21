@@ -76,7 +76,10 @@ def test_real_eval_reports_and_readme_table(tmp_path: Path, monkeypatch) -> None
         assert (folder / "report.md").exists()
         assert (folder / "failures.jsonl").read_text() == ""
     table = results_table(tmp_path / "reports")
-    assert "not yet run" in table and "100.00%" in table
+    assert "Scripted baseline" in table and "100.00%" in table
+    assert "Live-provider evaluations have not been run." in table
+    assert "Claude" not in table and "MiMo" not in table
+    assert f"0 / {report['counts']['auto_applied']}" in table
     readme = tmp_path / "README.md"
     readme.write_text("Intro\n<!-- RESULTS:START -->\nold\n<!-- RESULTS:END -->\nFooter")
     update_readme(readme, tmp_path / "reports")
