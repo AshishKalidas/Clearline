@@ -6,11 +6,15 @@ import { AppRoutes } from '../App';
 import { PreferencesProvider } from './Preferences';
 
 beforeEach(() => {
+  vi.stubEnv('MODE', 'test');
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
   sessionStorage.clear();
   localStorage.clear();
 });
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => {
+  vi.unstubAllEnvs();
+  vi.restoreAllMocks();
+});
 function mount(path: string) {
   return render(
     <MemoryRouter initialEntries={[path]}>
@@ -53,4 +57,45 @@ it('switches to the actual HTTP source and shows an offline state instead of sam
   await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('API unavailable'));
   expect(screen.queryByText('R 39 280,00')).not.toBeInTheDocument();
   expect(fetch).toHaveBeenCalledWith('/api/healthz', expect.anything());
+});
+
+it('keeps connected deep links inside the sample deployment and preserves the selected evidence tab', async () => {
+  vi.stubEnv('MODE', 'demo');
+  const fetch = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('No hosted API'));
+  mount('/workspace/review/sample-split?tab=evidence');
+  await screen.findByText('The evidence behind the proposal');
+  expect(screen.getByRole('link', { name: /^Payment review/ })).toHaveAttribute(
+    'href',
+    '/sample/review',
+  );
+  expect(screen.queryByRole('link', { name: 'Connected workspace' })).not.toBeInTheDocument();
+  expect(fetch).not.toHaveBeenCalled();
+});
+
+it('removes unavailable connected destinations from every sample entry point', async () => {
+  vi.stubEnv('MODE', 'demo');
+  const fetch = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('No hosted API'));
+  const user = userEvent.setup();
+  mount('/sample/settings');
+  expect(screen.queryByRole('link', { name: /Open connected/ })).not.toBeInTheDocument();
+  await user.click(screen.getByRole('link', { name: /Data imports/ }));
+  expect(screen.getByRole('link', { name: /Run the complete workspace/ })).toHaveAttribute(
+    'href',
+    'https://github.com/AshishKalidas/Clearline#run-the-complete-demo',
+  );
+  expect(screen.queryByRole('link', { name: /Open connected/ })).not.toBeInTheDocument();
+  await user.click(screen.getByRole('link', { name: /^Payment proofs/ }));
+  expect(screen.queryByText(/Switch to Connected/)).not.toBeInTheDocument();
+  expect(fetch).not.toHaveBeenCalled();
+});
+
+it.each(['/review', '/proofs'])('opens legacy %s links without a hosted API', async (path) => {
+  vi.stubEnv('MODE', 'demo');
+  const fetch = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('No hosted API'));
+  mount(path);
+  await screen.findByRole('heading', {
+    name: path === '/review' ? 'Make the call. With evidence.' : 'Verify before you release.',
+  });
+  expect(screen.queryByRole('link', { name: 'Connected workspace' })).not.toBeInTheDocument();
+  expect(fetch).not.toHaveBeenCalled();
 });

@@ -1,0 +1,16 @@
+# The Vercel project builds web/. Keep backend data and local tooling off the upload.
+*
+!web
+!web/**
+web/.env
+web/.env.*
+web/**/.env
+web/**/.env.*
+web/.vercel
+web/node_modules
+web/dist
+web/test-results
+web/playwright-report
+web/._*
+web/**/._*
+web/src/generated/*.tmp

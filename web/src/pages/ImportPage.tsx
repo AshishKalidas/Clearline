@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { money } from '../api';
+import { isDemoDeployment } from '../deployment';
 import { Icon } from '../Icon';
 import { columnLabels, templates } from '../imports/templates';
 import { useCsvImport } from '../imports/useCsvImport';
@@ -30,7 +31,11 @@ export function ImportPage() {
       <PageHeader
         eyebrow="Start with good evidence"
         title="Bring your records together."
-        description="Check a CSV, inspect its contents, then import it into the connected workspace."
+        description={
+          isDemoDeployment()
+            ? 'Explore the invoice and bank-feed formats with fictional CSV templates.'
+            : 'Check a CSV, inspect its contents, then import it into the connected workspace.'
+        }
       />
       <div className="import-layout">
         <section className="import-card panel" aria-labelledby="import-heading">
@@ -76,9 +81,18 @@ export function ImportPage() {
                 Templates are available here. CSV validation and imports use your connected API;
                 sample records stay unchanged.
               </p>
-              <Link className="primary-button" to="/workspace/import">
-                Open connected imports <Icon name="arrow" size={16} />
-              </Link>
+              {isDemoDeployment() ? (
+                <a
+                  className="primary-button"
+                  href="https://github.com/AshishKalidas/Clearline#run-the-complete-demo"
+                >
+                  Run the complete workspace <Icon name="arrow" size={16} />
+                </a>
+              ) : (
+                <Link className="primary-button" to="/workspace/import">
+                  Open connected imports <Icon name="arrow" size={16} />
+                </Link>
+              )}
             </div>
           ) : (
             <>

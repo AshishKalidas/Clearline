@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Icon, type IconName } from '../Icon';
+import { isDemoDeployment } from '../deployment';
 import { usePreferences } from './Preferences';
 import { useWorkspace } from './Workspace';
 
@@ -87,15 +88,17 @@ export function WorkspaceShell() {
               <Icon name="layers" size={15} />
               Sample
             </Link>
-            <Link
-              className={mode === 'connected' ? 'selected' : ''}
-              aria-current={mode === 'connected' ? 'true' : undefined}
-              to={`/workspace/${destination}`}
-              aria-label="Connected workspace"
-            >
-              <Icon name="activity" size={15} />
-              Connected
-            </Link>
+            {!isDemoDeployment() && (
+              <Link
+                className={mode === 'connected' ? 'selected' : ''}
+                aria-current={mode === 'connected' ? 'true' : undefined}
+                to={`/workspace/${destination}`}
+                aria-label="Connected workspace"
+              >
+                <Icon name="activity" size={15} />
+                Connected
+              </Link>
+            )}
           </nav>
           <Link
             to={`${basePath}/settings`}

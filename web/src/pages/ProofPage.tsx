@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ProofView } from '../ProofView';
 import { Icon } from '../Icon';
 import { money } from '../api';
+import { isDemoDeployment } from '../deployment';
 import { usePreferences } from '../workspace/Preferences';
 import { PageHeader } from '../workspace/PageHeader';
 import { useWorkspace } from '../workspace/Workspace';
@@ -71,8 +72,8 @@ function SampleProofView() {
         </button>
         <p className="proof-note">
           <Icon name="info" size={16} />
-          Simulated verification. No PDF is uploaded or inspected. Switch to Connected for actual
-          bank-feed checks.
+          Simulated verification. No PDF is uploaded or inspected.
+          {!isDemoDeployment() && ' Switch to Connected for actual bank-feed checks.'}
         </p>
       </section>
       <section className="proof-result panel" aria-live="polite">

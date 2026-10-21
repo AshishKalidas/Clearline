@@ -1,4 +1,5 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { isDemoDeployment } from './deployment';
 import { WorkspaceProvider } from './workspace/Workspace';
 import { PreferencesProvider } from './workspace/Preferences';
 import { WorkspaceShell } from './workspace/WorkspaceShell';
@@ -13,12 +14,21 @@ import { EvaluationPage } from './pages/EvaluationPage';
 
 /** URL-addressable workspaces keep sample and API-backed state in separate lifecycles. */
 export function AppRoutes() {
+  const demo = isDemoDeployment();
+  const prefixes = demo ? (['sample'] as const) : (['sample', 'workspace'] as const);
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/sample/overview" replace />} />
-      <Route path="/review" element={<Navigate to="/workspace/review" replace />} />
-      <Route path="/proofs" element={<Navigate to="/workspace/proofs" replace />} />
-      {(['sample', 'workspace'] as const).map((prefix) => (
+      <Route
+        path="/review"
+        element={<Navigate to={demo ? '/sample/review' : '/workspace/review'} replace />}
+      />
+      <Route
+        path="/proofs"
+        element={<Navigate to={demo ? '/sample/proofs' : '/workspace/proofs'} replace />}
+      />
+      {demo && <Route path="/workspace/*" element={<DemoRedirect />} />}
+      {prefixes.map((prefix) => (
         <Route
           key={prefix}
           path={`/${prefix}`}
@@ -43,6 +53,12 @@ export function AppRoutes() {
     </Routes>
   );
 }
+
+function DemoRedirect() {
+  const { pathname, search, hash } = useLocation();
+  return <Navigate to={`${pathname.replace(/^\/workspace/, '/sample')}${search}${hash}`} replace />;
+}
+
 export default function App() {
   return (
     <BrowserRouter>

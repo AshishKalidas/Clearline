@@ -56,10 +56,13 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
       - name: Check web types, units and formatting
-        run: npm ci && npm run build && npm test && npx prettier --check src e2e '*.ts' '*.json' index.html
+        run: npm ci && npm run build && npm test && npx prettier --check src e2e demo-e2e '*.ts' '*.json' index.html
         working-directory: web
       - name: Exercise browser workflows against nginx
         run: npx playwright install --with-deps chromium && npm run test:e2e
+        working-directory: web
+      - name: Exercise the standalone public demo
+        run: npm run test:demo
         working-directory: web
       - name: Collect service diagnostics
         if: failure()

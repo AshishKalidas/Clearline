@@ -3,6 +3,7 @@
 .env
 .env.*
 !.env.example
+.vercel/
 .docker-context.local
 .venv/
 __pycache__/

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, type IconName } from '../Icon';
+import { isDemoDeployment } from '../deployment';
 import { useWorkspace } from '../workspace/Workspace';
 import { usePreferences, type Appearance } from '../workspace/Preferences';
 import { PageHeader } from '../workspace/PageHeader';
@@ -163,9 +164,11 @@ export function SettingsPage() {
                   <Icon name="refresh" size={16} />
                   Reset sample decisions
                 </button>
-                <Link className="text-link" to="/workspace/overview">
-                  Open connected workspace <Icon name="arrow" size={15} />
-                </Link>
+                {!isDemoDeployment() && (
+                  <Link className="text-link" to="/workspace/overview">
+                    Open connected workspace <Icon name="arrow" size={15} />
+                  </Link>
+                )}
               </>
             ) : (
               <Link className="text-link" to="/sample/overview">
